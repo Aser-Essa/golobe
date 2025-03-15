@@ -57,32 +57,39 @@ export default function DottedMap({ children }: { children: React.ReactNode }) {
 
   return (
     <div className="w-full">
-      {children}
+      <div className="min-h-[500px]">{children}</div>
 
       {floatingCards.map((card, idx) => (
         <div
           key={`${card.top}-${card.left}-${idx}`}
           style={{
             position: "absolute",
-            top: Math.round(card.top) - 75,
-            left: Math.round(card.left) - 80,
+            top: Math.round(card.top) - 52,
+            left: Math.round(card.left) - 42,
           }}
           className="transition-all"
         >
-          <div className="relative flex h-12 w-35 items-center gap-2 rounded bg-white p-1 pr-2 text-nowrap shadow-lg">
-            <Image src={`/${card.image}`} width={40} height={40} alt="card" />
-            <div>
-              <p className="text-[10px] font-bold">James Doe</p>
-              <p className="text-[8px]">Boarding Pass N’123</p>
+          <div className="relative flex h-fit w-fit items-center gap-2 rounded bg-white p-1 text-nowrap shadow-lg md:h-12 md:w-24 md:pr-2 lg:w-35">
+            <div className="relative h-8 w-8 md:h-10 md:w-10">
+              <Image src={`/${card.image}`} fill alt="card" />
+            </div>
+            <div className="hidden overflow-hidden md:block">
+              <p className="line-clamp-1 overflow-hidden text-[10px] font-bold">
+                James Doe
+              </p>
+              <p className="line-clamp-1 overflow-hidden text-[8px]">
+                Boarding Pass N’123
+              </p>
             </div>
           </div>
-          <Image
-            src="/Arrow.png"
-            width={60}
-            height={28}
-            alt="arrow"
-            className="translate-x-1/2"
-          />
+          <div className="relative h-3 w-8 md:h-6 md:w-15">
+            <Image
+              src="/Arrow.png"
+              fill
+              alt="arrow"
+              className="translate-x-1/2"
+            />
+          </div>
         </div>
       ))}
     </div>
