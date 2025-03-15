@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React from "react";
 import {
   Select,
   SelectContent,
@@ -32,7 +32,7 @@ export default function FilterSelect({
 
   const router = useRouter();
 
-  function selectedData(item) {
+  function selectedData(item: { label: string; value: string }) {
     const params = new URLSearchParams(searchParams);
     params.set(item.label, item.value);
     router.replace(`?${params.toString()}`, { scroll: false });
