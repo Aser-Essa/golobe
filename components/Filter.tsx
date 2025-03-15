@@ -8,7 +8,7 @@ export default function Filter() {
   return (
     <>
       <div
-        className="bg-neutrals relative top-[-76px] space-y-8 rounded-2xl px-6 pt-8 pb-12"
+        className="bg-neutrals relative top-[-76px] mx-26 space-y-8 rounded-2xl px-6 pt-8 pb-12"
         style={{ boxShadow: "0 4px 16px #8dd3ba26" }}
       >
         <p className="text-xl font-semibold">Where are you flying? </p>

@@ -6,9 +6,9 @@ import DottedMapSVG from "./DottedMapSVG";
 export default function DiscoverPlaces() {
   return (
     <>
-      <div className="mt-1 h-screen space-y-6">
+      <div className="mt-1 space-y-6">
         <div className="mx-26 flex items-center justify-between">
-          <div className="flex flex-col gap-4">
+          <div className="space-y-4">
             <p className="text-[32px] leading-10 font-semibold">
               Let&apos;s go places together
             </p>
