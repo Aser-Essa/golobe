@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Suspense } from "react";
 
 import FilterRow from "./FilterRow";
 import { Button } from "./ui/button";
@@ -12,7 +12,9 @@ export default function Filter() {
         style={{ boxShadow: "0 4px 16px #8dd3ba26" }}
       >
         <p className="text-xl font-semibold">Where are you flying? </p>
-        <FilterRow />
+        <Suspense fallback={<p>Loading...</p>}>
+          <FilterRow />
+        </Suspense>
         <div className="flex flex-wrap items-center justify-center gap-6 sm:flex-nowrap sm:justify-end">
           <p className="flex cursor-pointer items-center gap-1 text-sm font-medium">
             <Plus className="h-4 w-4" /> Add Promo Code
