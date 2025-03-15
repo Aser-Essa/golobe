@@ -57,7 +57,7 @@ export default function DottedMap({ children }: { children: React.ReactNode }) {
 
   return (
     <div className="w-full">
-      <div className="min-h-[500px]">{children}</div>
+      {children}
 
       {floatingCards.map((card, idx) => (
         <div
