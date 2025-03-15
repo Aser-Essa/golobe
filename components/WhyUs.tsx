@@ -1,9 +1,10 @@
 import React from "react";
 import WhyUsCard from "./WhyUsCard";
+import Container from "./Container";
 
 export default function WhyUs() {
   return (
-    <div className="mx-26 mt-20">
+    <Container className="mt-20">
       <div className="space-y-4">
         <p className="text-[32px] leading-10 font-semibold">
           Your Perfect Trip, Guaranteed!
@@ -35,6 +36,6 @@ export default function WhyUs() {
           subTitle={"Find a lower price and we'll match it"}
         />
       </div>
-    </div>
+    </Container>
   );
 }

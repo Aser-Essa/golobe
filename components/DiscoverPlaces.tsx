@@ -2,12 +2,13 @@ import React from "react";
 import { Button } from "./ui/button";
 import DottedMap from "./DottedMap";
 import DottedMapSVG from "./DottedMapSVG";
+import Container from "./Container";
 
 export default function DiscoverPlaces() {
   return (
     <>
       <div className="mt-1 space-y-6">
-        <div className="mx-26 flex items-center justify-between">
+        <Container className="flex items-center justify-between">
           <div className="space-y-4">
             <p className="text-[32px] leading-10 font-semibold">
               Let&apos;s go places together
@@ -20,7 +21,7 @@ export default function DiscoverPlaces() {
           <Button className="border-mint-green text-blackish-green h-10 rounded-sm border-1 bg-transparent text-sm font-medium">
             See All
           </Button>
-        </div>
+        </Container>
         <DottedMap>
           <DottedMapSVG />
         </DottedMap>

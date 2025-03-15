@@ -3,12 +3,13 @@ import React, { Suspense } from "react";
 import FilterRow from "./FilterRow";
 import { Button } from "./ui/button";
 import { Plus, Send } from "lucide-react";
+import Container from "./Container";
 
 export default function Filter() {
   return (
-    <>
+    <Container>
       <div
-        className="bg-neutrals relative top-[-76px] mx-26 space-y-8 rounded-2xl px-6 pt-8 pb-12"
+        className="bg-neutrals relative top-[-76px] space-y-8 rounded-2xl px-6 pt-8 pb-12"
         style={{ boxShadow: "0 4px 16px #8dd3ba26" }}
       >
         <p className="text-xl font-semibold">Where are you flying? </p>
@@ -25,6 +26,6 @@ export default function Filter() {
           </Button>
         </div>
       </div>
-    </>
+    </Container>
   );
 }

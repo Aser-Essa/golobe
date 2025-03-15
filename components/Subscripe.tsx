@@ -1,11 +1,12 @@
 import Image from "next/image";
 import React from "react";
 import { Button } from "./ui/button";
+import Container from "./Container";
 
 export default function Subscripe() {
   return (
-    <>
-      <div className="relative top-38 mx-26 -mt-10 rounded-[20px] bg-[#CDEAE1] px-6">
+    <Container>
+      <div className="relative top-38 -mt-10 rounded-[20px] bg-[#CDEAE1] px-6">
         <div className="flex justify-between gap-15">
           <div className="flex flex-col justify-between py-6">
             <p className="text-blackish-green w-1/2 text-[44px] leading-13.5 font-semibold">
@@ -35,6 +36,6 @@ export default function Subscripe() {
           </div>
         </div>
       </div>
-    </>
+    </Container>
   );
 }

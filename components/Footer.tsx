@@ -1,11 +1,12 @@
 import Image from "next/image";
 import React from "react";
 import FooterList from "./FooterList";
+import Container from "./Container";
 
 export default function Footer() {
   return (
     <>
-      <div className="bg-mint-green flex min-h-[422px] flex-col items-center gap-20 px-26 pt-54 pb-16 xl:flex-row xl:items-start xl:gap-35">
+      <Container className="bg-mint-green flex min-h-[422px] flex-col items-center gap-20 pt-54 pb-16 xl:flex-row xl:items-start xl:gap-35">
         <div className="w-fit space-y-6">
           <div className="relative h-10 w-30">
             <Image src={"/logo2.svg"} fill alt="logo" />
@@ -68,7 +69,7 @@ export default function Footer() {
             items={["Our Story", "Work with us"]}
           />
         </div>
-      </div>
+      </Container>
     </>
   );
 }
