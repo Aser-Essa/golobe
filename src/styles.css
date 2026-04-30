@@ -1,7 +1,7 @@
-@import 'tailwindcss';
-@import 'tw-animate-css';
-@import 'shadcn/tailwind.css';
-@import '@fontsource-variable/montserrat';
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+@import "@fontsource-variable/montserrat";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -21,7 +21,7 @@ body {
 
 @theme inline {
   --font-heading: var(--font-sans);
-  --font-sans: 'Montserrat Variable', sans-serif;
+  --font-sans: "Montserrat Variable", sans-serif;
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -29,6 +29,7 @@ body {
   --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
   --color-sidebar-primary: var(--sidebar-primary);
   --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-salmon: var(--salmon);
   --color-sidebar: var(--sidebar);
   --color-chart-5: var(--chart-5);
   --color-chart-4: var(--chart-4);
@@ -67,9 +68,11 @@ body {
   --primary: oklch(81.355% 0.07853 170.826);
   --primary-foreground: oklch(1 0 0);
 
+  --salmon: oklch(75.371% 0.14772 23.133);
+
   /* ── Foreground — exact #112211 from Figma */
   --foreground: oklch(16.8% 0.028 152);
-  --background: oklch(98.2% 0.002 247); /* #FAFBFC hotelSearch bg */
+  --background: oklch(100% 0.00011 271.152); /* #FAFBFC hotelSearch bg */
 
   /* ── Cards */
   --card: oklch(1 0 0);
@@ -246,3 +249,13 @@ body {
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.556 0 0);
 } */
+
+header nav .active::before {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 4px;
+  background-color: var(--primary);
+  position: absolute;
+  bottom: -32px;
+}
