@@ -1,16 +1,16 @@
 import { Button } from "#/components/ui/button";
 import { Checkbox } from "#/components/ui/checkbox";
 import { Field, FieldError, FieldLabel } from "#/components/ui/field";
-import { Input } from "#/components/ui/input";
 import { signUpSchema } from "#/lib/schemas";
+import type { SignupFormType, UseSignUpProps } from "#/lib/types";
+import { GoogleOneTap } from "@clerk/tanstack-react-start";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Link } from "@tanstack/react-router";
-import { Controller, useForm } from "react-hook-form";
-import { SocialSignUpButton } from "#/components/main/auth/SocialSignUpButton";
-import type { SignupFormType, UseSignUpProps } from "#/lib/types";
 import { Loader2 } from "lucide-react";
+import { Controller, useForm } from "react-hook-form";
 import { toast } from "sonner";
-import { GoogleOneTap } from "@clerk/tanstack-react-start";
+import InputField from "../InputField";
+import SocialAuthButtons from "./SocialAuthButtons";
 
 export default function SignUpForm({ signUp, fetchStatus }: UseSignUpProps) {
   const { handleSubmit, control } = useForm({
@@ -59,185 +59,53 @@ export default function SignUpForm({ signUp, fetchStatus }: UseSignUpProps) {
 
         <form className="space-y-6" onSubmit={handleSubmit(onsubmit)}>
           <div className="flex items-center gap-6">
-            <Controller
+            <InputField
               name="firstName"
               control={control}
-              render={({ field, fieldState }) => (
-                <Field
-                  data-invalid={fieldState.invalid}
-                  className="relative w-full"
-                >
-                  <FieldLabel
-                    htmlFor={field.name}
-                    className="absolute -top-2.25 left-3 w-fit! bg-white px-1 text-sm font-normal"
-                  >
-                    First Name
-                  </FieldLabel>
-                  <Input
-                    {...field}
-                    id={field.name}
-                    aria-invalid={fieldState.invalid}
-                    placeholder="First name"
-                    className="h-14 w-full rounded-[4px] border-[#79747E] px-4"
-                  />
-
-                  {fieldState.invalid && (
-                    <FieldError errors={[fieldState.error]} />
-                  )}
-                </Field>
-              )}
+              label="First Name"
+              placeholder="First name"
             />
 
-            <Controller
+            <InputField
               name="lastName"
               control={control}
-              render={({ field, fieldState }) => (
-                <Field
-                  data-invalid={fieldState.invalid}
-                  className="relative w-full"
-                >
-                  <FieldLabel
-                    htmlFor={field.name}
-                    className="absolute -top-2.25 left-3 w-fit! bg-white px-1 text-sm font-normal"
-                  >
-                    Last Name
-                  </FieldLabel>
-                  <Input
-                    {...field}
-                    id={field.name}
-                    aria-invalid={fieldState.invalid}
-                    placeholder="Last name"
-                    className="h-14 w-full rounded-[4px] border-[#79747E] px-4"
-                  />
-
-                  {fieldState.invalid && (
-                    <FieldError errors={[fieldState.error]} />
-                  )}
-                </Field>
-              )}
+              label="Last Name"
+              placeholder="Last name"
             />
           </div>
 
           <div className="flex items-center gap-6">
-            <Controller
+            <InputField
               name="email"
               control={control}
-              render={({ field, fieldState }) => (
-                <Field
-                  data-invalid={fieldState.invalid}
-                  className="relative w-full"
-                >
-                  <FieldLabel
-                    htmlFor={field.name}
-                    className="absolute -top-2.25 left-3 w-fit! bg-white px-1 text-sm font-normal"
-                  >
-                    Email Address
-                  </FieldLabel>
-                  <Input
-                    {...field}
-                    id={field.name}
-                    type="email"
-                    aria-invalid={fieldState.invalid}
-                    placeholder="john.doe@gmail.com"
-                    className="h-14 w-full rounded-[4px] border-[#79747E] px-4"
-                  />
-
-                  {fieldState.invalid && (
-                    <FieldError errors={[fieldState.error]} />
-                  )}
-                </Field>
-              )}
+              label="Email Address"
+              placeholder="john.doe@gmail.com"
+              type="email"
             />
 
-            <Controller
+            <InputField
               name="phoneNumber"
               control={control}
-              render={({ field, fieldState }) => (
-                <Field
-                  data-invalid={fieldState.invalid}
-                  className="relative w-full"
-                >
-                  <FieldLabel
-                    htmlFor={field.name}
-                    className="absolute -top-2.25 left-3 w-fit! bg-white px-1 text-sm font-normal"
-                  >
-                    Phone Number
-                  </FieldLabel>
-                  <Input
-                    {...field}
-                    id={field.name}
-                    type="number"
-                    aria-invalid={fieldState.invalid}
-                    placeholder="phone number"
-                    className="h-14 w-full rounded-[4px] border-[#79747E] px-4"
-                  />
-
-                  {fieldState.invalid && (
-                    <FieldError errors={[fieldState.error]} />
-                  )}
-                </Field>
-              )}
+              label="Phone Number"
+              placeholder="Phone Number"
+              type="number"
             />
           </div>
 
-          <Controller
+          <InputField
             name="password"
             control={control}
-            render={({ field, fieldState }) => (
-              <Field
-                data-invalid={fieldState.invalid}
-                className="relative w-full"
-              >
-                <FieldLabel
-                  htmlFor={field.name}
-                  className="absolute -top-2.25 left-3 w-fit! bg-white px-1 text-sm font-normal"
-                >
-                  Password
-                </FieldLabel>
-                <Input
-                  {...field}
-                  id={field.name}
-                  type="password"
-                  aria-invalid={fieldState.invalid}
-                  placeholder="password"
-                  className="h-14 w-full rounded-[4px] border-[#79747E] px-4"
-                />
-
-                {fieldState.invalid && (
-                  <FieldError errors={[fieldState.error]} />
-                )}
-              </Field>
-            )}
+            label="Password"
+            placeholder="Password"
+            type="password"
           />
 
-          <Controller
+          <InputField
             name="confirmPassword"
             control={control}
-            render={({ field, fieldState }) => (
-              <Field
-                data-invalid={fieldState.invalid}
-                className="relative w-full"
-              >
-                <FieldLabel
-                  htmlFor={field.name}
-                  className="absolute -top-2.25 left-3 w-fit! bg-white px-1 text-sm font-normal"
-                >
-                  Confirm Password
-                </FieldLabel>
-                <Input
-                  {...field}
-                  id={field.name}
-                  type="password"
-                  aria-invalid={fieldState.invalid}
-                  placeholder="confirm password"
-                  className="h-14 w-full rounded-[4px] border-[#79747E] px-4"
-                />
-
-                {fieldState.invalid && (
-                  <FieldError errors={[fieldState.error]} />
-                )}
-              </Field>
-            )}
+            label="Confirm Password"
+            placeholder="Confirm Password"
+            type="password"
           />
 
           <Controller
@@ -309,19 +177,7 @@ export default function SignUpForm({ signUp, fetchStatus }: UseSignUpProps) {
             <div className="bg-foreground/25 h-0.25 w-full"></div>
           </div>
 
-          <div className="flex items-center gap-4">
-            <SocialSignUpButton strategy="oauth_facebook">
-              <img src="/facebook.svg" alt="facebook" className="size-6" />
-            </SocialSignUpButton>
-
-            <SocialSignUpButton strategy="oauth_google">
-              <img src="/google.svg" alt="google" className="size-6" />
-            </SocialSignUpButton>
-
-            <div className="border-primary hover:bg-primary/15 flex h-14 w-full cursor-pointer items-center justify-center rounded-sm border transition-all">
-              <img src="/apple.svg" alt="apple" className="size-6" />
-            </div>
-          </div>
+          <SocialAuthButtons />
         </div>
       </div>
     </>

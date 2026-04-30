@@ -2,7 +2,6 @@ import { Button } from "#/components/ui/button";
 import { Field, FieldError, FieldLabel } from "#/components/ui/field";
 import { Input } from "#/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Link, useNavigate, useRouter } from "@tanstack/react-router";
 import { ChevronLeft, Loader2 } from "lucide-react";
 import { useForm } from "react-hook-form";
 import z from "zod";

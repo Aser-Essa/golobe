@@ -38,7 +38,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
         <HeadContent />
       </head>
       <body>
-        <Toaster />
+        <Toaster position="top-center" />
         <ClerkProvider>{children}</ClerkProvider>
         <TanStackDevtools
           config={{

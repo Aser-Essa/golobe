@@ -1,10 +1,16 @@
 import { Link } from "@tanstack/react-router";
 import { BedDouble, Heart } from "lucide-react";
 import Logo from "./Logo";
-import { Show, SignInButton, SignUpButton } from "@clerk/tanstack-react-start";
 import { Button } from "../ui/button";
+import {
+  Show,
+  SignInButton,
+  SignUpButton,
+  useAuth,
+} from "@clerk/tanstack-react-start";
 
 export default function Header() {
+  const { signOut } = useAuth();
   return (
     <>
       <header className="fixed top-0 left-0 flex h-22 w-full items-center justify-between bg-white/50 px-26 py-5 backdrop-blur-md">
@@ -15,6 +21,13 @@ export default function Header() {
           </Link>
         </nav>
         <Logo />
+
+        <button
+          onClick={async () => await signOut().then(() => {})}
+          className="border-primary hover:bg-primary/15 flex h-14 cursor-pointer items-center justify-center rounded-sm border transition-all"
+        >
+          Logout
+        </button>
         <Show when={"signed-out"}>
           <div className="flex items-center gap-4">
             <SignInButton>

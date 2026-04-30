@@ -1,6 +1,6 @@
 import ForgotPasswordForm from "#/components/main/auth/ForgotPasswordForm";
+import ForgotPasswordVerifyForm from "#/components/main/auth/ForgotPasswordVerifyForm";
 import ResetPasswordForm from "#/components/main/auth/ResetPasswordForm";
-import VerifyForm from "#/components/main/auth/VerifyForm";
 import { useSignIn } from "@clerk/tanstack-react-start";
 import { createFileRoute } from "@tanstack/react-router";
 import { toast } from "sonner";
@@ -21,23 +21,12 @@ function RouteComponent() {
     }
   }
 
-  async function handleVerify(data: { code: string }) {
-    const { error } = await signIn.resetPasswordEmailCode.verifyCode({
-      code: data.code,
-    });
-
-    if (error) {
-      toast.error(error.message);
-      await sendEmailCode();
-    }
-  }
-
   if (signIn.status === "needs_first_factor") {
     return (
-      <VerifyForm
-        handleVerify={handleVerify}
+      <ForgotPasswordVerifyForm
         sendEmailCode={sendEmailCode}
         fetchStatus={fetchStatus}
+        signIn={signIn}
       />
     );
   }

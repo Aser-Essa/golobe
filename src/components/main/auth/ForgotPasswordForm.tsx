@@ -1,7 +1,5 @@
-import { SocialSignUpButton } from "#/components/main/auth/SocialSignUpButton";
+import { SocialAuthButton } from "#/components/main/auth/SocialAuthButton";
 import { Button } from "#/components/ui/button";
-import { Field, FieldError, FieldLabel } from "#/components/ui/field";
-import { Input } from "#/components/ui/input";
 import { forgotPasswordSchema } from "#/lib/schemas";
 import type {
   ForgotPasswordFormProps,
@@ -9,8 +7,9 @@ import type {
 } from "#/lib/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2 } from "lucide-react";
-import { Controller, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { toast } from "sonner";
+import InputField from "../InputField";
 
 export default function ForgotPasswordForm({
   fetchStatus,
@@ -50,34 +49,12 @@ export default function ForgotPasswordForm({
         </div>
 
         <form className="space-y-6" onSubmit={handleSubmit(onsubmit)}>
-          <Controller
+          <InputField
             name="email"
             control={control}
-            render={({ field, fieldState }) => (
-              <Field
-                data-invalid={fieldState.invalid}
-                className="relative w-full"
-              >
-                <FieldLabel
-                  htmlFor={field.name}
-                  className="absolute -top-2.25 left-3 w-fit! bg-white px-1 text-sm font-normal"
-                >
-                  Email Address
-                </FieldLabel>
-                <Input
-                  {...field}
-                  id={field.name}
-                  type="email"
-                  aria-invalid={fieldState.invalid}
-                  placeholder="john.doe@gmail.com"
-                  className="h-14 w-full rounded-[4px] border-[#79747E] px-4"
-                />
-
-                {fieldState.invalid && (
-                  <FieldError errors={[fieldState.error]} />
-                )}
-              </Field>
-            )}
+            label="Email Address"
+            placeholder="john.doe@gmail.com"
+            type="email"
           />
 
           <Button type="submit" className="mt-4 h-12 w-full">
@@ -102,13 +79,13 @@ export default function ForgotPasswordForm({
           </div>
 
           <div className="flex items-center gap-4">
-            <SocialSignUpButton strategy="oauth_facebook">
+            <SocialAuthButton strategy="oauth_facebook">
               <img src="/facebook.svg" alt="facebook" className="size-6" />
-            </SocialSignUpButton>
+            </SocialAuthButton>
 
-            <SocialSignUpButton strategy="oauth_google">
+            <SocialAuthButton strategy="oauth_google">
               <img src="/google.svg" alt="google" className="size-6" />
-            </SocialSignUpButton>
+            </SocialAuthButton>
 
             <div className="border-primary hover:bg-primary/15 flex h-14 w-full cursor-pointer items-center justify-center rounded-sm border transition-all">
               <img src="/apple.svg" alt="apple" className="size-6" />

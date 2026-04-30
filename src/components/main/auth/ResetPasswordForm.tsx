@@ -1,14 +1,14 @@
 import { Button } from "#/components/ui/button";
-import { Field, FieldError, FieldLabel } from "#/components/ui/field";
-import { Input } from "#/components/ui/input";
 import { resetPasswordSchema } from "#/lib/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Controller, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 
 import type { ResetPasswordFormType } from "#/lib/types";
 import { useSignIn } from "@clerk/tanstack-react-start";
 import { Loader2 } from "lucide-react";
 import { toast } from "sonner";
+import InputField from "../InputField";
+import { useRouter } from "@tanstack/react-router";
 
 export default function ResetPasswordForm() {
   const { signIn, fetchStatus } = useSignIn();
@@ -21,6 +21,8 @@ export default function ResetPasswordForm() {
     },
   });
 
+  const router = useRouter();
+
   async function onsubmit(data: ResetPasswordFormType) {
     const { error } = await signIn.resetPasswordEmailCode.submitPassword({
       password: data.password,
@@ -28,7 +30,12 @@ export default function ResetPasswordForm() {
 
     if (error) {
       toast.error(error.message);
+      return;
     }
+
+    toast.success("Password reset successfully");
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+    router.navigate({ to: "/", reloadDocument: true });
   }
 
   return (
@@ -42,60 +49,20 @@ export default function ResetPasswordForm() {
       </div>
 
       <form className="space-y-6" onSubmit={handleSubmit(onsubmit)}>
-        <Controller
+        <InputField
           name="password"
           control={control}
-          render={({ field, fieldState }) => (
-            <Field
-              data-invalid={fieldState.invalid}
-              className="relative w-full"
-            >
-              <FieldLabel
-                htmlFor={field.name}
-                className="absolute -top-2.25 left-3 w-fit! bg-white px-1 text-sm font-normal"
-              >
-                Password
-              </FieldLabel>
-              <Input
-                {...field}
-                id={field.name}
-                type="password"
-                aria-invalid={fieldState.invalid}
-                placeholder="password"
-                className="h-14 w-full rounded-[4px] border-[#79747E] px-4"
-              />
-
-              {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
-            </Field>
-          )}
+          label="Password"
+          placeholder="Password"
+          type="password"
         />
 
-        <Controller
+        <InputField
           name="confirmPassword"
           control={control}
-          render={({ field, fieldState }) => (
-            <Field
-              data-invalid={fieldState.invalid}
-              className="relative w-full"
-            >
-              <FieldLabel
-                htmlFor={field.name}
-                className="absolute -top-2.25 left-3 w-fit! bg-white px-1 text-sm font-normal"
-              >
-                Confirm Password
-              </FieldLabel>
-              <Input
-                {...field}
-                id={field.name}
-                type="password"
-                aria-invalid={fieldState.invalid}
-                placeholder="confirm password"
-                className="h-14 w-full rounded-[4px] border-[#79747E] px-4"
-              />
-
-              {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
-            </Field>
-          )}
+          label="Confirm Password"
+          placeholder="Confirm Password"
+          type="password"
         />
 
         <Button type="submit" className="mt-4 h-12 w-full">

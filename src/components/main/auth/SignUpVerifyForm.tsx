@@ -36,6 +36,7 @@ export default function SignUpVerifyForm({
           }
         },
       });
+      toast.success("You have successfully signed up");
     } else {
       toast.error("Sign up attempt not complete");
       console.error("Sign-up attempt not complete:", signUp);

@@ -6,7 +6,7 @@ type SocialSignUpProps = {
   children: React.ReactNode;
 };
 
-export function SocialSignUpButton({ strategy, children }: SocialSignUpProps) {
+export function SocialAuthButton({ strategy, children }: SocialSignUpProps) {
   const { signUp } = useSignUp();
   const [loading, setLoading] = useState(false);
 

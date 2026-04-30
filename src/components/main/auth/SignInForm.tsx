@@ -1,18 +1,18 @@
 import { Button, buttonVariants } from "#/components/ui/button";
 import { Checkbox } from "#/components/ui/checkbox";
 import { Field, FieldError, FieldLabel } from "#/components/ui/field";
-import { Input } from "#/components/ui/input";
 import { signInSchema } from "#/lib/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Link } from "@tanstack/react-router";
+import { Link, useNavigate, useRouter } from "@tanstack/react-router";
 import { Controller, useForm } from "react-hook-form";
 
-import { SocialSignUpButton } from "#/components/main/auth/SocialSignUpButton";
+import type { SignInFormType, UseSignInProps } from "#/lib/types";
 import { cn } from "#/lib/utils";
 import { GoogleOneTap } from "@clerk/tanstack-react-start";
 import { Loader2 } from "lucide-react";
 import { toast } from "sonner";
-import type { SignInFormType, UseSignInProps } from "#/lib/types";
+import InputField from "../InputField";
+import SocialAuthButtons from "./SocialAuthButtons";
 
 export default function SignInForm({ signIn, fetchStatus }: UseSignInProps) {
   const { handleSubmit, control } = useForm({
@@ -24,6 +24,8 @@ export default function SignInForm({ signIn, fetchStatus }: UseSignInProps) {
     },
   });
 
+  const navigate = useNavigate();
+
   async function onsubmit(data: SignInFormType) {
     await signIn.reset();
 
@@ -34,7 +36,13 @@ export default function SignInForm({ signIn, fetchStatus }: UseSignInProps) {
 
     if (error) {
       toast.error(error.message);
+      return;
     }
+
+    toast.success("You have successfully logged in");
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+
+    navigate({ to: "/", reloadDocument: true });
   }
 
   return (
@@ -48,65 +56,22 @@ export default function SignInForm({ signIn, fetchStatus }: UseSignInProps) {
         </div>
 
         <form className="space-y-6" onSubmit={handleSubmit(onsubmit)}>
-          <Controller
-            name="email"
+          <InputField
+            label=" Email Address"
             control={control}
-            render={({ field, fieldState }) => (
-              <Field
-                data-invalid={fieldState.invalid}
-                className="relative w-full"
-              >
-                <FieldLabel
-                  htmlFor={field.name}
-                  className="absolute -top-2.25 left-3 w-fit! bg-white px-1 text-sm font-normal"
-                >
-                  Email Address
-                </FieldLabel>
-                <Input
-                  {...field}
-                  id={field.name}
-                  type="email"
-                  aria-invalid={fieldState.invalid}
-                  placeholder="john.doe@gmail.com"
-                  className="h-14 w-full rounded-[4px] border-[#79747E] px-4"
-                />
-
-                {fieldState.invalid && (
-                  <FieldError errors={[fieldState.error]} />
-                )}
-              </Field>
-            )}
+            name="email"
+            placeholder="john.doe@gmail.com"
+            type="email"
           />
 
-          <Controller
+          <InputField
             name="password"
             control={control}
-            render={({ field, fieldState }) => (
-              <Field
-                data-invalid={fieldState.invalid}
-                className="relative w-full"
-              >
-                <FieldLabel
-                  htmlFor={field.name}
-                  className="absolute -top-2.25 left-3 w-fit! bg-white px-1 text-sm font-normal"
-                >
-                  Password
-                </FieldLabel>
-                <Input
-                  {...field}
-                  id={field.name}
-                  type="password"
-                  aria-invalid={fieldState.invalid}
-                  placeholder="password"
-                  className="h-14 w-full rounded-[4px] border-[#79747E] px-4"
-                />
-
-                {fieldState.invalid && (
-                  <FieldError errors={[fieldState.error]} />
-                )}
-              </Field>
-            )}
+            label="Password"
+            placeholder="Password"
+            type="password"
           />
+
           <div className="flex h-6 items-center justify-between">
             <Controller
               name="rememberMe"
@@ -181,19 +146,7 @@ export default function SignInForm({ signIn, fetchStatus }: UseSignInProps) {
             <div className="bg-foreground/25 h-0.25 w-full"></div>
           </div>
 
-          <div className="flex items-center gap-4">
-            <SocialSignUpButton strategy="oauth_facebook">
-              <img src="/facebook.svg" alt="facebook" className="size-6" />
-            </SocialSignUpButton>
-
-            <SocialSignUpButton strategy="oauth_google">
-              <img src="/google.svg" alt="google" className="size-6" />
-            </SocialSignUpButton>
-
-            <div className="border-primary hover:bg-primary/15 flex h-14 w-full cursor-pointer items-center justify-center rounded-sm border transition-all">
-              <img src="/apple.svg" alt="apple" className="size-6" />
-            </div>
-          </div>
+          <SocialAuthButtons />
         </div>
       </div>
     </>
