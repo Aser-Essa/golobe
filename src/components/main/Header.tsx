@@ -13,7 +13,7 @@ export default function Header() {
   const { signOut } = useAuth();
   return (
     <>
-      <header className="fixed top-0 left-0 flex h-22 w-full items-center justify-between bg-white/50 px-26 py-5 backdrop-blur-md">
+      <header className="box-shadow-sm fixed top-0 left-0 z-2000 flex h-22 w-full items-center justify-between bg-white/50 px-26 py-5 backdrop-blur-md">
         <nav>
           <Link to="/" className="relative flex items-center gap-1">
             <BedDouble />
