@@ -6,8 +6,8 @@ import {
 import { useNavigate, useSearch } from "@tanstack/react-router";
 import { ChevronUp } from "lucide-react";
 import { useState } from "react";
-import { Slider } from "../../../ui/slider";
 import type { FilterSearchParams } from "#/lib/types";
+import { Slider } from "#/components/ui/slider";
 
 export default function PriceFilter() {
   const [isOpen, setIsOpen] = useState(true);

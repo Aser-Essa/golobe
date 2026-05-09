@@ -1,7 +1,7 @@
 import type { FilterSearchParams } from "#/lib/types";
 import { Building2 } from "lucide-react";
-import HotelSearchBar from "../hotels/detail/Filters/HotelSearchBar";
 import { Button } from "../ui/button";
+import HotelSearchBar from "./Filters/HotelSearchBar";
 
 export default function HotelSearchWidget({
   searchParams,

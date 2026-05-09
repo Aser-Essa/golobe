@@ -1,4 +1,4 @@
-import { getRatingLabel } from "#/lib/constants";
+import { getRatingLabel } from "#/lib/utils";
 import { Separator } from "../../ui/separator";
 import type { HotelType } from "#/lib/types";
 import ReviewCard from "./ReviewCard";

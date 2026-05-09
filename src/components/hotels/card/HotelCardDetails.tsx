@@ -1,5 +1,5 @@
-import { getRatingLabel } from "#/lib/constants";
 import type { HotelType } from "#/lib/types";
+import { getRatingLabel } from "#/lib/utils";
 import { Coffee, MapPin, Star } from "lucide-react";
 
 export default function HotelCardDetails({ hotel }: { hotel: HotelType }) {

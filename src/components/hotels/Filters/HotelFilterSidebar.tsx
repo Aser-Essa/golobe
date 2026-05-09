@@ -1,4 +1,4 @@
-import { Separator } from "../../../ui/separator";
+import { Separator } from "#/components/ui/separator";
 import AmenitiesFilter from "./AmenitiesFilter";
 import FreebiesFilter from "./FreebiesFilter";
 import PriceFilter from "./PriceFilter";

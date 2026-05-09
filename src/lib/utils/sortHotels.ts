@@ -5,7 +5,7 @@ export function sortByPrice({
   order,
 }: {
   data: HotelType[];
-  order: string;
+  order: "asc" | "desc";
 }) {
   return [...data].sort((a, b) => {
     const minA = Math.min(...a.rooms.map((room) => room.price_per_night));

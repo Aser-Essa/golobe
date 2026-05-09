@@ -1,4 +1,4 @@
-import { getRatingLabel } from "#/lib/constants";
+import { getRatingLabel } from "#/lib/utils";
 import type { HotelType } from "#/lib/types";
 import { Sparkles } from "lucide-react";
 
