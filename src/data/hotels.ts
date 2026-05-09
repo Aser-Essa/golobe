@@ -1,23 +1,124 @@
 import { filterSearchParamsSchema } from "#/lib/schemas";
 import { supabase } from "#/lib/supabase";
+import {
+  filterByAmenities,
+  filterByAvailable,
+  filterByFreebies,
+  filterByPrice,
+  filterByRoomsGuests,
+  sortByPrice,
+} from "#/lib/utils";
 import { createServerFn } from "@tanstack/react-start";
 import z from "zod";
 
 export const getHotels = createServerFn({ method: "GET" })
   .inputValidator(filterSearchParamsSchema)
   .handler(async ({ data }) => {
-    const { data: hotelData } = await supabase.from("hotels").select(
-      `*,  
-        rooms!inner(*),
-        rooms_count:rooms(count),
+    const {
+      destination,
+      rating,
+      hotelType,
+      minPrice,
+      maxPrice,
+      amenities,
+      freebies,
+      checkIn,
+      checkOut,
+      rooms,
+      guests,
+      sortBy = "avg_rating-desc",
+    } = data;
+
+    let query = supabase
+      .from("hotels")
+      .select(
+        `*,  
+        rooms!inner(*,bookings(*)),
         amenities:hotel_amenity_map!inner(
           amenities!inner(*)
         ),
         hotel_images:hotel_images(*)
         `,
-    );
+      )
+      .eq("is_active", true);
 
-    return hotelData;
+    if (destination?.trim()) {
+      const d = destination.trim();
+      query = query.or(
+        `city.ilike.%${d}%,country.ilike.%${d}%,address.ilike.%${d}%,name.ilike.%${d}%`,
+      );
+    }
+
+    if (rating) {
+      query = query.gte("star_rating", rating);
+    }
+
+    if (hotelType) {
+      query = query.eq("hotel_type", hotelType);
+    }
+
+    if (sortBy && !sortBy.includes("price")) {
+      const [column, order] = sortBy.split("-");
+      query = query.order(column, { ascending: order === "asc" });
+    }
+
+    const { data: hotelsData, error } = await query;
+
+    if (error) {
+      throw new Error(error.message);
+    }
+
+    let filteredData = hotelsData;
+
+    if (minPrice || maxPrice) {
+      filteredData = filterByPrice({
+        minPrice,
+        maxPrice,
+        data: filteredData,
+      });
+    }
+
+    if (amenities?.length) {
+      filteredData = filterByAmenities({
+        data: filteredData,
+        amenities,
+      });
+    }
+
+    if (freebies?.length) {
+      filteredData = filterByFreebies({
+        data: filteredData,
+        freebies,
+      });
+    }
+
+    if (checkIn && checkOut) {
+      filteredData = filterByAvailable({
+        data: filteredData,
+        checkIn,
+        checkOut,
+        rooms,
+        guests,
+      });
+    }
+
+    if (rooms && guests && !checkIn && !checkOut) {
+      filteredData = filterByRoomsGuests({
+        data: filteredData,
+        rooms,
+        guests,
+      });
+    }
+
+    if (sortBy && sortBy.includes("price")) {
+      const [_, order] = sortBy.split("-");
+      filteredData = sortByPrice({
+        data: filteredData,
+        order,
+      });
+    }
+
+    return filteredData;
   });
 
 export const getHotel = createServerFn({ method: "GET" })

@@ -24,9 +24,9 @@ export default function HotelTypeFilter() {
           variant={"line"}
         >
           <TabsTrigger
-            onClick={() => onClick("hotels")}
-            value="hotels"
-            className="after:bg-primary h-[45px] w-full cursor-pointer! justify-start bg-transparent! p-0! text-start shadow-none! after:bottom-[-18px]! after:h-1!"
+            onClick={() => onClick("hotel")}
+            value="hotel"
+            className="after:bg-primary h-11.25 w-full cursor-pointer! justify-start bg-transparent! p-0! text-start shadow-none! after:-bottom-4.5! after:h-1!"
           >
             <div className="space-y-2">
               <p className="text-base font-semibold text-black"> Hotels</p>
@@ -35,9 +35,9 @@ export default function HotelTypeFilter() {
           </TabsTrigger>
           <Separator orientation="vertical" className="bg-[#D7E2EE]" />
           <TabsTrigger
-            onClick={() => onClick("motels")}
-            value="motels"
-            className="after:bg-primary h-[45px] w-full cursor-pointer! justify-start bg-transparent! p-0! text-start shadow-none! after:bottom-[-18px]! after:h-1!"
+            onClick={() => onClick("motel")}
+            value="motel"
+            className="after:bg-primary h-11.25 w-full cursor-pointer! justify-start bg-transparent! p-0! text-start shadow-none! after:-bottom-4.5! after:h-1!"
           >
             <div className="space-y-2">
               <p className="text-base font-semibold text-black">Motels</p>
@@ -46,9 +46,9 @@ export default function HotelTypeFilter() {
           </TabsTrigger>
           <Separator orientation="vertical" className="bg-[#D7E2EE]" />
           <TabsTrigger
-            onClick={() => onClick("resorts")}
-            value="resorts"
-            className="after:bg-primary h-[45px] w-full cursor-pointer! justify-start bg-transparent! p-0! text-start shadow-none! after:bottom-[-18px]! after:h-1!"
+            onClick={() => onClick("resort")}
+            value="resort"
+            className="after:bg-primary h-11.25 w-full cursor-pointer! justify-start bg-transparent! p-0! text-start shadow-none! after:-bottom-4.5! after:h-1!"
           >
             <div className="space-y-2">
               <p className="text-base font-semibold text-black">Resorts</p>

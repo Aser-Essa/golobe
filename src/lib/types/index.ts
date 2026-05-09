@@ -60,7 +60,7 @@ type UserPublicProfile = {
 };
 
 export interface HotelType extends Tables<"hotels"> {
-  rooms: Array<Tables<"rooms">>;
+  rooms: Array<Tables<"rooms"> & { bookings: Tables<"bookings">[] }>;
   rooms_count: Array<{ count: number }>;
   amenities: Array<{ amenities: Tables<"amenities"> }>;
   hotel_images: Array<Tables<"hotel_images">>;

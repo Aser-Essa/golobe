@@ -68,7 +68,7 @@ export const env = envSchema.parse({
 });
 
 export const filterSearchParamsSchema = z.object({
-  destination: z.string().optional(),
+  destination: z.string().trim().optional(),
   checkIn: z.coerce.string().optional(),
   checkOut: z.coerce.string().optional(),
   rooms: z.coerce.number().int().min(1).max(30).optional(),
@@ -78,8 +78,8 @@ export const filterSearchParamsSchema = z.object({
   rating: z.coerce.number().int().min(1).max(5).optional(),
   freebies: z.array(z.string()).optional(),
   amenities: z.array(z.string()).optional(),
-  hotelType: z.enum(["hotels", "motels", "resorts"]).optional(),
-  sortBy: z.string().optional(),
+  hotelType: z.enum(["hotel", "motel", "resort"]).optional(),
+  sortBy: z.string().trim().optional(),
   page: z.coerce.number().int().min(1).optional(),
 });
 

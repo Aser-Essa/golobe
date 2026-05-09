@@ -21,8 +21,10 @@ export default function HotelSearchBar({
 }) {
   const defaultValues = {
     destination: searchParams.destination || "",
-    checkIn: searchParams.checkIn || new Date(),
-    checkOut: searchParams.checkOut || new Date(),
+    checkIn: searchParams.checkIn ? new Date(searchParams.checkIn) : new Date(),
+    checkOut: searchParams.checkOut
+      ? new Date(searchParams.checkOut)
+      : new Date(),
     rooms: searchParams.rooms || 1,
     guests: searchParams.guests || 1,
   };
@@ -48,6 +50,7 @@ export default function HotelSearchBar({
   }, [checkInDate]);
 
   function onsubmit(data: SearchHotelFormType) {
+    console.log(data);
     navigate({
       to: "/hotels",
       search: (prev) => ({ ...prev, ...data }),

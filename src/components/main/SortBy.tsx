@@ -24,15 +24,19 @@ export default function SortBy() {
 
   return (
     <>
-      <Select defaultValue={sortBy || "recommended"} onValueChange={onChange}>
+      <Select
+        defaultValue={sortBy || "avg_rating-desc"}
+        onValueChange={onChange}
+      >
         <SelectTrigger className="w-full max-w-48 border-none p-0 font-semibold text-black ring-0!">
           <SelectValue placeholder={sortBy || "Recommended"} />
         </SelectTrigger>
         <SelectContent position="popper" align="end">
           <SelectGroup>
-            <SelectItem value="recommended">Recommended</SelectItem>
-            <SelectItem value="cheapest">Cheapest first</SelectItem>
-            <SelectItem value="expensive">Most expensive first</SelectItem>
+            <SelectItem value="avg_rating-desc">Recommended</SelectItem>
+            <SelectItem value="price-asc">Cheapest first</SelectItem>
+            <SelectItem value="price-desc">Most expensive first</SelectItem>
+            <SelectItem value="star_rating-desc">Star rating</SelectItem>
           </SelectGroup>
         </SelectContent>
       </Select>
