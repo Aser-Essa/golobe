@@ -22,8 +22,6 @@ function RouteComponent() {
   const searchParams = Route.useSearch();
   const hotels: HotelType[] = Route.useLoaderData();
 
-  console.log(hotels);
-
   return (
     <>
       <div className="box-shadow-sm z-50 space-y-8 rounded-[16px] bg-white px-6 py-8">

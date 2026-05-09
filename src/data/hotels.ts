@@ -59,7 +59,9 @@ export const getHotels = createServerFn({ method: "GET" })
 
     if (sortBy && !sortBy.includes("price")) {
       const [column, order] = sortBy.split("-");
-      query = query.order(column, { ascending: order === "asc" });
+      if (column && order) {
+        query = query.order(column, { ascending: order === "asc" });
+      }
     }
 
     const { data: hotelsData, error } = await query;
@@ -97,12 +99,10 @@ export const getHotels = createServerFn({ method: "GET" })
         data: filteredData,
         checkIn,
         checkOut,
-        rooms,
-        guests,
       });
     }
 
-    if (rooms && guests && !checkIn && !checkOut) {
+    if (rooms && guests) {
       filteredData = filterByRoomsGuests({
         data: filteredData,
         rooms,

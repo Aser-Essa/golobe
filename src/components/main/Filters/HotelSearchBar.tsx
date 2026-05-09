@@ -50,7 +50,6 @@ export default function HotelSearchBar({
   }, [checkInDate]);
 
   function onsubmit(data: SearchHotelFormType) {
-    console.log(data);
     navigate({
       to: "/hotels",
       search: (prev) => ({ ...prev, ...data }),

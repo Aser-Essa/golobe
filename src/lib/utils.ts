@@ -65,17 +65,17 @@ export function filterByAvailable({
   data,
   checkIn,
   checkOut,
-  rooms,
-  guests,
 }: {
   data: HotelType[];
   checkIn: string;
   checkOut: string;
-  rooms: number | undefined;
-  guests: number | undefined;
 }) {
   const reqIn = new Date(checkIn).getTime();
   const reqOut = new Date(checkOut).getTime();
+
+  if (isNaN(reqIn) || isNaN(reqOut)) {
+    throw new Error("Invalid check-in or check-out date");
+  }
 
   const hotelsWithAvailableRooms = data
     .map((hotel) => ({
@@ -91,14 +91,6 @@ export function filterByAvailable({
       ),
     }))
     .filter((hotel) => hotel.rooms.length > 0);
-
-  if (rooms && guests) {
-    return filterByRoomsGuests({
-      data: hotelsWithAvailableRooms,
-      rooms,
-      guests,
-    });
-  }
 
   return hotelsWithAvailableRooms;
 }
