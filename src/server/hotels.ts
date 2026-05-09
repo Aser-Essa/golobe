@@ -112,12 +112,10 @@ export const getHotels = createServerFn({ method: "GET" })
 
     if (sortBy && sortBy.includes("price")) {
       const [_, order] = sortBy.split("-");
-      if (order === "desc" || order === "asc") {
-        filteredData = sortByPrice({
-          data: filteredData,
-          order,
-        });
-      }
+      filteredData = sortByPrice({
+        data: filteredData,
+        order: order as "asc" | "desc",
+      });
     }
 
     return filteredData;
