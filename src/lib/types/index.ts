@@ -1,14 +1,16 @@
 import type { useSignIn, useSignUp } from "@clerk/tanstack-react-start";
 import type {
   filterSearchParamsSchema,
-  forgotPasswordSchema,
   hotelSearchWidgetSchema,
+} from "../schemas/search";
+import type z from "zod";
+import type { Tables } from "./supabase";
+import type {
+  forgotPasswordSchema,
   resetPasswordSchema,
   signInSchema,
   signUpSchema,
 } from "../schemas";
-import type z from "zod";
-import type { Tables } from "./supabase";
 
 export type SignupFormType = z.infer<typeof signUpSchema>;
 
@@ -35,21 +37,6 @@ export interface ForgotPasswordFormProps {
 }
 
 export type SearchHotelFormType = z.infer<typeof hotelSearchWidgetSchema>;
-
-// export type FilterSearchParams = {
-//   destination?: string;
-//   checkIn?: Date;
-//   checkOut?: Date;
-//   rooms?: number;
-//   guests?: number;
-//   minPrice?: number;
-//   maxPrice?: number;
-//   rating?: string;
-//   freebies?: string[];
-//   amenities?: string[];
-//   hotelType?: "hotels" | "motels" | "resorts";
-//   sortBy?: string;
-// };
 
 export type FilterSearchParams = z.infer<typeof filterSearchParamsSchema>;
 

@@ -1,13 +1,13 @@
-import Amenities from "#/components/main/Amenities";
-import AvailableRooms from "#/components/main/AvailableRooms";
-import HotelBreadCrumb from "#/components/main/HotelBreadCrumb";
-import HotelHeader from "#/components/main/HotelHeader";
-import HotelImages from "#/components/main/HotelImages";
-import HotelOverView from "#/components/main/HotelOverView";
-import MapAndLocation from "#/components/main/MapAndLocation";
-import Reviews from "#/components/main/Reviews";
+import Amenities from "#/components/hotels/detail/Amenities";
+import AvailableRooms from "#/components/hotels/detail/AvailableRooms";
+import HotelBreadCrumb from "#/components/hotels/detail/HotelBreadCrumb";
+import HotelHeader from "#/components/hotels/detail/HotelHeader";
+import HotelImages from "#/components/hotels/detail/HotelImages";
+import HotelOverView from "#/components/hotels/detail/HotelOverView";
+import MapAndLocation from "#/components/hotels/detail/MapAndLocation";
+import Reviews from "#/components/hotels/detail/Reviews";
 import { Separator } from "#/components/ui/separator";
-import { getHotel } from "#/data/hotels";
+import { getHotel } from "#/server/hotels";
 import type { HotelType } from "#/lib/types";
 import { createFileRoute, redirect } from "@tanstack/react-router";
 
@@ -25,8 +25,6 @@ export const Route = createFileRoute("/_main/hotels/$/id/")({
 
 function RouteComponent() {
   const hotel: HotelType = Route.useLoaderData()[0];
-
-  console.log(hotel);
 
   const isRenderHotelOverView =
     !!hotel.description ||

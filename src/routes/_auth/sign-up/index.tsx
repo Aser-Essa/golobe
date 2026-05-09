@@ -1,5 +1,5 @@
-import SignUpForm from "#/components/main/auth/SignUpForm";
-import SignUpVerifyForm from "#/components/main/auth/SignUpVerifyForm";
+import SignUpForm from "#/components/auth/SignUpForm";
+import SignUpVerifyForm from "#/components/auth/SignUpVerifyForm";
 import { useSignUp } from "@clerk/tanstack-react-start";
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect } from "react";

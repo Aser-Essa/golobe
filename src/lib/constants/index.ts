@@ -45,23 +45,3 @@ export const amenityIcons = {
   // room
   ac: AirVent,
 } as const;
-
-export const ratingLabels = {
-  0: "No Rating",
-  1: "Poor",
-  2: "Fair",
-  3: "Good",
-  4: "Very Good",
-  4.5: "Excellent",
-  5: "Exceptional",
-};
-
-export function getRatingLabel(avg: number) {
-  if (avg >= 4.8) return "Exceptional";
-  if (avg >= 4.5) return "Excellent";
-  if (avg >= 4.0) return "Very Good";
-  if (avg >= 3.0) return "Good";
-  if (avg >= 2.0) return "Fair";
-  if (avg > 0) return "Poor";
-  return "No Rating";
-}

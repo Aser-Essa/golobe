@@ -1,8 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-import SignInForm from "#/components/main/auth/SignInForm";
 import { useSignIn } from "@clerk/tanstack-react-start";
 import { useEffect } from "react";
+import SignInForm from "#/components/auth/SignInForm";
 
 export const Route = createFileRoute("/_auth/sign-in/")({
   component: RouteComponent,

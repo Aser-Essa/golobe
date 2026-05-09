@@ -1,6 +1,6 @@
-import ForgotPasswordForm from "#/components/main/auth/ForgotPasswordForm";
-import ForgotPasswordVerifyForm from "#/components/main/auth/ForgotPasswordVerifyForm";
-import ResetPasswordForm from "#/components/main/auth/ResetPasswordForm";
+import ForgotPasswordForm from "#/components/auth/ForgotPasswordForm";
+import ForgotPasswordVerifyForm from "#/components/auth/ForgotPasswordVerifyForm";
+import ResetPasswordForm from "#/components/auth/ResetPasswordForm";
 import { useSignIn } from "@clerk/tanstack-react-start";
 import { createFileRoute } from "@tanstack/react-router";
 import { toast } from "sonner";

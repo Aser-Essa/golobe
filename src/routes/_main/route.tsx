@@ -1,4 +1,4 @@
-import Header from "#/components/main/Header";
+import Header from "#/components/layout/Header";
 import { createFileRoute, Outlet } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/_main")({
