@@ -17,7 +17,7 @@ export default function SortBy() {
 
   function onChange(value: FilterSearchParams["sortBy"]) {
     navigate({
-      search: (prev) => ({ ...prev, sortBy: value }),
+      search: (prev) => ({ ...prev, sortBy: value, page: 1 }),
       resetScroll: false,
     });
   }

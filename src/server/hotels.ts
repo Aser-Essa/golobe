@@ -1,3 +1,4 @@
+import { HOTELS_PER_PAGE } from "#/lib/constants";
 import { filterSearchParamsSchema } from "#/lib/schemas/search";
 import { supabase } from "#/lib/supabase";
 import {
@@ -27,6 +28,7 @@ export const getHotels = createServerFn({ method: "GET" })
       rooms,
       guests,
       sortBy = "avg_rating-desc",
+      page = 1,
     } = data;
 
     let query = supabase
@@ -118,7 +120,24 @@ export const getHotels = createServerFn({ method: "GET" })
       });
     }
 
-    return filteredData;
+    const totalPages = Math.ceil(filteredData.length / HOTELS_PER_PAGE);
+
+    const safePage = Math.max(1, Math.min(page, totalPages));
+
+    const from = (safePage - 1) * HOTELS_PER_PAGE;
+    const to = safePage * HOTELS_PER_PAGE;
+
+    const safeTo = Math.min(to, filteredData.length);
+
+    const paginatedData = filteredData.slice(from, safeTo);
+
+    return {
+      hotels: paginatedData,
+      totalLength: filteredData.length,
+      totalPages,
+      from: from + 1,
+      to: safeTo,
+    };
   });
 
 export const getHotel = createServerFn({ method: "GET" })

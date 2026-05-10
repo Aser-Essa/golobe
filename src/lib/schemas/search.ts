@@ -21,5 +21,5 @@ export const filterSearchParamsSchema = z.object({
   amenities: z.array(z.string()).optional(),
   hotelType: z.enum(["hotel", "motel", "resort"]).optional(),
   sortBy: z.string().trim().optional(),
-  page: z.coerce.number().int().min(1).optional(),
+  page: z.coerce.number().int().min(1).catch(1).default(1),
 });

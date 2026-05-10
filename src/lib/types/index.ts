@@ -54,3 +54,11 @@ export interface HotelType extends Tables<"hotels"> {
   hotel_tags: Array<Tables<"hotel_tags">>;
   reviews: Array<Tables<"reviews"> & { user: UserPublicProfile }>;
 }
+
+export type PageButtonItem = number | "...";
+
+export type generatePageButtonsParams = {
+  page: number;
+  totalPages: number;
+  windowSize: number;
+};

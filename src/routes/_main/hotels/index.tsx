@@ -1,13 +1,13 @@
 import HotelFilterSidebar from "#/components/hotels/Filters/HotelFilterSidebar";
 import HotelSearchBar from "#/components/hotels/Filters/HotelSearchBar";
 import HotelTypeFilter from "#/components/hotels/Filters/HotelTypeFilter";
+import { HotelPagination } from "#/components/hotels/HotelPagination";
 import HotelsList from "#/components/hotels/HotelsList";
 import HotelSortBy from "#/components/hotels/HotelSortBy";
 import { Button } from "#/components/ui/button";
 import { Separator } from "#/components/ui/separator";
-import { getHotels } from "#/server/hotels";
 import { filterSearchParamsSchema } from "#/lib/schemas/search";
-import type { HotelType } from "#/lib/types";
+import { getHotels } from "#/server/hotels";
 import { createFileRoute } from "@tanstack/react-router";
 import { Search } from "lucide-react";
 
@@ -20,7 +20,7 @@ export const Route = createFileRoute("/_main/hotels/")({
 
 function RouteComponent() {
   const searchParams = Route.useSearch();
-  const hotels: HotelType[] = Route.useLoaderData();
+  const { hotels, totalLength, totalPages, from, to } = Route.useLoaderData();
 
   return (
     <>
@@ -44,8 +44,9 @@ function RouteComponent() {
         <Separator orientation="vertical" className="h-100" />
         <div className="w-full space-y-8">
           <HotelTypeFilter />
-          <HotelSortBy totalCount={hotels.length} />
+          <HotelSortBy totalCount={totalLength} from={from} to={to} />
           <HotelsList hotels={hotels} />
+          <HotelPagination totalPages={totalPages} />
         </div>
       </div>
       <div className="h-screen"></div>

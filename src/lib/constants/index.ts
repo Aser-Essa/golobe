@@ -45,3 +45,5 @@ export const amenityIcons = {
   // room
   ac: AirVent,
 } as const;
+
+export const HOTELS_PER_PAGE = 4;
