@@ -28,7 +28,7 @@ export default function MapAndLocation({
             rel="noopener noreferrer"
             className={cn(
               buttonVariants({ variant: "default" }),
-              "ox-4 h-12 rounded-[4px] py-2 text-sm font-semibold",
+              "h-12 rounded-[4px] px-4 py-2 text-sm font-semibold",
             )}
           >
             View on google maps

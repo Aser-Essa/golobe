@@ -9,6 +9,7 @@ type AmenitiesProps = {
 export default function Amenities({ amenities }: AmenitiesProps) {
   let amenitiesArray = amenities.map((amenity) => amenity.amenities);
   const amenitiesLimit = 9;
+  const remainingAmenities = amenities.length - amenitiesLimit;
 
   const [showAllAmenities, setShowAllAmenities] = useState(false);
 
@@ -23,19 +24,19 @@ export default function Amenities({ amenities }: AmenitiesProps) {
   return (
     <>
       <div className="space-y-8">
-        <p className="text-xl font-bold">Available Rooms</p>
+        <p className="text-xl font-bold">Amenities</p>
         <div className="grid max-w-180 grid-cols-2 gap-6">
           {amenitiesArray.map((amenity) => (
             <AmenityItem key={amenity.id} amenity={amenity} />
           ))}
-          <span
-            className="text-salmon cursor-pointer text-base font-semibold"
-            onClick={toggleShowAllAmenities}
-          >
-            {showAllAmenities
-              ? "Show less"
-              : `+${amenities.length - amenitiesLimit} more`}
-          </span>
+          {remainingAmenities !== 0 && (
+            <span
+              className="text-salmon cursor-pointer text-base font-semibold"
+              onClick={toggleShowAllAmenities}
+            >
+              {showAllAmenities ? "Show less" : `+${remainingAmenities} more`}
+            </span>
+          )}
         </div>
       </div>
     </>

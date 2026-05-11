@@ -2,7 +2,7 @@ import type { HotelType } from "#/lib/types";
 
 export default function HotelPrice({ rooms }: { rooms: HotelType["rooms"] }) {
   const prices = rooms.map((room) => room.price_per_night);
-  const minPrice = Math.min(...prices);
+  const minPrice = prices.length > 0 ? Math.min(...prices) : 0;
 
   return (
     <>

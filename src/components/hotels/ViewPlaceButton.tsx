@@ -5,7 +5,12 @@ export default function ViewPlaceButton({ hotelId }: { hotelId: string }) {
   const navigate = useNavigate({ from: "/hotels/" });
 
   function handleNavigate() {
-    navigate({ to: `/hotels/${hotelId}` });
+    navigate({
+      to: `/hotels/${hotelId}`,
+      search: (prev) => ({
+        ...prev,
+      }),
+    });
   }
 
   return (

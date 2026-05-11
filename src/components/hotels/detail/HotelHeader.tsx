@@ -11,7 +11,7 @@ type HotelHeaderProps = {
 
 export default function HotelHeader({ hotel }: HotelHeaderProps) {
   const prices = hotel.rooms.map((room) => room.price_per_night);
-  const minPrice = Math.min(...prices);
+  const minPrice = prices.length > 0 ? Math.min(...prices) : 0;
 
   return (
     <div className="my-8 flex items-start justify-between">

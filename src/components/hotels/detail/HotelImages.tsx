@@ -1,5 +1,5 @@
 import type { Tables } from "#/lib/types/supabase";
-import ViewAllImages from "../ViewAllImages";
+import ViewAllImages from "./ViewAllImages";
 
 type HotelImagesProps = {
   hotel_images: Tables<"hotel_images">[];

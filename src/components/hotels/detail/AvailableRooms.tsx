@@ -1,4 +1,6 @@
-import type { HotelType } from "#/lib/types";
+import type { FilterSearchParams, HotelType } from "#/lib/types";
+import { getAvailableRooms } from "#/lib/utils/filters";
+import { useSearch } from "@tanstack/react-router";
 import { Fragment } from "react/jsx-runtime";
 import { Button } from "../../ui/button";
 import { Separator } from "../../ui/separator";
@@ -8,6 +10,18 @@ type AvailableRoomsProps = {
 };
 
 export default function AvailableRooms({ rooms }: AvailableRoomsProps) {
+  const searchParams: FilterSearchParams = useSearch({
+    from: "/_main/hotels/$/id/",
+  });
+
+  const avaialbleRooms = getAvailableRooms({
+    rooms,
+    checkIn: searchParams.checkIn || new Date().toISOString().split("T")[0],
+    checkOut: searchParams.checkOut || new Date().toISOString().split("T")[0],
+  });
+
+  console.log(avaialbleRooms);
+
   return (
     <>
       <div className="space-y-8">

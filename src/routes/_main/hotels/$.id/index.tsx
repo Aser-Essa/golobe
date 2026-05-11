@@ -24,7 +24,7 @@ export const Route = createFileRoute("/_main/hotels/$/id/")({
 });
 
 function RouteComponent() {
-  const hotel: HotelType = Route.useLoaderData()[0];
+  const hotel: HotelType = Route.useLoaderData()[0] || {};
 
   const isRenderHotelOverView =
     !!hotel.description ||
@@ -80,12 +80,8 @@ function RouteComponent() {
         </>
       )}
 
-      {hotel.review_count > 0 && (
-        <>
-          <Separator className="my-16" />
-          <Reviews avg_rating={hotel.avg_rating} reviews={hotel.reviews} />
-        </>
-      )}
+      <Separator className="my-16" />
+      <Reviews avg_rating={hotel.avg_rating} reviews={hotel.reviews} />
 
       <div className="h-[50vh]"></div>
     </>

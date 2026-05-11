@@ -12,6 +12,8 @@ type ReviewsProps = {
 export default function Reviews({ avg_rating, reviews }: ReviewsProps) {
   const verifiedReviews = reviews.filter((review) => review.is_verified);
 
+  if (verifiedReviews.length === 0) return null;
+
   return (
     <>
       <div className="space-y-6">

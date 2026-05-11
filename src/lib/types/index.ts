@@ -1,16 +1,16 @@
 import type { useSignIn, useSignUp } from "@clerk/tanstack-react-start";
-import type {
-  filterSearchParamsSchema,
-  hotelSearchWidgetSchema,
-} from "../schemas/search";
 import type z from "zod";
-import type { Tables } from "./supabase";
 import type {
   forgotPasswordSchema,
   resetPasswordSchema,
   signInSchema,
   signUpSchema,
 } from "../schemas";
+import type {
+  filterSearchParamsSchema,
+  hotelSearchWidgetSchema,
+} from "../schemas/search";
+import type { Tables } from "./supabase";
 
 export type SignupFormType = z.infer<typeof signUpSchema>;
 

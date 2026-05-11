@@ -1,3 +1,4 @@
+import { getTypePlacesCount } from "#/components/hotels/Filters/HotelTypeFilter";
 import { HOTELS_PER_PAGE } from "#/lib/constants";
 import { filterSearchParamsSchema } from "#/lib/schemas/search";
 import { supabase } from "#/lib/supabase";
@@ -27,8 +28,8 @@ export const getHotels = createServerFn({ method: "GET" })
       checkOut,
       rooms,
       guests,
-      sortBy = "avg_rating-desc",
-      page = 1,
+      sortBy,
+      page,
     } = data;
 
     let query = supabase
@@ -53,10 +54,6 @@ export const getHotels = createServerFn({ method: "GET" })
 
     if (rating) {
       query = query.gte("star_rating", rating);
-    }
-
-    if (hotelType) {
-      query = query.eq("hotel_type", hotelType);
     }
 
     if (sortBy && !sortBy.includes("price")) {
@@ -112,6 +109,25 @@ export const getHotels = createServerFn({ method: "GET" })
       });
     }
 
+    const hotelsCount = getTypePlacesCount({
+      hotels: filteredData,
+      type: "hotel",
+    });
+
+    const motelsCount = getTypePlacesCount({
+      hotels: filteredData,
+      type: "motel",
+    });
+
+    const resortsCount = getTypePlacesCount({
+      hotels: filteredData,
+      type: "resort",
+    });
+
+    filteredData = filteredData.filter(
+      (hotel) => hotel.hotel_type === hotelType,
+    );
+
     if (sortBy && sortBy.includes("price")) {
       const [_, order] = sortBy.split("-");
       filteredData = sortByPrice({
@@ -137,6 +153,11 @@ export const getHotels = createServerFn({ method: "GET" })
       totalPages,
       from: from + 1,
       to: safeTo,
+      typePlaceCounts: {
+        hotel: hotelsCount,
+        motel: motelsCount,
+        resort: resortsCount,
+      },
     };
   });
 
@@ -147,20 +168,20 @@ export const getHotel = createServerFn({ method: "GET" })
       .from("hotels")
       .select(
         `*,  
-        rooms!inner(*),
+        rooms!inner(*,bookings(*)),
         rooms_count:rooms(count),
         amenities:hotel_amenity_map!inner(
           amenities!inner(*)
         ),
         hotel_images(*),
         hotel_tags(*),
-       reviews(
+        reviews(
           *,
           user:user_profiles(
-    id,
-    full_name,
-    avatar_url
-  )
+            id,
+            full_name,
+            avatar_url
+          )
         )
       `,
       )
@@ -172,3 +193,18 @@ export const getHotel = createServerFn({ method: "GET" })
 
     return hotelData;
   });
+
+export const getFilterOptions = createServerFn({ method: "GET" }).handler(
+  async () => {
+    const { data: optionsData, error } = await supabase
+      .from("hotel_filter_options")
+      .select(`*`)
+      .single();
+
+    if (error) {
+      throw new Error(error.message);
+    }
+
+    return optionsData;
+  },
+);

@@ -1,4 +1,5 @@
 import type { HotelType } from "#/lib/types";
+import { getRatingLabel } from "#/lib/utils";
 
 type ReviewCardProps = {
   review: HotelType["reviews"][number];
@@ -17,7 +18,7 @@ export default function ReviewCard({ review }: ReviewCardProps) {
         <div className="flex-1 space-y-2 text-sm">
           <div className="flex items-center gap-2">
             <p className="font-semibold">
-              {review.rating.toFixed(1)} {"Amazing"}
+              {review.rating.toFixed(1)} {getRatingLabel(review.rating)}
             </p>
             <span>|</span>
             <p>{review.user.full_name}</p>

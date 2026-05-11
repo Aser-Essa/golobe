@@ -1,6 +1,6 @@
+import { Button } from "#/components/ui/button";
 import type { Tables } from "#/lib/types/supabase";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
-import { Button } from "../ui/button";
 
 type ViewAllImagesProps = {
   hotel_images: Tables<"hotel_images">[];

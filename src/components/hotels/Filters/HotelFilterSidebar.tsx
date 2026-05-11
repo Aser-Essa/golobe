@@ -16,6 +16,7 @@ export default function HotelFilterSidebar() {
         <Separator />
         <FreebiesFilter />
         <Separator />
+
         <AmenitiesFilter />
       </div>
     </>

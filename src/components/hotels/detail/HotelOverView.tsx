@@ -28,10 +28,10 @@ export default function HotelOverView({
             {review_count > 0 && (
               <>
                 <div className="bg-primary flex aspect-square h-37.5 w-40 flex-col justify-between rounded-[12px] p-4">
-                  <p className="text-[32px] font-bold">{avg_rating || 0}</p>
+                  <p className="text-[32px] font-bold">{avg_rating ?? 0}</p>
                   <div>
                     <span className="text-base font-bold">
-                      {getRatingLabel(avg_rating || 0)}
+                      {getRatingLabel(avg_rating ?? 0)}
                     </span>
                     <p className="text-sm font-medium">
                       {review_count || 0} reviews

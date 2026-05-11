@@ -143,6 +143,13 @@ export type Database = {
             foreignKeyName: "bookings_user_id_fkey"
             columns: ["user_id"]
             isOneToOne: false
+            referencedRelation: "user_profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "bookings_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
             referencedRelation: "users"
             referencedColumns: ["id"]
           },
@@ -207,6 +214,13 @@ export type Database = {
           user_id?: string
         }
         Relationships: [
+          {
+            foreignKeyName: "favourites_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "user_profiles"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "favourites_user_id_fkey"
             columns: ["user_id"]
@@ -382,6 +396,7 @@ export type Database = {
           country: string
           created_at: string
           description: string | null
+          hotel_type: string
           id: string
           is_active: boolean
           latitude: number | null
@@ -390,7 +405,6 @@ export type Database = {
           review_count: number
           slug: string
           star_rating: number | null
-          type: string
           updated_at: string
         }
         Insert: {
@@ -401,6 +415,7 @@ export type Database = {
           country: string
           created_at?: string
           description?: string | null
+          hotel_type?: string
           id?: string
           is_active?: boolean
           latitude?: number | null
@@ -409,7 +424,6 @@ export type Database = {
           review_count?: number
           slug: string
           star_rating?: number | null
-          type?: string
           updated_at?: string
         }
         Update: {
@@ -420,6 +434,7 @@ export type Database = {
           country?: string
           created_at?: string
           description?: string | null
+          hotel_type?: string
           id?: string
           is_active?: boolean
           latitude?: number | null
@@ -428,7 +443,6 @@ export type Database = {
           review_count?: number
           slug?: string
           star_rating?: number | null
-          type?: string
           updated_at?: string
         }
         Relationships: []
@@ -465,6 +479,13 @@ export type Database = {
           user_id?: string
         }
         Relationships: [
+          {
+            foreignKeyName: "recent_searches_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "user_profiles"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "recent_searches_user_id_fkey"
             columns: ["user_id"]
@@ -521,6 +542,13 @@ export type Database = {
             columns: ["hotel_id"]
             isOneToOne: false
             referencedRelation: "hotels"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "reviews_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "user_profiles"
             referencedColumns: ["id"]
           },
           {
@@ -623,7 +651,32 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      hotel_filter_options: {
+        Row: {
+          amenities: Json | null
+          freebies: Json | null
+          max_price: number | null
+        }
+        Relationships: []
+      }
+      user_profiles: {
+        Row: {
+          avatar_url: string | null
+          full_name: string | null
+          id: string | null
+        }
+        Insert: {
+          avatar_url?: string | null
+          full_name?: string | null
+          id?: string | null
+        }
+        Update: {
+          avatar_url?: string | null
+          full_name?: string | null
+          id?: string | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
       search_hotels: {
