@@ -1,31 +1,29 @@
-import type { FilterSearchParams, SearchHotelFormType } from "#/lib/types";
-import { cn } from "#/lib/utils";
 import { hotelSearchWidgetSchema } from "#/lib/schemas/search";
+import type { hotelSearchWidgetType } from "#/lib/types";
+import { cn } from "#/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useNavigate } from "@tanstack/react-router";
 import { BedDoubleIcon } from "lucide-react";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 
-import RoomGuestFilter from "./RoomGuestFilter";
 import DateField from "#/components/common/DateField";
 import InputField from "#/components/common/InputField";
+import RoomGuestFilter from "./RoomGuestFilter";
 
 export default function HotelSearchBar({
   searchParams,
   className,
   submitButton,
 }: {
-  searchParams: FilterSearchParams;
+  searchParams: hotelSearchWidgetType;
   className?: string;
   submitButton?: React.ReactNode;
 }) {
   const defaultValues = {
     destination: searchParams.destination || "",
-    checkIn: searchParams.checkIn ? new Date(searchParams.checkIn) : new Date(),
-    checkOut: searchParams.checkOut
-      ? new Date(searchParams.checkOut)
-      : new Date(),
+    checkIn: new Date(searchParams.checkIn),
+    checkOut: new Date(searchParams.checkOut),
     rooms: searchParams.rooms || 1,
     guests: searchParams.guests || 1,
   };
@@ -43,14 +41,14 @@ export default function HotelSearchBar({
   const today = new Date();
   today.setHours(0, 0, 0, 0);
 
-  const navigate = useNavigate({ from: "/" });
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (checkOutDate > checkInDate) return;
     setValue("checkOut", checkInDate);
   }, [checkInDate]);
 
-  function onsubmit(data: SearchHotelFormType) {
+  function onsubmit(data: hotelSearchWidgetType) {
     navigate({
       to: "/hotels",
       search: (prev) => ({ ...prev, ...data }),
@@ -61,7 +59,7 @@ export default function HotelSearchBar({
     <>
       <form onSubmit={handleSubmit(onsubmit)} className={cn("flex", className)}>
         <div className="flex w-full items-start gap-2">
-          <div className="relative w-full">
+          <div className="relative w-full flex-2">
             <InputField
               className="pl-11"
               control={control}

@@ -7,7 +7,10 @@ import HotelSortBy from "#/components/hotels/HotelSortBy";
 import PaginationResultsSummary from "#/components/hotels/PaginationResultsSummary";
 import { Button } from "#/components/ui/button";
 import { Separator } from "#/components/ui/separator";
-import { filterSearchParamsSchema } from "#/lib/schemas/search";
+import {
+  filterSearchParamsSchema,
+  hotelSearchWidgetSchema,
+} from "#/lib/schemas/search";
 import { getHotels } from "#/server/hotels";
 import { createFileRoute } from "@tanstack/react-router";
 import { Search } from "lucide-react";
@@ -21,6 +24,9 @@ export const Route = createFileRoute("/_main/hotels/")({
 
 function RouteComponent() {
   const searchParams = Route.useSearch();
+
+  const parsedSearchParams = hotelSearchWidgetSchema.parse(searchParams);
+
   const { hotels, totalLength, totalPages, from, to, typePlaceCounts } =
     Route.useLoaderData();
 
@@ -28,7 +34,7 @@ function RouteComponent() {
     <>
       <div className="box-shadow-sm z-50 space-y-8 rounded-[16px] bg-white px-6 py-8">
         <HotelSearchBar
-          searchParams={searchParams}
+          searchParams={parsedSearchParams}
           className="gap-2"
           submitButton={
             <Button

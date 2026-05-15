@@ -55,7 +55,7 @@ export default function RoomGuestFilter({
           <Button
             variant="outline"
             data-empty={""}
-            className="data-[empty=true]:text-muted-foreground relative h-14 w-[240px] justify-between rounded-[4px] border-[#79747E] px-4 text-left font-normal"
+            className="data-[empty=true]:text-muted-foreground relative h-14 w-[240px] flex-1! justify-between rounded-[4px] border-[#79747E] px-4 text-left font-normal"
           >
             <div className="flex items-center justify-start gap-2">
               <UserRound className="size-5" />

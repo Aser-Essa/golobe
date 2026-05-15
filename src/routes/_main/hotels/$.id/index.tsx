@@ -10,6 +10,8 @@ import { Separator } from "#/components/ui/separator";
 import { getHotel } from "#/server/hotels";
 import type { HotelType } from "#/lib/types";
 import { createFileRoute, redirect } from "@tanstack/react-router";
+import FilterAvaliableRoomsWidget from "#/components/hotels/Filters/FilterAvaliableRoomsWidget";
+import { filterAvaliableRoomsWidgetSchema } from "#/lib/schemas";
 
 export const Route = createFileRoute("/_main/hotels/$/id/")({
   component: RouteComponent,
@@ -25,6 +27,10 @@ export const Route = createFileRoute("/_main/hotels/$/id/")({
 
 function RouteComponent() {
   const hotel: HotelType = Route.useLoaderData()[0] || {};
+
+  const searchParams = Route.useSearch();
+  const parsedSearchParams =
+    filterAvaliableRoomsWidgetSchema.parse(searchParams);
 
   const isRenderHotelOverView =
     !!hotel.description ||
@@ -58,6 +64,7 @@ function RouteComponent() {
       {hotel.rooms.length > 0 && (
         <>
           <Separator className="my-16" />
+          <FilterAvaliableRoomsWidget searchParams={parsedSearchParams} />
           <AvailableRooms rooms={hotel.rooms} />
         </>
       )}

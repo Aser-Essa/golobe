@@ -20,7 +20,6 @@ export function getAvailableRooms({
     (room) =>
       !room.bookings.some(
         (booking) =>
-          booking.status !== "cancelled" &&
           new Date(booking.check_in).getTime() < reqOut &&
           new Date(booking.check_out).getTime() > reqIn,
       ),

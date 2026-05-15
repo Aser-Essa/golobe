@@ -32,7 +32,7 @@ export default function DateField({
           <Button
             variant="outline"
             data-empty={!date}
-            className="data-[empty=true]:text-muted-foreground relative h-14 w-[212px] justify-between rounded-[4px] border-[#79747E] px-4 text-left font-normal"
+            className="data-[empty=true]:text-muted-foreground relative h-14 w-[212px] flex-1 justify-between rounded-[4px] border-[#79747E] px-4 text-left font-normal"
           >
             {date ? format(date, "PPP") : <span>Pick a date</span>}
             <CalendarDays className="size-5" />

@@ -7,6 +7,7 @@ import type {
   signUpSchema,
 } from "../schemas";
 import type {
+  filterAvaliableRoomsWidgetSchema,
   filterSearchParamsSchema,
   hotelSearchWidgetSchema,
 } from "../schemas/search";
@@ -36,9 +37,13 @@ export interface ForgotPasswordFormProps {
   sendEmailCode: () => Promise<void>;
 }
 
-export type SearchHotelFormType = z.infer<typeof hotelSearchWidgetSchema>;
+export type hotelSearchWidgetType = z.infer<typeof hotelSearchWidgetSchema>;
 
 export type FilterSearchParams = z.infer<typeof filterSearchParamsSchema>;
+
+export type filterAvaliableRoomsWidgetType = z.infer<
+  typeof filterAvaliableRoomsWidgetSchema
+>;
 
 type UserPublicProfile = {
   id: string;
