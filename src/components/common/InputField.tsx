@@ -1,11 +1,12 @@
 import { cn } from "#/lib/utils";
+import type { Control, FieldPath, FieldValues } from "react-hook-form";
 import { Controller } from "react-hook-form";
 import { Field, FieldError, FieldLabel } from "../ui/field";
 import { Input } from "../ui/input";
 
-type InputFieldProps = {
-  name: string;
-  control: any;
+type InputFieldProps<T extends FieldValues> = {
+  name: FieldPath<T>;
+  control:  Control<T>;
   label: string;
   placeholder: string;
   type?: string;
@@ -13,7 +14,7 @@ type InputFieldProps = {
   icon?: React.ReactNode;
 };
 
-export default function InputField({
+export default function InputField<T extends FieldValues>({
   name,
   control,
   label,
@@ -21,9 +22,9 @@ export default function InputField({
   placeholder,
   className,
   icon,
-}: InputFieldProps) {
+}: InputFieldProps<T>) {
   return (
-    <>
+     
       <Controller
         name={name}
         control={control}
@@ -31,7 +32,7 @@ export default function InputField({
           <Field data-invalid={fieldState.invalid} className="relative w-full">
             <FieldLabel
               htmlFor={field.name}
-              className="absolute -top-2.25 left-3 z-10 w-fit! bg-white px-1 text-sm font-normal"
+              className="absolute -top-2.25 left-3 z-10 w-fit! bg-inherit px-1 text-sm font-normal"
             >
               {label}
             </FieldLabel>
@@ -54,6 +55,6 @@ export default function InputField({
           </Field>
         )}
       />
-    </>
+     
   );
 }

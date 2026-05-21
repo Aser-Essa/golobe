@@ -1,7 +1,13 @@
 import type { ClassValue } from "clsx";
 import { clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
-import type { generatePageButtonsParams, PageButtonItem } from "../types";
+import type {
+  GeneratePageButtonsParams,
+  GetTypePlacesCountParams,
+  PageButtonItem,
+} from "../types";
+import type { Tables } from "../types/supabase";
+import { FALLBACK_IMAGE } from "../constants";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -21,7 +27,7 @@ export function generatePageButtons({
   page,
   totalPages,
   windowSize,
-}: generatePageButtonsParams): PageButtonItem[] {
+}: GeneratePageButtonsParams): PageButtonItem[] {
   const windowEnd = Math.min(
     totalPages,
     windowSize * Math.ceil(page / windowSize),
@@ -37,4 +43,26 @@ export function generatePageButtons({
   if (windowStart > 1) pages = [1, "...", ...pages];
 
   return pages;
+}
+
+export const formatCheckIn = (date: string) =>
+  new Date(date).toLocaleDateString("en-US", {
+    weekday: "long",
+    month: "short",
+    day: "numeric",
+  });
+
+export function getCoverImageUrl(images: Tables<"hotel_images">[]): string {
+  const cover = images.find((img) => img.is_cover) ?? images[0];
+  return cover.url || FALLBACK_IMAGE;
+}
+
+export function getMinRoomPrice(rooms: { price_per_night: number }[]): number {
+  if (rooms.length === 0) return 0;
+  return rooms.reduce((min, r) => Math.min(min, r.price_per_night), Infinity);
+}
+
+export function getTypePlacesCount({ hotels, type }: GetTypePlacesCountParams) {
+  const count = hotels.filter((hotel) => hotel.hotel_type === type).length;
+  return count;
 }

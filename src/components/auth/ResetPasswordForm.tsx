@@ -23,7 +23,7 @@ export default function ResetPasswordForm() {
 
   const router = useRouter();
 
-  async function onsubmit(data: ResetPasswordFormType) {
+  async function onSubmit(data: ResetPasswordFormType) {
     const { error } = await signIn.resetPasswordEmailCode.submitPassword({
       password: data.password,
     });
@@ -48,7 +48,7 @@ export default function ResetPasswordForm() {
         </span>
       </div>
 
-      <form className="space-y-6" onSubmit={handleSubmit(onsubmit)}>
+      <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
         <InputField
           name="password"
           control={control}

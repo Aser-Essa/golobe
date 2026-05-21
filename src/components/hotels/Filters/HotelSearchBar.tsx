@@ -1,5 +1,5 @@
 import { hotelSearchWidgetSchema } from "#/lib/schemas/search";
-import type { hotelSearchWidgetType } from "#/lib/types";
+import type { HotelSearchWidgetType } from "#/lib/types";
 import { cn } from "#/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useNavigate } from "@tanstack/react-router";
@@ -16,7 +16,7 @@ export default function HotelSearchBar({
   className,
   submitButton,
 }: {
-  searchParams: hotelSearchWidgetType;
+  searchParams: HotelSearchWidgetType;
   className?: string;
   submitButton?: React.ReactNode;
 }) {
@@ -48,7 +48,7 @@ export default function HotelSearchBar({
     setValue("checkOut", checkInDate);
   }, [checkInDate]);
 
-  function onsubmit(data: hotelSearchWidgetType) {
+  function onSubmit(data: HotelSearchWidgetType) {
     navigate({
       to: "/hotels",
       search: (prev) => ({ ...prev, ...data }),
@@ -56,45 +56,43 @@ export default function HotelSearchBar({
   }
 
   return (
-    <>
-      <form onSubmit={handleSubmit(onsubmit)} className={cn("flex", className)}>
-        <div className="flex w-full items-start gap-2">
-          <div className="relative w-full flex-2">
-            <InputField
-              className="pl-11"
-              control={control}
-              icon={
-                <BedDoubleIcon className="absolute top-1/2 left-3.5 size-5 -translate-y-1/2" />
-              }
-              label="Enter Destination"
-              name="destination"
-              placeholder="Enter Destination"
-            />
-          </div>
-
-          <DateField
-            name="checkIn"
-            label="Check In"
+    <form onSubmit={handleSubmit(onSubmit)} className={cn("flex", className)}>
+      <div className="flex w-full items-start gap-2">
+        <div className="relative w-full flex-2">
+          <InputField
+            className="pl-11"
             control={control}
-            date={checkInDate}
-            disabledDays={(day) => day < today}
-          />
-
-          <DateField
-            name="checkOut"
-            label="Check Out"
-            control={control}
-            date={checkOutDate}
-            disabledDays={(day) => day < checkInDate}
-          />
-          <RoomGuestFilter
-            setValue={setValue}
-            roomsFormValue={roomsFormValue}
-            guestsFormValue={guestsFormValue}
+            icon={
+              <BedDoubleIcon className="absolute top-1/2 left-3.5 size-5 -translate-y-1/2" />
+            }
+            label="Enter Destination"
+            name="destination"
+            placeholder="Enter Destination"
           />
         </div>
-        {submitButton}
-      </form>
-    </>
+
+        <DateField
+          name="checkIn"
+          label="Check In"
+          control={control}
+          date={checkInDate}
+          disabledDays={(day) => day < today}
+        />
+
+        <DateField
+          name="checkOut"
+          label="Check Out"
+          control={control}
+          date={checkOutDate}
+          disabledDays={(day) => day < checkInDate}
+        />
+        <RoomGuestFilter
+          setValue={setValue}
+          roomsFormValue={roomsFormValue}
+          guestsFormValue={guestsFormValue}
+        />
+      </div>
+      {submitButton}
+    </form>
   );
 }

@@ -5,7 +5,7 @@ import {
   BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb";
+} from "#/components/ui/breadcrumb";
 import { Link } from "@tanstack/react-router";
 
 type HotelBreadCrumbProps = { name: string; city: string; country: string };
@@ -16,7 +16,7 @@ export default function HotelBreadCrumb({
   country,
 }: HotelBreadCrumbProps) {
   return (
-    <>
+     
       <Breadcrumb className="font-medium">
         <BreadcrumbList>
           <BreadcrumbItem>
@@ -52,6 +52,6 @@ export default function HotelBreadCrumb({
           </BreadcrumbItem>
         </BreadcrumbList>
       </Breadcrumb>
-    </>
+     
   );
 }

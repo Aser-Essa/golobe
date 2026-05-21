@@ -14,7 +14,7 @@ export const Route = createFileRoute("/_auth")({
 
 function RouteComponent() {
   return (
-    <>
+     
       <div className="flex justify-between gap-26 p-26">
         <div className="flex w-full flex-col justify-start">
           <div className="mb-16">
@@ -31,6 +31,6 @@ function RouteComponent() {
           />
         </div>
       </div>
-    </>
+     
   );
 }

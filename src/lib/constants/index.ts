@@ -57,3 +57,6 @@ export const HOTEL_TYPES: {
   { value: "motel", label: "Motels" },
   { value: "resort", label: "Resorts" },
 ];
+
+export const FALLBACK_IMAGE = "/dummy-hotel-img.png";
+

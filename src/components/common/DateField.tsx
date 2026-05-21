@@ -1,32 +1,33 @@
-import { Button } from "@/components/ui/button";
-import { Calendar } from "@/components/ui/calendar";
+import { Button } from "#/components/ui/button";
+import type { Control, FieldPath, FieldValues } from "react-hook-form";
+import { Calendar } from "#/components/ui/calendar";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/components/ui/popover";
+} from "#/components/ui/popover";
 import { format } from "date-fns";
 import { CalendarDays } from "lucide-react";
 import { Controller } from "react-hook-form";
 import { FieldLabel } from "../ui/field";
 
-type DateFieldProps = {
-  name: string;
-  control: any;
+type DateFieldProps<T extends FieldValues> = {
+  name: FieldPath<T>;
+  control:  Control<T>;
   label: string;
   date: Date | null;
   disabledDays?: (date: Date) => boolean;
 };
 
-export default function DateField({
+export default function DateField<T extends FieldValues>({
   name,
   control,
   label,
   date,
   disabledDays,
-}: DateFieldProps) {
+}: DateFieldProps<T>) {
   return (
-    <>
+     
       <Popover>
         <PopoverTrigger asChild>
           <Button
@@ -58,6 +59,6 @@ export default function DateField({
           />
         </PopoverContent>
       </Popover>
-    </>
+     
   );
 }

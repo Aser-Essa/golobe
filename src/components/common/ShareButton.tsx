@@ -9,7 +9,6 @@ export default function ShareButton() {
   }
 
   return (
-    <>
       <Button
         onClick={handleShare}
         className="aspect-square size-12 h-full bg-transparent"
@@ -17,6 +16,5 @@ export default function ShareButton() {
       >
         <Share2 className="size-5 text-[#4C4850]" />
       </Button>
-    </>
   );
 }

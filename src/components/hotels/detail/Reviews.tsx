@@ -15,7 +15,7 @@ export default function Reviews({ avg_rating, reviews }: ReviewsProps) {
   if (verifiedReviews.length === 0) return null;
 
   return (
-    <>
+     
       <div className="space-y-6">
         <p className="text-xl font-bold">Reviews</p>
         <div>
@@ -39,6 +39,6 @@ export default function Reviews({ avg_rating, reviews }: ReviewsProps) {
           </Fragment>
         ))}
       </div>
-    </>
+     
   );
 }

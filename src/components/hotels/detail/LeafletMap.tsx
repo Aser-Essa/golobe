@@ -11,7 +11,7 @@ export default function LeafletMap({ latitude, longitude }: LeafletMapProps) {
   if (latitude === null || longitude === null) return null;
 
   return (
-    <>
+     
       <MapContainer
         center={[latitude, longitude]}
         zoom={13}
@@ -29,6 +29,6 @@ export default function LeafletMap({ latitude, longitude }: LeafletMapProps) {
           </Popup>
         </Marker>
       </MapContainer>
-    </>
+     
   );
 }

@@ -1,4 +1,5 @@
 import type { Tables } from "#/lib/types/supabase";
+import { getCoverImageUrl } from "#/lib/utils";
 
 type HotelCoverImageProps = {
   hotel_images: Tables<"hotel_images">[];
@@ -7,13 +8,10 @@ type HotelCoverImageProps = {
 export default function HotelCoverImage({
   hotel_images,
 }: HotelCoverImageProps) {
-  const coverImg = hotel_images.find((image) => image.is_cover === true);
-  const coverImageUrl =
-    coverImg?.url ||
-    "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800";
+
+  const coverImageUrl = getCoverImageUrl(hotel_images)
 
   return (
-    <>
       <div className="relative aspect-square size-75">
         <div className="h-full w-full overflow-hidden">
           <img
@@ -25,6 +23,5 @@ export default function HotelCoverImage({
           {hotel_images.length} images
         </div>
       </div>
-    </>
   );
 }

@@ -6,7 +6,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
+} from "#/components/ui/select";
 import { useNavigate, useSearch } from "@tanstack/react-router";
 
 export default function SortBy() {
@@ -23,7 +23,7 @@ export default function SortBy() {
   }
 
   return (
-    <>
+     
       <Select
         defaultValue={sortBy || "avg_rating-desc"}
         onValueChange={onChange}
@@ -40,6 +40,6 @@ export default function SortBy() {
           </SelectGroup>
         </SelectContent>
       </Select>
-    </>
+     
   );
 }

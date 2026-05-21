@@ -14,13 +14,13 @@ export default function ViewPlaceButton({ hotelId }: { hotelId: string }) {
   }
 
   return (
-    <>
+     
       <Button
         onClick={handleNavigate}
         className="h-full flex-1 rounded-[4px] text-sm font-semibold"
       >
         View Places
       </Button>
-    </>
+     
   );
 }

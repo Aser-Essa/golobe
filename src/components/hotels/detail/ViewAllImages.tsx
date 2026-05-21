@@ -1,6 +1,6 @@
 import { Button } from "#/components/ui/button";
 import type { Tables } from "#/lib/types/supabase";
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogTrigger } from "#/components/ui/dialog";
 
 type ViewAllImagesProps = {
   hotel_images: Tables<"hotel_images">[];
@@ -8,7 +8,7 @@ type ViewAllImagesProps = {
 
 export default function ViewAllImages({ hotel_images }: ViewAllImagesProps) {
   return (
-    <>
+     
       <Dialog>
         <DialogTrigger asChild>
           <Button className="absolute right-4 bottom-4 z-10 h-12 px-4 py-2 font-semibold hover:bg-[#a4dbc9]">
@@ -30,6 +30,6 @@ export default function ViewAllImages({ hotel_images }: ViewAllImagesProps) {
           </div>
         </DialogContent>
       </Dialog>
-    </>
+     
   );
 }

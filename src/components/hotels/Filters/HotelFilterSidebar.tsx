@@ -3,22 +3,23 @@ import AmenitiesFilter from "./AmenitiesFilter";
 import FreebiesFilter from "./FreebiesFilter";
 import PriceFilter from "./PriceFilter";
 import RateFilter from "./RateFilter";
+import type { SidebarFilterOptions } from "#/lib/types";
 
-export default function HotelFilterSidebar() {
+export default function HotelFilterSidebar({
+  SidebarFilterOptions,
+}: {
+  SidebarFilterOptions: SidebarFilterOptions;
+}) {
   return (
-    <>
-      <div className="h-100 max-w-86 space-y-8">
-        <p className="text-xl font-semibold">Filters</p>
-
-        <PriceFilter />
-        <Separator />
-        <RateFilter />
-        <Separator />
-        <FreebiesFilter />
-        <Separator />
-
-        <AmenitiesFilter />
-      </div>
-    </>
+    <div className="h-100 max-w-86 space-y-8">
+      <p className="text-xl font-semibold">Filters</p>
+      <PriceFilter max_price={SidebarFilterOptions.max_price} />
+      <Separator />
+      <RateFilter />
+      <Separator />
+      <FreebiesFilter freebies={SidebarFilterOptions.freebies} />
+      <Separator />
+      <AmenitiesFilter amenities={SidebarFilterOptions.amenities} />
+    </div>
   );
 }

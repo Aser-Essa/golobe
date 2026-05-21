@@ -7,7 +7,7 @@ import type {
   signUpSchema,
 } from "../schemas";
 import type {
-  filterAvaliableRoomsWidgetSchema,
+  filterAvailableRoomsWidgetSchema,
   filterSearchParamsSchema,
   hotelSearchWidgetSchema,
 } from "../schemas/search";
@@ -37,12 +37,12 @@ export interface ForgotPasswordFormProps {
   sendEmailCode: () => Promise<void>;
 }
 
-export type hotelSearchWidgetType = z.infer<typeof hotelSearchWidgetSchema>;
+export type HotelSearchWidgetType = z.infer<typeof hotelSearchWidgetSchema>;
 
 export type FilterSearchParams = z.infer<typeof filterSearchParamsSchema>;
 
-export type filterAvaliableRoomsWidgetType = z.infer<
-  typeof filterAvaliableRoomsWidgetSchema
+export type FilterAvailableRoomsWidgetType = z.infer<
+  typeof filterAvailableRoomsWidgetSchema
 >;
 
 type UserPublicProfile = {
@@ -62,8 +62,19 @@ export interface HotelType extends Tables<"hotels"> {
 
 export type PageButtonItem = number | "...";
 
-export type generatePageButtonsParams = {
+export type GeneratePageButtonsParams = {
   page: number;
   totalPages: number;
   windowSize: number;
+};
+
+export type GetTypePlacesCountParams = {
+  type: FilterSearchParams["hotelType"];
+  hotels: HotelType[];
+};
+
+export type SidebarFilterOptions = {
+  max_price: number;
+  amenities: string[];
+  freebies: string[];
 };

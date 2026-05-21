@@ -43,12 +43,12 @@ export default function SignUpVerifyForm({
   };
 
   return (
-    <>
+     
       <VerifyForm
         handleVerify={handleVerify}
         sendEmailCode={signUp.verifications.sendEmailCode}
         fetchStatus={fetchStatus}
       />
-    </>
+     
   );
 }

@@ -18,7 +18,7 @@ export default function MapAndLocation({
   address,
 }: MapAndLocationProps) {
   return (
-    <>
+     
       <div className="space-y-8">
         <div className="flex items-center justify-between">
           <p className="text-xl font-bold">Location/Map</p>
@@ -47,6 +47,6 @@ export default function MapAndLocation({
           </div>
         </div>
       </div>
-    </>
+     
   );
 }

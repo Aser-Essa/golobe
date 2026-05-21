@@ -10,13 +10,13 @@ import { Separator } from "#/components/ui/separator";
 import { getHotel } from "#/server/hotels";
 import type { HotelType } from "#/lib/types";
 import { createFileRoute, redirect } from "@tanstack/react-router";
-import FilterAvaliableRoomsWidget from "#/components/hotels/Filters/FilterAvaliableRoomsWidget";
-import { filterAvaliableRoomsWidgetSchema } from "#/lib/schemas";
+import FilterAvailableRoomsWidget from "#/components/hotels/Filters/FilterAvailableRoomsWidget";
+import { filterAvailableRoomsWidgetSchema } from "#/lib/schemas";
 
-export const Route = createFileRoute("/_main/hotels/$/id/")({
+export const Route = createFileRoute("/_main/hotels/$id/")({
   component: RouteComponent,
   loader: async ({ params }) => {
-    const id = params._splat || "";
+    const id = params.id;
     const data = await getHotel({ data: { id } });
     if (data.length === 0) {
       throw redirect({ to: "/hotels" });
@@ -30,7 +30,7 @@ function RouteComponent() {
 
   const searchParams = Route.useSearch();
   const parsedSearchParams =
-    filterAvaliableRoomsWidgetSchema.parse(searchParams);
+    filterAvailableRoomsWidgetSchema.parse(searchParams);
 
   const isRenderHotelOverView =
     !!hotel.description ||
@@ -62,11 +62,14 @@ function RouteComponent() {
       )}
 
       {hotel.rooms.length > 0 && (
-        <>
+        <div id="rooms">
           <Separator className="my-16" />
-          <FilterAvaliableRoomsWidget searchParams={parsedSearchParams} />
+          <FilterAvailableRoomsWidget
+            searchParams={parsedSearchParams}
+            className="bg-transparent shadow-none!"
+          />
           <AvailableRooms rooms={hotel.rooms} />
-        </>
+        </div>
       )}
 
       {hotel.latitude !== null && hotel.longitude !== null && (

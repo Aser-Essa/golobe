@@ -31,7 +31,7 @@ export const filterSearchParamsSchema = z.object({
   page: z.coerce.number().int().min(1).catch(1).default(1),
 });
 
-export const filterAvaliableRoomsWidgetSchema = z.object({
+export const filterAvailableRoomsWidgetSchema = z.object({
   checkIn: z
     .date({ message: "Check in date is required" })
     .catch(() => new Date()),

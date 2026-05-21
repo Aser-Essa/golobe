@@ -1,17 +1,16 @@
-import { getRatingLabel } from "#/lib/utils";
 import type { HotelType } from "#/lib/types";
+import { cn, getMinRoomPrice, getRatingLabel } from "#/lib/utils";
 import { MapPin, Star } from "lucide-react";
-import { Button } from "../../ui/button";
 import AddToFavorite from "../../common/AddToFavorite";
 import ShareButton from "../../common/ShareButton";
+import { buttonVariants } from "../../ui/button";
 
 type HotelHeaderProps = {
   hotel: HotelType;
 };
 
 export default function HotelHeader({ hotel }: HotelHeaderProps) {
-  const prices = hotel.rooms.map((room) => room.price_per_night);
-  const minPrice = prices.length > 0 ? Math.min(...prices) : 0;
+  const minPrice = getMinRoomPrice(hotel.rooms)
 
   return (
     <div className="my-8 flex items-start justify-between">
@@ -56,9 +55,15 @@ export default function HotelHeader({ hotel }: HotelHeaderProps) {
           <span className="text-sm">/night</span>
         </p>
         <div className="flex flex-row-reverse items-center gap-4">
-          <Button className="h-12 w-37.5 px-4 py-2 font-semibold">
+          <a
+            href="#rooms"
+            className={cn(
+              buttonVariants(),
+              "h-12 w-37.5 px-4 py-2 font-semibold",
+            )}
+          >
             Book now
-          </Button>
+          </a>
           <ShareButton />
           <AddToFavorite />
         </div>

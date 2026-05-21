@@ -19,12 +19,12 @@ export default function ForgotPasswordVerifyForm({
   }
 
   return (
-    <>
+     
       <VerifyForm
         handleVerify={handleVerify}
         sendEmailCode={sendEmailCode}
         fetchStatus={fetchStatus}
       />
-    </>
+     
   );
 }

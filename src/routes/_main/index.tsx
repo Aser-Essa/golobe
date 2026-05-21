@@ -1,7 +1,7 @@
-import Herosection from "#/components/layout/Herosection";
 import HotelSearchWidget from "#/components/hotels/HotelSearchWidget";
-import { createFileRoute } from "@tanstack/react-router";
+import Herosection from "#/components/layout/Herosection";
 import { hotelSearchWidgetSchema } from "#/lib/schemas";
+import { createFileRoute } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/_main/")({ component: Home });
 

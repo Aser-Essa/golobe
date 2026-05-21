@@ -1,14 +1,14 @@
 import { SocialAuthButton } from "./SocialAuthButton";
 
-export default function SocialAuthButtons() {
+export default function SocialAuthButtons({mode}: {mode: "signin" | "signup"}) {
   return (
-    <>
+     
       <div className="flex items-center gap-4">
-        <SocialAuthButton strategy="oauth_facebook">
+        <SocialAuthButton mode={mode} strategy="oauth_facebook">
           <img src="/facebook.svg" alt="facebook" className="size-6" />
         </SocialAuthButton>
 
-        <SocialAuthButton strategy="oauth_google">
+        <SocialAuthButton mode={mode} strategy="oauth_google">
           <img src="/google.svg" alt="google" className="size-6" />
         </SocialAuthButton>
 
@@ -16,6 +16,6 @@ export default function SocialAuthButtons() {
           <img src="/apple.svg" alt="apple" className="size-6" />
         </div>
       </div>
-    </>
+     
   );
 }

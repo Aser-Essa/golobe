@@ -12,7 +12,7 @@ import {
 export default function Header() {
   const { signOut } = useAuth();
   return (
-    <>
+     
       <header className="box-shadow-sm fixed top-0 left-0 z-2000 flex h-22 w-full items-center justify-between bg-white/50 px-26 py-5 backdrop-blur-md">
         <nav>
           <Link to="/" className="relative flex items-center gap-1">
@@ -44,19 +44,19 @@ export default function Header() {
         <Show when={"signed-in"}>
           <div className="flex items-center gap-4">
             <Link to="/favorites" className="relative flex items-center gap-1">
-              <Heart fill="true" />
+              <Heart fill="#000" />
               <p className="text-sm font-semibold">Favorites</p>
             </Link>
 
             <div className="h-4.5 w-0.5 bg-black"></div>
 
             <Link to="/profile" className="relative flex items-center gap-1">
-              <img src="/profile.png" className="aspect-square h-11 w-11" />
+              <img src="/profile.png" alt="profile" className="aspect-square h-11 w-11" />
               <p className="text-sm font-semibold">John D.</p>
             </Link>
           </div>
         </Show>
       </header>
-    </>
+     
   );
 }

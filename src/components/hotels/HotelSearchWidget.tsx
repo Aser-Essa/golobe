@@ -1,4 +1,4 @@
-import type { hotelSearchWidgetType } from "#/lib/types";
+import type { HotelSearchWidgetType } from "#/lib/types";
 import { Building2 } from "lucide-react";
 import { Button } from "../ui/button";
 import HotelSearchBar from "./Filters/HotelSearchBar";
@@ -6,27 +6,25 @@ import HotelSearchBar from "./Filters/HotelSearchBar";
 export default function HotelSearchWidget({
   searchParams,
 }: {
-  searchParams: hotelSearchWidgetType;
+  searchParams: HotelSearchWidgetType;
 }) {
   return (
-    <>
-      <div className="box-shadow-sm z-50 mx-20 translate-y-[-29%] space-y-8 rounded-[16px] bg-white px-6 py-8">
-        <p className="text-xl font-semibold">Where are you flying? </p>
+    <div className="box-shadow-sm z-50 mx-20 translate-y-[-29%] space-y-8 rounded-[16px] bg-white px-6 py-8">
+      <p className="text-xl font-semibold">Where are you flying? </p>
 
-        <HotelSearchBar
-          searchParams={searchParams}
-          className="flex-col items-end gap-8"
-          submitButton={
-            <Button
-              type="submit"
-              className="flex h-12 items-center gap-1 px-4 py-2 text-sm font-medium"
-            >
-              <Building2 className="size-5" />
-              <p> Show Stays</p>
-            </Button>
-          }
-        />
-      </div>
-    </>
+      <HotelSearchBar
+        searchParams={searchParams}
+        className="flex-col items-end gap-8"
+        submitButton={
+          <Button
+            type="submit"
+            className="flex h-12 items-center gap-1 px-4 py-2 text-sm font-medium"
+          >
+            <Building2 className="size-5" />
+            <p> Show Stays</p>
+          </Button>
+        }
+      />
+    </div>
   );
 }

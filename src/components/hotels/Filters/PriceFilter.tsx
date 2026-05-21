@@ -2,36 +2,45 @@ import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
-} from "@/components/ui/collapsible";
+} from "#/components/ui/collapsible";
 import { useNavigate, useSearch } from "@tanstack/react-router";
 import { ChevronUp } from "lucide-react";
 import { useEffect, useState } from "react";
 import type { FilterSearchParams } from "#/lib/types";
 import { Slider } from "#/components/ui/slider";
-import { getFilterOptions } from "#/server/hotels";
 
-export default function PriceFilter() {
+type PriceFilterProps = {
+  max_price: number;
+};
+
+export default function PriceFilter({
+  max_price: maxPriceLimit,
+}: PriceFilterProps) {
   const [isOpen, setIsOpen] = useState(true);
-  const [absoluteMax, setAbsoluteMax] = useState<number>(100);
-  const [sliderValues, setSliderValues] = useState<[number, number]>([0, 100]);
 
   const navigate = useNavigate({ from: "/hotels/" });
 
-  const { minPrice, maxPrice }: FilterSearchParams = useSearch({
-    from: "/_main/hotels/",
-  });
+  const { minPrice, maxPrice: selectedMaxPrice }: FilterSearchParams =
+    useSearch({
+      from: "/_main/hotels/",
+    });
+
+  const [sliderValues, setSliderValues] = useState<[number, number]>([
+    minPrice ?? 0,
+    selectedMaxPrice ?? maxPriceLimit,
+  ]);
 
   useEffect(() => {
-    getFilterOptions().then((options) => {
-      const max = options.max_price;
-      setAbsoluteMax(max);
-      setSliderValues([minPrice ?? 0, maxPrice ?? max]);
-    });
-  }, []);
+    setSliderValues([minPrice ?? 0, selectedMaxPrice ?? maxPriceLimit]);
+  }, [minPrice, selectedMaxPrice, maxPriceLimit]);
 
   function handleSliderValueChange(values: number[]) {
     const [minPriceValue, maxPriceValue] = values as [number, number];
     setSliderValues([minPriceValue, maxPriceValue]);
+  }
+
+  function handleSliderValueCommit(values: number[]) {
+    const [minPriceValue, maxPriceValue] = values as [number, number];
     navigate({
       search: (prev) => ({
         ...prev,
@@ -58,8 +67,9 @@ export default function PriceFilter() {
       <CollapsibleContent className="flex flex-col gap-2">
         <Slider
           onValueChange={handleSliderValueChange}
+          onValueCommit={handleSliderValueCommit}
           min={0}
-          max={absoluteMax}
+          max={maxPriceLimit}
           value={sliderValues}
           step={5}
           className="w-full"

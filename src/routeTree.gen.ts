@@ -13,10 +13,12 @@ import { Route as MainRouteRouteImport } from './routes/_main/route'
 import { Route as AuthRouteRouteImport } from './routes/_auth/route'
 import { Route as MainIndexRouteImport } from './routes/_main/index'
 import { Route as MainHotelsIndexRouteImport } from './routes/_main/hotels/index'
+import { Route as MainBookingsIndexRouteImport } from './routes/_main/bookings/index'
 import { Route as AuthSignUpIndexRouteImport } from './routes/_auth/sign-up/index'
 import { Route as AuthSignInIndexRouteImport } from './routes/_auth/sign-in/index'
 import { Route as AuthForgotPasswordIndexRouteImport } from './routes/_auth/forgot-password/index'
-import { Route as MainHotelsSplatIdIndexRouteImport } from './routes/_main/hotels/$.id/index'
+import { Route as MainHotelsIdIndexRouteImport } from './routes/_main/hotels/$id/index'
+import { Route as MainBookingsIdIndexRouteImport } from './routes/_main/bookings/$id/index'
 
 const MainRouteRoute = MainRouteRouteImport.update({
   id: '/_main',
@@ -36,6 +38,11 @@ const MainHotelsIndexRoute = MainHotelsIndexRouteImport.update({
   path: '/hotels/',
   getParentRoute: () => MainRouteRoute,
 } as any)
+const MainBookingsIndexRoute = MainBookingsIndexRouteImport.update({
+  id: '/bookings/',
+  path: '/bookings/',
+  getParentRoute: () => MainRouteRoute,
+} as any)
 const AuthSignUpIndexRoute = AuthSignUpIndexRouteImport.update({
   id: '/sign-up/',
   path: '/sign-up/',
@@ -51,9 +58,14 @@ const AuthForgotPasswordIndexRoute = AuthForgotPasswordIndexRouteImport.update({
   path: '/forgot-password/',
   getParentRoute: () => AuthRouteRoute,
 } as any)
-const MainHotelsSplatIdIndexRoute = MainHotelsSplatIdIndexRouteImport.update({
-  id: '/hotels/$/id/',
-  path: '/hotels/$/id/',
+const MainHotelsIdIndexRoute = MainHotelsIdIndexRouteImport.update({
+  id: '/hotels/$id/',
+  path: '/hotels/$id/',
+  getParentRoute: () => MainRouteRoute,
+} as any)
+const MainBookingsIdIndexRoute = MainBookingsIdIndexRouteImport.update({
+  id: '/bookings/$id/',
+  path: '/bookings/$id/',
   getParentRoute: () => MainRouteRoute,
 } as any)
 
@@ -62,16 +74,20 @@ export interface FileRoutesByFullPath {
   '/forgot-password/': typeof AuthForgotPasswordIndexRoute
   '/sign-in/': typeof AuthSignInIndexRoute
   '/sign-up/': typeof AuthSignUpIndexRoute
+  '/bookings/': typeof MainBookingsIndexRoute
   '/hotels/': typeof MainHotelsIndexRoute
-  '/hotels/$/id/': typeof MainHotelsSplatIdIndexRoute
+  '/bookings/$id/': typeof MainBookingsIdIndexRoute
+  '/hotels/$id/': typeof MainHotelsIdIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof MainIndexRoute
   '/forgot-password': typeof AuthForgotPasswordIndexRoute
   '/sign-in': typeof AuthSignInIndexRoute
   '/sign-up': typeof AuthSignUpIndexRoute
+  '/bookings': typeof MainBookingsIndexRoute
   '/hotels': typeof MainHotelsIndexRoute
-  '/hotels/$/id': typeof MainHotelsSplatIdIndexRoute
+  '/bookings/$id': typeof MainBookingsIdIndexRoute
+  '/hotels/$id': typeof MainHotelsIdIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -81,8 +97,10 @@ export interface FileRoutesById {
   '/_auth/forgot-password/': typeof AuthForgotPasswordIndexRoute
   '/_auth/sign-in/': typeof AuthSignInIndexRoute
   '/_auth/sign-up/': typeof AuthSignUpIndexRoute
+  '/_main/bookings/': typeof MainBookingsIndexRoute
   '/_main/hotels/': typeof MainHotelsIndexRoute
-  '/_main/hotels/$/id/': typeof MainHotelsSplatIdIndexRoute
+  '/_main/bookings/$id/': typeof MainBookingsIdIndexRoute
+  '/_main/hotels/$id/': typeof MainHotelsIdIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -91,16 +109,20 @@ export interface FileRouteTypes {
     | '/forgot-password/'
     | '/sign-in/'
     | '/sign-up/'
+    | '/bookings/'
     | '/hotels/'
-    | '/hotels/$/id/'
+    | '/bookings/$id/'
+    | '/hotels/$id/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/forgot-password'
     | '/sign-in'
     | '/sign-up'
+    | '/bookings'
     | '/hotels'
-    | '/hotels/$/id'
+    | '/bookings/$id'
+    | '/hotels/$id'
   id:
     | '__root__'
     | '/_auth'
@@ -109,8 +131,10 @@ export interface FileRouteTypes {
     | '/_auth/forgot-password/'
     | '/_auth/sign-in/'
     | '/_auth/sign-up/'
+    | '/_main/bookings/'
     | '/_main/hotels/'
-    | '/_main/hotels/$/id/'
+    | '/_main/bookings/$id/'
+    | '/_main/hotels/$id/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -148,6 +172,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MainHotelsIndexRouteImport
       parentRoute: typeof MainRouteRoute
     }
+    '/_main/bookings/': {
+      id: '/_main/bookings/'
+      path: '/bookings'
+      fullPath: '/bookings/'
+      preLoaderRoute: typeof MainBookingsIndexRouteImport
+      parentRoute: typeof MainRouteRoute
+    }
     '/_auth/sign-up/': {
       id: '/_auth/sign-up/'
       path: '/sign-up'
@@ -169,11 +200,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthForgotPasswordIndexRouteImport
       parentRoute: typeof AuthRouteRoute
     }
-    '/_main/hotels/$/id/': {
-      id: '/_main/hotels/$/id/'
-      path: '/hotels/$/id'
-      fullPath: '/hotels/$/id/'
-      preLoaderRoute: typeof MainHotelsSplatIdIndexRouteImport
+    '/_main/hotels/$id/': {
+      id: '/_main/hotels/$id/'
+      path: '/hotels/$id'
+      fullPath: '/hotels/$id/'
+      preLoaderRoute: typeof MainHotelsIdIndexRouteImport
+      parentRoute: typeof MainRouteRoute
+    }
+    '/_main/bookings/$id/': {
+      id: '/_main/bookings/$id/'
+      path: '/bookings/$id'
+      fullPath: '/bookings/$id/'
+      preLoaderRoute: typeof MainBookingsIdIndexRouteImport
       parentRoute: typeof MainRouteRoute
     }
   }
@@ -197,14 +235,18 @@ const AuthRouteRouteWithChildren = AuthRouteRoute._addFileChildren(
 
 interface MainRouteRouteChildren {
   MainIndexRoute: typeof MainIndexRoute
+  MainBookingsIndexRoute: typeof MainBookingsIndexRoute
   MainHotelsIndexRoute: typeof MainHotelsIndexRoute
-  MainHotelsSplatIdIndexRoute: typeof MainHotelsSplatIdIndexRoute
+  MainBookingsIdIndexRoute: typeof MainBookingsIdIndexRoute
+  MainHotelsIdIndexRoute: typeof MainHotelsIdIndexRoute
 }
 
 const MainRouteRouteChildren: MainRouteRouteChildren = {
   MainIndexRoute: MainIndexRoute,
+  MainBookingsIndexRoute: MainBookingsIndexRoute,
   MainHotelsIndexRoute: MainHotelsIndexRoute,
-  MainHotelsSplatIdIndexRoute: MainHotelsSplatIdIndexRoute,
+  MainBookingsIdIndexRoute: MainBookingsIdIndexRoute,
+  MainHotelsIdIndexRoute: MainHotelsIdIndexRoute,
 }
 
 const MainRouteRouteWithChildren = MainRouteRoute._addFileChildren(

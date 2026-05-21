@@ -11,7 +11,7 @@ import {
   filterSearchParamsSchema,
   hotelSearchWidgetSchema,
 } from "#/lib/schemas/search";
-import { getHotels } from "#/server/hotels";
+import { getFilterOptions, getHotels } from "#/server/hotels";
 import { createFileRoute } from "@tanstack/react-router";
 import { Search } from "lucide-react";
 
@@ -19,7 +19,13 @@ export const Route = createFileRoute("/_main/hotels/")({
   component: RouteComponent,
   validateSearch: filterSearchParamsSchema,
   loaderDeps: ({ search }) => search,
-  loader: ({ deps: searchFilters }) => getHotels({ data: searchFilters }),
+  loader: async ({ deps }) => {
+    const [hotels, SidebarFilterOptions] = await Promise.all([
+      getHotels({ data: deps }),
+      getFilterOptions(),
+    ]);
+    return { ...hotels, SidebarFilterOptions };
+  },
 });
 
 function RouteComponent() {
@@ -27,8 +33,15 @@ function RouteComponent() {
 
   const parsedSearchParams = hotelSearchWidgetSchema.parse(searchParams);
 
-  const { hotels, totalLength, totalPages, from, to, typePlaceCounts } =
-    Route.useLoaderData();
+  const {
+    hotels,
+    totalLength,
+    totalPages,
+    from,
+    to,
+    typePlaceCounts,
+    SidebarFilterOptions,
+  } = Route.useLoaderData();
 
   return (
     <>
@@ -48,7 +61,7 @@ function RouteComponent() {
       </div>
 
       <div className="mt-8 flex items-start gap-6">
-        <HotelFilterSidebar />
+        <HotelFilterSidebar SidebarFilterOptions={SidebarFilterOptions} />
         <Separator orientation="vertical" className="h-100" />
         <div className="w-full space-y-8">
           <HotelTypeFilter typePlaceCounts={typePlaceCounts} />

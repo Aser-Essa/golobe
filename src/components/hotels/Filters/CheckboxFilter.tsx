@@ -1,10 +1,10 @@
-import { Checkbox } from "@/components/ui/checkbox";
+import { Checkbox } from "#/components/ui/checkbox";
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
-} from "@/components/ui/collapsible";
-import { Field, FieldGroup, FieldLabel } from "@/components/ui/field";
+} from "#/components/ui/collapsible";
+import { Field, FieldGroup, FieldLabel } from "#/components/ui/field";
 import { useNavigate } from "@tanstack/react-router";
 import { ChevronUp } from "lucide-react";
 import { useMemo, useState } from "react";

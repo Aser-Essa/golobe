@@ -1,22 +1,27 @@
-import { useSignUp } from "@clerk/tanstack-react-start";
+import { useSignIn, useSignUp } from "@clerk/tanstack-react-start";
 import { useState } from "react";
 
 type SocialSignUpProps = {
   strategy: "oauth_google" | "oauth_facebook";
   children: React.ReactNode;
+  mode: "signup" | "signin";
 };
 
-export function SocialAuthButton({ strategy, children }: SocialSignUpProps) {
+export function SocialAuthButton({ strategy, mode, children }: SocialSignUpProps) {
   const { signUp } = useSignUp();
+  const { signIn } = useSignIn();
+
+  const action = mode === "signup" ? signUp : signIn;
+
   const [loading, setLoading] = useState(false);
 
   const handleClick = async () => {
-    await signUp.reset();
+    await action.reset();
 
     if (loading) return;
     setLoading(true);
     try {
-      await signUp.sso({
+      await action.sso({
         strategy,
         redirectUrl: "/",
         redirectCallbackUrl: "/",

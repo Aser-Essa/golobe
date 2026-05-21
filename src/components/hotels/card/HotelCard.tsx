@@ -12,7 +12,6 @@ type HotelCardProps = {
 
 export default function HotelCard({ hotel }: HotelCardProps) {
   return (
-    <>
       <div className="box-shadow-sm flex w-full overflow-hidden rounded-[12px] bg-white">
         <HotelCoverImage hotel_images={hotel.hotel_images} />
         <div className="w-full space-y-6 p-6">
@@ -27,6 +26,5 @@ export default function HotelCard({ hotel }: HotelCardProps) {
           </div>
         </div>
       </div>
-    </>
   );
 }

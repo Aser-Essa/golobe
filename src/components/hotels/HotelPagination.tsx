@@ -8,7 +8,7 @@ import {
   PaginationLink,
   PaginationNext,
   PaginationPrevious,
-} from "@/components/ui/pagination";
+} from "#/components/ui/pagination";
 import { useSearch } from "@tanstack/react-router";
 
 export function HotelPagination({ totalPages }: { totalPages: number }) {

@@ -16,7 +16,7 @@ export default function HotelOverView({
   hotel_tags,
 }: HotelOverViewProps) {
   return (
-    <>
+     
       <div className="space-y-4">
         <p className="text-xl font-bold">Overview</p>
         <div className="space-y-8">
@@ -26,7 +26,7 @@ export default function HotelOverView({
 
           <div className="flex flex-wrap items-center gap-4">
             {review_count > 0 && (
-              <>
+               
                 <div className="bg-primary flex aspect-square h-37.5 w-40 flex-col justify-between rounded-[12px] p-4">
                   <p className="text-[32px] font-bold">{avg_rating ?? 0}</p>
                   <div>
@@ -38,7 +38,7 @@ export default function HotelOverView({
                     </p>
                   </div>
                 </div>
-              </>
+               
             )}
 
             {hotel_tags.length > 0 &&
@@ -57,6 +57,6 @@ export default function HotelOverView({
           </div>
         </div>
       </div>
-    </>
+     
   );
 }

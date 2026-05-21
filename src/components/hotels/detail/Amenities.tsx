@@ -22,7 +22,7 @@ export default function Amenities({ amenities }: AmenitiesProps) {
   }
 
   return (
-    <>
+     
       <div className="space-y-8">
         <p className="text-xl font-bold">Amenities</p>
         <div className="grid max-w-180 grid-cols-2 gap-6">
@@ -39,6 +39,6 @@ export default function Amenities({ amenities }: AmenitiesProps) {
           )}
         </div>
       </div>
-    </>
+     
   );
 }

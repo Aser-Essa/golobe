@@ -3,8 +3,8 @@ import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
-} from "@/components/ui/collapsible";
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+} from "#/components/ui/collapsible";
+import { Tabs, TabsList, TabsTrigger } from "#/components/ui/tabs";
 import { useNavigate, useSearch } from "@tanstack/react-router";
 import { ChevronUp } from "lucide-react";
 import { useState } from "react";
@@ -26,7 +26,7 @@ export default function RateFilter() {
   }
 
   return (
-    <>
+     
       <Collapsible
         open={isOpen}
         onOpenChange={setIsOpen}
@@ -58,6 +58,6 @@ export default function RateFilter() {
           </Tabs>
         </CollapsibleContent>
       </Collapsible>
-    </>
+     
   );
 }

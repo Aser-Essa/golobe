@@ -1,12 +1,11 @@
-import { getTypePlacesCount } from "#/components/hotels/Filters/HotelTypeFilter";
 import { HOTELS_PER_PAGE } from "#/lib/constants";
 import { filterSearchParamsSchema } from "#/lib/schemas/search";
 import { supabase } from "#/lib/supabase";
+import { getTypePlacesCount } from "#/lib/utils";
 import {
   filterByAmenities,
   filterByAvailableRooms,
   filterByFreebies,
-  filterByPrice,
   filterByRoomsGuests,
 } from "#/lib/utils/filters";
 import { sortByPrice } from "#/lib/utils/sortHotels";
@@ -56,6 +55,11 @@ export const getHotels = createServerFn({ method: "GET" })
       query = query.gte("star_rating", rating);
     }
 
+    if (minPrice || maxPrice) {
+      query = query.gte("rooms.price_per_night", minPrice);
+      query = query.lte("rooms.price_per_night", maxPrice);
+    }
+
     if (sortBy && !sortBy.includes("price")) {
       const [column, order] = sortBy.split("-");
       if (column && order) {
@@ -70,14 +74,6 @@ export const getHotels = createServerFn({ method: "GET" })
     }
 
     let filteredData = hotelsData;
-
-    if (minPrice || maxPrice) {
-      filteredData = filterByPrice({
-        minPrice,
-        maxPrice,
-        data: filteredData,
-      });
-    }
 
     if (amenities?.length) {
       filteredData = filterByAmenities({
@@ -129,7 +125,7 @@ export const getHotels = createServerFn({ method: "GET" })
     );
 
     if (sortBy && sortBy.includes("price")) {
-      const [_, order] = sortBy.split("-");
+      const [, order] = sortBy.split("-");
       filteredData = sortByPrice({
         data: filteredData,
         order: order as "asc" | "desc",
