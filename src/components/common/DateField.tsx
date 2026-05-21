@@ -33,12 +33,12 @@ export default function DateField<T extends FieldValues>({
           <Button
             variant="outline"
             data-empty={!date}
-            className="data-[empty=true]:text-muted-foreground relative h-14 w-[212px] flex-1 justify-between rounded-[4px] border-[#79747E] px-4 text-left font-normal"
+            className="data-[empty=true]:text-muted-foreground bg-white! relative h-14 w-[212px] flex-1 justify-between rounded-[4px] border-[#79747E] px-4 text-left font-normal"
           >
             {date ? format(date, "PPP") : <span>Pick a date</span>}
             <CalendarDays className="size-5" />
 
-            <FieldLabel className="absolute -top-2.25 left-3 w-fit! bg-white px-1 text-sm font-normal">
+            <FieldLabel className="absolute rounded-[8px] -top-2.25 left-3 w-fit! bg-white/80 backdrop-blur-2xl px-1 text-sm font-normal">
               {label}
             </FieldLabel>
           </Button>

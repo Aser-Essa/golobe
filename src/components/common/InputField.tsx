@@ -32,7 +32,7 @@ export default function InputField<T extends FieldValues>({
           <Field data-invalid={fieldState.invalid} className="relative w-full">
             <FieldLabel
               htmlFor={field.name}
-              className="absolute -top-2.25 left-3 z-10 w-fit! bg-inherit px-1 text-sm font-normal"
+              className="absolute -top-2.25 left-3 z-10 w-fit! bg-white rounded-[8px] px-1 text-sm font-normal"
             >
               {label}
             </FieldLabel>
@@ -45,7 +45,7 @@ export default function InputField<T extends FieldValues>({
                 placeholder={placeholder || label}
                 type={type}
                 className={cn(
-                  "h-14 w-full rounded-[4px] border-[#79747E] px-4",
+                  "h-14 w-full rounded-[4px] border-[#79747E] px-4 bg-white!",
                   className,
                 )}
               />
