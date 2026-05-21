@@ -3,5 +3,6 @@ import { createServerFn } from "@tanstack/react-start";
 
 export const checkAuthFn = createServerFn().handler(async () => {
   const { isAuthenticated } = await auth();
+
   return { isAuthenticated };
 });

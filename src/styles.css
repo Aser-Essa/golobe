@@ -90,7 +90,7 @@ body {
   --secondary-foreground: oklch(16.8% 0.028 152);
 
   /* ── Muted — #FAFBFC page surface */
-  --muted: oklch(98.2% 0.002 247);
+  --muted: oklch(89.755% 0.0001 271.152);
   --muted-foreground: oklch(43.5% 0.022 193); /* #546869 vector */
 
   /* ── Accent — same as secondary */

@@ -59,4 +59,3 @@ export const HOTEL_TYPES: {
 ];
 
 export const FALLBACK_IMAGE = "/dummy-hotel-img.png";
-

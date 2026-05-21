@@ -17,6 +17,7 @@ import { Route as MainBookingsIndexRouteImport } from './routes/_main/bookings/i
 import { Route as AuthSignUpIndexRouteImport } from './routes/_auth/sign-up/index'
 import { Route as AuthSignInIndexRouteImport } from './routes/_auth/sign-in/index'
 import { Route as AuthForgotPasswordIndexRouteImport } from './routes/_auth/forgot-password/index'
+import { Route as ApiWebhooksSplatRouteImport } from './routes/api/webhooks/$'
 import { Route as MainHotelsIdIndexRouteImport } from './routes/_main/hotels/$id/index'
 import { Route as MainBookingsIdIndexRouteImport } from './routes/_main/bookings/$id/index'
 
@@ -58,6 +59,11 @@ const AuthForgotPasswordIndexRoute = AuthForgotPasswordIndexRouteImport.update({
   path: '/forgot-password/',
   getParentRoute: () => AuthRouteRoute,
 } as any)
+const ApiWebhooksSplatRoute = ApiWebhooksSplatRouteImport.update({
+  id: '/api/webhooks/$',
+  path: '/api/webhooks/$',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const MainHotelsIdIndexRoute = MainHotelsIdIndexRouteImport.update({
   id: '/hotels/$id/',
   path: '/hotels/$id/',
@@ -71,6 +77,7 @@ const MainBookingsIdIndexRoute = MainBookingsIdIndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof MainIndexRoute
+  '/api/webhooks/$': typeof ApiWebhooksSplatRoute
   '/forgot-password/': typeof AuthForgotPasswordIndexRoute
   '/sign-in/': typeof AuthSignInIndexRoute
   '/sign-up/': typeof AuthSignUpIndexRoute
@@ -81,6 +88,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof MainIndexRoute
+  '/api/webhooks/$': typeof ApiWebhooksSplatRoute
   '/forgot-password': typeof AuthForgotPasswordIndexRoute
   '/sign-in': typeof AuthSignInIndexRoute
   '/sign-up': typeof AuthSignUpIndexRoute
@@ -94,6 +102,7 @@ export interface FileRoutesById {
   '/_auth': typeof AuthRouteRouteWithChildren
   '/_main': typeof MainRouteRouteWithChildren
   '/_main/': typeof MainIndexRoute
+  '/api/webhooks/$': typeof ApiWebhooksSplatRoute
   '/_auth/forgot-password/': typeof AuthForgotPasswordIndexRoute
   '/_auth/sign-in/': typeof AuthSignInIndexRoute
   '/_auth/sign-up/': typeof AuthSignUpIndexRoute
@@ -106,6 +115,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/api/webhooks/$'
     | '/forgot-password/'
     | '/sign-in/'
     | '/sign-up/'
@@ -116,6 +126,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/api/webhooks/$'
     | '/forgot-password'
     | '/sign-in'
     | '/sign-up'
@@ -128,6 +139,7 @@ export interface FileRouteTypes {
     | '/_auth'
     | '/_main'
     | '/_main/'
+    | '/api/webhooks/$'
     | '/_auth/forgot-password/'
     | '/_auth/sign-in/'
     | '/_auth/sign-up/'
@@ -140,6 +152,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   AuthRouteRoute: typeof AuthRouteRouteWithChildren
   MainRouteRoute: typeof MainRouteRouteWithChildren
+  ApiWebhooksSplatRoute: typeof ApiWebhooksSplatRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -200,6 +213,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthForgotPasswordIndexRouteImport
       parentRoute: typeof AuthRouteRoute
     }
+    '/api/webhooks/$': {
+      id: '/api/webhooks/$'
+      path: '/api/webhooks/$'
+      fullPath: '/api/webhooks/$'
+      preLoaderRoute: typeof ApiWebhooksSplatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/_main/hotels/$id/': {
       id: '/_main/hotels/$id/'
       path: '/hotels/$id'
@@ -256,6 +276,7 @@ const MainRouteRouteWithChildren = MainRouteRoute._addFileChildren(
 const rootRouteChildren: RootRouteChildren = {
   AuthRouteRoute: AuthRouteRouteWithChildren,
   MainRouteRoute: MainRouteRouteWithChildren,
+  ApiWebhooksSplatRoute: ApiWebhooksSplatRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

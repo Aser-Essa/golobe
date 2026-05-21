@@ -66,3 +66,17 @@ export function getTypePlacesCount({ hotels, type }: GetTypePlacesCountParams) {
   const count = hotels.filter((hotel) => hotel.hotel_type === type).length;
   return count;
 }
+
+export const formatUserName = ({
+  firstName,
+  lastName,
+}: {
+  firstName: string | null | undefined;
+  lastName: string | null | undefined;
+}) => {
+  const userName = `${firstName ?? ""} ${
+    lastName ? lastName[0].toUpperCase() + "." : ""
+  }`.trim();
+
+  return userName;
+};

@@ -7,11 +7,17 @@ type SocialSignUpProps = {
   mode: "signup" | "signin";
 };
 
-export function SocialAuthButton({ strategy, mode, children }: SocialSignUpProps) {
+export function SocialAuthButton({
+  strategy,
+  mode,
+  children,
+}: SocialSignUpProps) {
   const { signUp } = useSignUp();
   const { signIn } = useSignIn();
 
   const action = mode === "signup" ? signUp : signIn;
+
+  console.log(action);
 
   const [loading, setLoading] = useState(false);
 

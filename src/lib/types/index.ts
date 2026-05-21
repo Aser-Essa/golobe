@@ -12,6 +12,7 @@ import type {
   hotelSearchWidgetSchema,
 } from "../schemas/search";
 import type { Tables } from "./supabase";
+import type { createUserSchema } from "../schemas/user";
 
 export type SignupFormType = z.infer<typeof signUpSchema>;
 
@@ -78,3 +79,5 @@ export type SidebarFilterOptions = {
   amenities: string[];
   freebies: string[];
 };
+
+export type CreateUserType = z.infer<typeof createUserSchema>;
