@@ -2,8 +2,10 @@ import type { ClassValue } from "clsx";
 import { clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 import type {
+  FilterSearchParams,
   GeneratePageButtonsParams,
   GetTypePlacesCountParams,
+  HotelSearchWidgetType,
   PageButtonItem,
 } from "../types";
 import type { Tables } from "../types/supabase";
@@ -80,3 +82,35 @@ export const formatUserName = ({
 
   return userName;
 };
+
+export function sanitizeString(value: string) {
+  return value.trim().replace(/[.,\/#!$%\^&*;:{}=\-_`~()]/g, "");
+}
+
+function toValidDate(value: string, fallback = new Date()): Date {
+  const d = new Date(value);
+  return isNaN(d.getTime()) ? fallback : d;
+}
+
+export function mapSearchParamsToHotelWidget(
+  searchParams: FilterSearchParams,
+): HotelSearchWidgetType {
+  return {
+    destination: searchParams.destination,
+    checkIn: toValidDate(searchParams.checkIn),
+    checkOut: toValidDate(searchParams.checkOut),
+    rooms: searchParams.rooms ?? 1,
+    guests: searchParams.guests ?? 1,
+  };
+}
+
+export function mapHotelWidgetToSearchParams(data: HotelSearchWidgetType) {
+  const sanitizedDestination = sanitizeString(data.destination);
+  return {
+    destination: sanitizedDestination,
+    checkIn: data.checkIn.toISOString(),
+    checkOut: data.checkOut.toISOString(),
+    rooms: data.rooms,
+    guests: data.guests,
+  };
+}

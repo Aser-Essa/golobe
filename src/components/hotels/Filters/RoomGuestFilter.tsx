@@ -5,6 +5,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "#/components/ui/popover";
+import { MAX_ROOMS } from "#/lib/constants";
 import { ChevronDown, Minus, Plus, UserRound } from "lucide-react";
 
 type RoomGuestFilterProps = {
@@ -64,12 +65,14 @@ export default function RoomGuestFilter({
           <FieldLabel className="absolute -top-2.25 left-3 w-fit! bg-white px-1 text-sm font-normal"></FieldLabel>
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-[240px] p-2" align="start">
+      <PopoverContent className="w-[240px] p-2" align="center">
         <div className="w-full">
           <div className="flex items-center justify-between">
             <div className="space-y-1">
               <p className="font-medium">Rooms</p>
-              <p className="text-muted-foreground text-xs">Max 10 rooms</p>
+              <p className="text-muted-foreground text-xs">
+                Max {MAX_ROOMS} rooms
+              </p>
             </div>
             <div className="flex items-center gap-4">
               <Button

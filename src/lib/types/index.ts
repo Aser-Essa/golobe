@@ -46,6 +46,13 @@ export type FilterAvailableRoomsWidgetType = z.infer<
   typeof filterAvailableRoomsWidgetSchema
 >;
 
+export type searchDestinationsType = {
+  city: string;
+  country: string;
+  address: string;
+  name: string;
+}[];
+
 type UserPublicProfile = {
   id: string;
   full_name: string;

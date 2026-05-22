@@ -6,20 +6,21 @@ import HotelImages from "#/components/hotels/detail/HotelImages";
 import HotelOverView from "#/components/hotels/detail/HotelOverView";
 import MapAndLocation from "#/components/hotels/detail/MapAndLocation";
 import Reviews from "#/components/hotels/detail/Reviews";
-import { Separator } from "#/components/ui/separator";
-import { getHotel } from "#/server/hotels";
-import type { HotelType } from "#/lib/types";
-import { createFileRoute, redirect } from "@tanstack/react-router";
 import FilterAvailableRoomsWidget from "#/components/hotels/Filters/FilterAvailableRoomsWidget";
-import { filterAvailableRoomsWidgetSchema } from "#/lib/schemas";
+import { Separator } from "#/components/ui/separator";
+import type { FilterSearchParams, HotelType } from "#/lib/types";
+import { mapSearchParamsToHotelWidget } from "#/lib/utils";
+import { getHotel } from "#/server/hotels";
+import { createFileRoute, redirect } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/_main/hotels/$id/")({
   component: RouteComponent,
-  loader: async ({ params }) => {
+  loaderDeps: ({ search }) => search as FilterSearchParams,
+  loader: async ({ params, deps: searchParams }) => {
     const id = params.id;
     const data = await getHotel({ data: { id } });
     if (data.length === 0) {
-      throw redirect({ to: "/hotels" });
+      throw redirect({ to: "/hotels", search: searchParams });
     }
     return data;
   },
@@ -28,9 +29,9 @@ export const Route = createFileRoute("/_main/hotels/$id/")({
 function RouteComponent() {
   const hotel: HotelType = Route.useLoaderData()[0] || {};
 
-  const searchParams = Route.useSearch();
-  const parsedSearchParams =
-    filterAvailableRoomsWidgetSchema.parse(searchParams);
+  const searchParams: FilterSearchParams = Route.useSearch();
+
+  const normalizedSearchParams = mapSearchParamsToHotelWidget(searchParams);
 
   const isRenderHotelOverView =
     !!hotel.description ||
@@ -65,7 +66,7 @@ function RouteComponent() {
         <div id="rooms">
           <Separator className="my-16" />
           <FilterAvailableRoomsWidget
-            searchParams={parsedSearchParams}
+            searchParams={normalizedSearchParams}
             className="bg-transparent shadow-none!"
           />
           <AvailableRooms rooms={hotel.rooms} />

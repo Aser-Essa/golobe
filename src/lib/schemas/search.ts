@@ -1,10 +1,19 @@
 import z from "zod";
+import { MAX_GUESTS, MAX_ROOMS } from "../constants";
 
 export const hotelSearchWidgetSchema = z.object({
   destination: z
     .string()
+    .trim()
     .min(1, { message: "Destination is required" })
-    .catch(""),
+    .refine(
+      (value) => {
+        return /[a-zA-Z0-9\u0600-\u06FF]/.test(value);
+      },
+      {
+        message: "Invalid input",
+      },
+    ),
   checkIn: z
     .date({ message: "Check in date is required" })
     .catch(() => new Date()),
@@ -16,11 +25,11 @@ export const hotelSearchWidgetSchema = z.object({
 });
 
 export const filterSearchParamsSchema = z.object({
-  destination: z.string().trim().optional(),
-  checkIn: z.coerce.string().default(new Date().toISOString()),
-  checkOut: z.coerce.string().default(new Date().toISOString()),
-  rooms: z.coerce.number().int().min(1).max(30).optional(),
-  guests: z.coerce.number().int().min(1).max(16).optional(),
+  destination: z.string().trim(),
+  checkIn: z.string().default(new Date().toISOString()),
+  checkOut: z.string().default(new Date().toISOString()),
+  rooms: z.coerce.number().int().min(1).max(MAX_GUESTS).optional(),
+  guests: z.coerce.number().int().min(1).max(MAX_ROOMS).optional(),
   minPrice: z.coerce.number().min(0).optional(),
   maxPrice: z.coerce.number().min(0).optional(),
   rating: z.coerce.number().int().min(1).max(5).optional(),

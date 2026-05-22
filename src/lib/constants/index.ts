@@ -49,6 +49,11 @@ export const amenityIcons = {
 
 export const HOTELS_PER_PAGE = 4;
 
+export const MAX_ROOMS = 10;
+export const MAX_GUESTS = MAX_ROOMS * 3;
+
+export const MAX_DESTINATION_OPTIONS = 6
+
 export const HOTEL_TYPES: {
   value: FilterSearchParams["hotelType"];
   label: string;

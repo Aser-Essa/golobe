@@ -1,19 +1,20 @@
 import HotelSearchWidget from "#/components/hotels/HotelSearchWidget";
 import Herosection from "#/components/layout/Herosection";
-import { hotelSearchWidgetSchema } from "#/lib/schemas";
+import type { FilterSearchParams } from "#/lib/types";
+import { mapSearchParamsToHotelWidget } from "#/lib/utils";
 import { createFileRoute } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/_main/")({ component: Home });
 
 function Home() {
-  const searchParams = Route.useSearch();
+  const searchParams: FilterSearchParams = Route.useSearch();
 
-  const parsedSearchParams = hotelSearchWidgetSchema.parse(searchParams);
+  const normalizedSearchParams = mapSearchParamsToHotelWidget(searchParams);
 
   return (
     <>
       <Herosection />
-      <HotelSearchWidget searchParams={parsedSearchParams} />
+      <HotelSearchWidget searchParams={normalizedSearchParams} />
       <div className="h-screen"></div>
     </>
   );

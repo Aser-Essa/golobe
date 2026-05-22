@@ -1,7 +1,8 @@
 import { HOTELS_PER_PAGE } from "#/lib/constants";
 import { filterSearchParamsSchema } from "#/lib/schemas/search";
 import { supabase } from "#/lib/supabase";
-import { getTypePlacesCount } from "#/lib/utils";
+import type { searchDestinationsType } from "#/lib/types";
+import { getTypePlacesCount, sanitizeString } from "#/lib/utils";
 import {
   filterByAmenities,
   filterByAvailableRooms,
@@ -44,11 +45,15 @@ export const getHotels = createServerFn({ method: "GET" })
       )
       .eq("is_active", true);
 
-    if (destination?.trim()) {
-      const d = destination.trim();
-      query = query.or(
-        `city.ilike.%${d}%,country.ilike.%${d}%,address.ilike.%${d}%,name.ilike.%${d}%`,
-      );
+    const d = sanitizeString(destination);
+    if (d.length) {
+      const terms = d.split(" ").filter(Boolean);
+
+      for (const term of terms) {
+        query = query.or(
+          `city.ilike.%${term}%,country.ilike.%${term}%,address.ilike.%${term}%,name.ilike.%${term}%`,
+        );
+      }
     }
 
     if (rating) {
@@ -204,3 +209,33 @@ export const getFilterOptions = createServerFn({ method: "GET" }).handler(
     return optionsData;
   },
 );
+
+export const getSearchDestinations = createServerFn({ method: "GET" })
+  .inputValidator(z.object({ query: z.string() }))
+  .handler(
+    async ({
+      data: { query: searchQuery },
+    }): Promise<searchDestinationsType> => {
+      const sanitizedQuery = sanitizeString(searchQuery);
+
+      if (!searchQuery.length) return [];
+
+      let query = supabase.from("hotels").select(`city,country,address,name`);
+
+      const terms = sanitizedQuery.split(" ").filter(Boolean);
+
+      for (const term of terms) {
+        query = query.or(
+          `city.ilike.%${term}%,country.ilike.%${term}%,address.ilike.%${term}%,name.ilike.%${term}%`,
+        );
+      }
+
+      const { data: searchDestinations, error } = await query;
+
+      if (error) {
+        throw new Error(error.message);
+      }
+
+      return searchDestinations;
+    },
+  );

@@ -1,14 +1,13 @@
 import { hotelSearchWidgetSchema } from "#/lib/schemas/search";
 import type { HotelSearchWidgetType } from "#/lib/types";
-import { cn } from "#/lib/utils";
+import { cn, mapHotelWidgetToSearchParams } from "#/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useNavigate } from "@tanstack/react-router";
-import { BedDoubleIcon } from "lucide-react";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 
 import DateField from "#/components/common/DateField";
-import InputField from "#/components/common/InputField";
+import DestinationSearch from "./DestinationSearch";
 import RoomGuestFilter from "./RoomGuestFilter";
 
 export default function HotelSearchBar({
@@ -20,13 +19,7 @@ export default function HotelSearchBar({
   className?: string;
   submitButton?: React.ReactNode;
 }) {
-  const defaultValues = {
-    destination: searchParams.destination || "",
-    checkIn: new Date(searchParams.checkIn),
-    checkOut: new Date(searchParams.checkOut),
-    rooms: searchParams.rooms || 1,
-    guests: searchParams.guests || 1,
-  };
+  const defaultValues = searchParams;
 
   const { control, watch, setValue, handleSubmit } = useForm({
     resolver: zodResolver(hotelSearchWidgetSchema),
@@ -49,27 +42,25 @@ export default function HotelSearchBar({
   }, [checkInDate]);
 
   function onSubmit(data: HotelSearchWidgetType) {
+    if (data.destination.trim().length === 0) {
+      navigate({
+        to: "/",
+      });
+      return;
+    }
+
+    const mappedSearchParams = mapHotelWidgetToSearchParams(data);
+
     navigate({
       to: "/hotels",
-      search: (prev) => ({ ...prev, ...data }),
+      search: (prev) => ({ ...prev, ...mappedSearchParams }),
     });
   }
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={cn("flex", className)}>
       <div className="flex w-full items-start gap-2">
-        <div className="relative w-full flex-2">
-          <InputField
-            className="pl-11"
-            control={control}
-            icon={
-              <BedDoubleIcon className="absolute top-1/2 left-3.5 size-5 -translate-y-1/2" />
-            }
-            label="Enter Destination"
-            name="destination"
-            placeholder="Enter Destination"
-          />
-        </div>
+        <DestinationSearch control={control} watch={watch} name="destination" />
 
         <DateField
           name="checkIn"

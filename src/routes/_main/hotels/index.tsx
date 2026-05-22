@@ -7,10 +7,8 @@ import HotelSortBy from "#/components/hotels/HotelSortBy";
 import PaginationResultsSummary from "#/components/hotels/PaginationResultsSummary";
 import { Button } from "#/components/ui/button";
 import { Separator } from "#/components/ui/separator";
-import {
-  filterSearchParamsSchema,
-  hotelSearchWidgetSchema,
-} from "#/lib/schemas/search";
+import { filterSearchParamsSchema } from "#/lib/schemas/search";
+import { mapSearchParamsToHotelWidget } from "#/lib/utils";
 import { getFilterOptions, getHotels } from "#/server/hotels";
 import { createFileRoute } from "@tanstack/react-router";
 import { Search } from "lucide-react";
@@ -31,7 +29,7 @@ export const Route = createFileRoute("/_main/hotels/")({
 function RouteComponent() {
   const searchParams = Route.useSearch();
 
-  const parsedSearchParams = hotelSearchWidgetSchema.parse(searchParams);
+  const normalizedSearchParams = mapSearchParamsToHotelWidget(searchParams);
 
   const {
     hotels,
@@ -47,7 +45,7 @@ function RouteComponent() {
     <>
       <div className="box-shadow-sm z-50 space-y-8 rounded-[16px] bg-white px-6 py-8">
         <HotelSearchBar
-          searchParams={parsedSearchParams}
+          searchParams={normalizedSearchParams}
           className="gap-2"
           submitButton={
             <Button
@@ -62,7 +60,7 @@ function RouteComponent() {
 
       <div className="mt-8 flex items-start gap-6">
         <HotelFilterSidebar SidebarFilterOptions={SidebarFilterOptions} />
-        <Separator orientation="vertical" className="h-100" />
+        <Separator orientation="vertical"  />
         <div className="w-full space-y-8">
           <HotelTypeFilter typePlaceCounts={typePlaceCounts} />
           <div className="flex items-center justify-between text-sm">
