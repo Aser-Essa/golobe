@@ -36,7 +36,7 @@ export const getHotels = createServerFn({ method: "GET" })
       .from("hotels")
       .select(
         `*,  
-        rooms!inner(*,boosfdkings(*)),
+        rooms!inner(*,bookings(*)),
         amenities:hotel_amenity_map!inner(
           amenities!inner(*)
         ),

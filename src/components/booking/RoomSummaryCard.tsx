@@ -1,6 +1,6 @@
 import { FALLBACK_IMAGE } from "#/lib/constants";
 import type { FilterSearchParams, HotelType } from "#/lib/types";
-import { formatCheckIn } from "#/lib/utils";
+import { formatDate } from "#/lib/utils";
 import { useSearch } from "@tanstack/react-router";
 import { MapPin } from "lucide-react";
 
@@ -17,10 +17,10 @@ export default function RoomSummaryCard({ room, hotel }: RoomSummaryCardProps) {
   const searchParams = search;
 
   const checkInDate = searchParams.checkIn
-    ? formatCheckIn(searchParams.checkIn)
+    ? formatDate(searchParams.checkIn)
     : "-";
   const checkOutDate = searchParams.checkOut
-    ? formatCheckIn(searchParams.checkOut)
+    ? formatDate(searchParams.checkOut)
     : "-";
 
   return (

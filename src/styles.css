@@ -75,7 +75,7 @@ body {
   --salmon: oklch(75.371% 0.14772 23.133);
 
   /* ── Foreground — exact #112211 from Figma */
-  --foreground: oklch(23.128% 0.0394 144.202);
+  --foreground: oklch(23.128% 0.0394 144.202) ;
   --background: oklch(98.761% 0.00181 249.253); /* #FAFBFC hotelSearch bg */
 
   /* ── Cards */
@@ -90,7 +90,7 @@ body {
   --secondary-foreground: oklch(16.8% 0.028 152);
 
   /* ── Muted — #FAFBFC page surface */
-  --muted: oklch(89.755% 0.0001 271.152);
+  --muted: oklch(94.611% 0.00011 271.152);
   --muted-foreground: oklch(43.5% 0.022 193); /* #546869 vector */
 
   /* ── Accent — same as secondary */

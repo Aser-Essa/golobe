@@ -47,7 +47,7 @@ export function generatePageButtons({
   return pages;
 }
 
-export const formatCheckIn = (date: string) =>
+export const formatDate = (date: string) =>
   new Date(date).toLocaleDateString("en-US", {
     weekday: "long",
     month: "short",
