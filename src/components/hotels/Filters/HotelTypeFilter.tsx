@@ -1,15 +1,11 @@
 import { Separator } from "#/components/ui/separator";
-import { HOTEL_TYPES } from "#/lib/constants";
-import type { FilterSearchParams, HotelType } from "#/lib/types";
 import { Tabs, TabsList, TabsTrigger } from "#/components/ui/tabs";
+import { HOTEL_TYPES } from "#/lib/constants";
+import type { FilterSearchParams } from "#/lib/types";
 import { useNavigate, useSearch } from "@tanstack/react-router";
 import { Fragment } from "react/jsx-runtime";
 
-
-
 type TypePlaceCounts = Record<FilterSearchParams["hotelType"], number>;
-
-
 
 export default function HotelTypeFilter({
   typePlaceCounts,

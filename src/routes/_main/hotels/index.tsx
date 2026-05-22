@@ -1,3 +1,4 @@
+import RouteError from "#/components/common/RouteError";
 import HotelFilterSidebar from "#/components/hotels/Filters/HotelFilterSidebar";
 import HotelSearchBar from "#/components/hotels/Filters/HotelSearchBar";
 import HotelTypeFilter from "#/components/hotels/Filters/HotelTypeFilter";
@@ -24,6 +25,9 @@ export const Route = createFileRoute("/_main/hotels/")({
     const SidebarFilterOptions = await getFilterOptions();
     return { hotelsPromise, SidebarFilterOptions };
   },
+  errorComponent: ({ error, reset }) => (
+    <RouteError error={error} reset={reset} />
+  ),
 });
 
 function RouteComponent() {
