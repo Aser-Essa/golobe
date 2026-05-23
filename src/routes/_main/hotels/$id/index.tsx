@@ -1,3 +1,4 @@
+import Container from "#/components/common/Container";
 import Amenities from "#/components/hotels/detail/Amenities";
 import AvailableRooms from "#/components/hotels/detail/AvailableRooms";
 import HotelBreadCrumb from "#/components/hotels/detail/HotelBreadCrumb";
@@ -39,7 +40,7 @@ function RouteComponent() {
     Number(hotel.review_count) > 0;
 
   return (
-    <>
+    <Container>
       <HotelBreadCrumb
         name={hotel.name}
         city={hotel.city}
@@ -95,6 +96,6 @@ function RouteComponent() {
       <Reviews avg_rating={hotel.avg_rating} reviews={hotel.reviews} />
 
       <div className="h-[50vh]"></div>
-    </>
+    </Container>
   );
 }

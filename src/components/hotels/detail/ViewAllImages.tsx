@@ -1,6 +1,7 @@
 import { Button } from "#/components/ui/button";
 import type { Tables } from "#/lib/types/supabase";
 import { Dialog, DialogContent, DialogTrigger } from "#/components/ui/dialog";
+import { Eye } from "lucide-react";
 
 type ViewAllImagesProps = {
   hotel_images: Tables<"hotel_images">[];
@@ -11,8 +12,10 @@ export default function ViewAllImages({ hotel_images }: ViewAllImagesProps) {
      
       <Dialog>
         <DialogTrigger asChild>
-          <Button className="absolute right-4 bottom-4 z-10 h-12 px-4 py-2 font-semibold hover:bg-[#a4dbc9]">
-            View all photos
+          <Button className="absolute right-4 bottom-4 z-10 h-12 p-2 sm:px-4 py-2 font-semibold hover:bg-[#a4dbc9]">
+            View all <span className="hidden md:inline">photos</span> <span>
+              <Eye className=" size-5  md:hidden inline" />
+            </span>
           </Button>
         </DialogTrigger>
         <DialogContent className="w-[90vw] max-w-screen!">

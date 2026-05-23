@@ -3,6 +3,7 @@ import { MapPin } from "lucide-react";
 import { lazy, Suspense } from "react";
 import { buttonVariants } from "../../ui/button";
 import type { HotelType } from "#/lib/types";
+import { Skeleton } from "#/components/ui/skeleton";
 
 const LeafletMap = lazy(() => import("./LeafletMap"));
 
@@ -18,35 +19,33 @@ export default function MapAndLocation({
   address,
 }: MapAndLocationProps) {
   return (
-     
-      <div className="space-y-8">
-        <div className="flex items-center justify-between">
-          <p className="text-xl font-bold">Location/Map</p>
-          <a
-            href={`https://www.google.com/maps?q=${latitude},${longitude}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className={cn(
-              buttonVariants({ variant: "default" }),
-              "h-12 rounded-[4px] px-4 py-2 text-sm font-semibold",
-            )}
-          >
-            View on google maps
-          </a>
-        </div>
+    <div className="space-y-8">
+      <div className="flex items-center justify-between flex-wrap gap-3">
+        <p className="text-xl font-bold">Location/Map</p>
+        <a
+          href={`https://www.google.com/maps?q=${latitude},${longitude}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          className={cn(
+            buttonVariants({ variant: "default" }),
+            "h-12 rounded-[4px] sm:px-4 p-2 py-2 text-xs sm:text-sm font-semibold",
+          )}
+        >
+          View on google maps
+        </a>
+      </div>
 
-        <div className="space-y-2">
-          <div className="h-[500px] overflow-hidden rounded-[16px]">
-            <Suspense fallback={<div>Loading...</div>}>
-              <LeafletMap latitude={latitude} longitude={longitude} />
-            </Suspense>
-          </div>
-          <div className="flex items-center gap-0.5">
-            <MapPin className="text-foreground size-5" />
-            <p className="text-foreground/75 text-sm font-medium">{address}</p>
-          </div>
+      <div className="space-y-2">
+        <div className=" h-100 sm:h-125 overflow-hidden rounded-[16px]">
+          <Suspense fallback={<Skeleton className="h-full w-full" />}>
+            <LeafletMap latitude={latitude} longitude={longitude} />
+          </Suspense>
+        </div>
+        <div className="flex items-center gap-0.5">
+          <MapPin className="text-foreground size-5" />
+          <p className="text-foreground/75 text-sm font-medium">{address}</p>
         </div>
       </div>
-     
+    </div>
   );
 }

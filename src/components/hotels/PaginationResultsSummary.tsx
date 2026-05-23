@@ -10,9 +10,15 @@ export default function PaginationResultsSummary({
   to,
 }: PaginationResultsSummaryProps) {
   return (
-    <p className="text-sm font-semibold">
-      Showing {from}-{to} of{" "}
-      <span className="text-salmon">{totalCount} places</span>
+    <p className="flex items-center gap-1 text-sm font-semibold">
+      <span className="hidden md:inline">Showing</span>
+      <span>
+        {from}-{to} of
+      </span>
+      <span className="text-salmon flex items-center gap-1">
+        <span>{totalCount}</span>
+        <span>places</span>
+      </span>
     </p>
   );
 }

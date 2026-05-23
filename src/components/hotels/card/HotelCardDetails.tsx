@@ -5,7 +5,7 @@ import { Coffee, MapPin, Star } from "lucide-react";
 export default function HotelCardDetails({ hotel }: { hotel: HotelType }) {
   return (
     <div className="space-y-4">
-      <p className="text-xl font-bold">{hotel.name}</p>
+      <p className="text-lg font-bold md:text-xl">{hotel.name}</p>
       <div className="space-y-3">
         <div className="flex items-center gap-0.5">
           <MapPin className="text-foreground size-5" />
@@ -13,7 +13,7 @@ export default function HotelCardDetails({ hotel }: { hotel: HotelType }) {
             {hotel.address}
           </p>
         </div>
-        <div className="flex w-fit items-center justify-between gap-8">
+        <div className="flex w-fit items-center justify-between gap-x-8 flex-wrap gap-y-3">
           <div className="flex items-center gap-1">
             <div className="flex items-center">
               {Array.from({ length: hotel.star_rating || 0 }).map((_, idx) => (

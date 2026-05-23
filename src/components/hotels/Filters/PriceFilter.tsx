@@ -55,7 +55,7 @@ export default function PriceFilter({
     <Collapsible
       open={isOpen}
       onOpenChange={setIsOpen}
-      className="flex w-86 flex-col gap-7"
+      className="flex flex-col gap-7"
     >
       <CollapsibleTrigger asChild>
         <div className="rounded-10 flex w-full cursor-pointer items-center justify-between">

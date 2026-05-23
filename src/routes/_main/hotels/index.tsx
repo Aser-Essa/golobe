@@ -1,4 +1,6 @@
+import Container from "#/components/common/Container";
 import RouteError from "#/components/common/RouteError";
+import { FilterSidebarSheet } from "#/components/hotels/Filters/FilterSidebarSheet";
 import HotelFilterSidebar from "#/components/hotels/Filters/HotelFilterSidebar";
 import HotelSearchBar from "#/components/hotels/Filters/HotelSearchBar";
 import HotelTypeFilter from "#/components/hotels/Filters/HotelTypeFilter";
@@ -38,25 +40,34 @@ function RouteComponent() {
   const { hotelsPromise, SidebarFilterOptions } = Route.useLoaderData();
 
   return (
-    <>
+    <Container>
       <div className="box-shadow-sm z-50 space-y-8 rounded-[16px] bg-white px-6 py-8">
         <HotelSearchBar
           searchParams={normalizedSearchParams}
-          className="gap-2"
+          className="flex-col gap-2 lg:flex-row lg:items-end"
           submitButton={
-            <Button
-              type="submit"
-              className="flex aspect-square h-14 items-center gap-1 px-4 py-2 text-sm font-medium"
-            >
-              <Search className="size-5" />
-            </Button>
+            <div className="flex items-center gap-2">
+              <Button
+                type="submit"
+                className="flex aspect-square h-14 w-full flex-1 items-center gap-1 px-4 py-2 text-sm font-medium lg:w-fit"
+              >
+                <Search className="size-5" />
+              </Button>
+              <div className="flex w-full flex-1 xl:hidden">
+                <FilterSidebarSheet
+                  SidebarFilterOptions={SidebarFilterOptions}
+                />
+              </div>
+            </div>
           }
         />
       </div>
 
       <div className="mt-8 flex items-start gap-6">
-        <HotelFilterSidebar SidebarFilterOptions={SidebarFilterOptions} />
-        <Separator orientation="vertical" />
+        <div className="hidden xl:block">
+          <HotelFilterSidebar SidebarFilterOptions={SidebarFilterOptions} />
+        </div>
+        <Separator orientation="vertical" className="hidden xl:block" />
 
         <Await promise={hotelsPromise} fallback={<HotelsPageSkeleton />}>
           {(data) => (
@@ -81,7 +92,8 @@ function RouteComponent() {
           )}
         </Await>
       </div>
+
       <div className="h-screen"></div>
-    </>
+    </Container>
   );
 }

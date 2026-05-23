@@ -25,7 +25,7 @@ export default function Amenities({ amenities }: AmenitiesProps) {
      
       <div className="space-y-8">
         <p className="text-xl font-bold">Amenities</p>
-        <div className="grid max-w-180 grid-cols-2 gap-6">
+        <div className="grid max-w-180 grid-cols-1 sm:grid-cols-2 gap-6">
           {amenitiesArray.map((amenity) => (
             <AmenityItem key={amenity.id} amenity={amenity} />
           ))}

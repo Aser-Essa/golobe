@@ -59,7 +59,7 @@ export default function HotelSearchBar({
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={cn("flex", className)}>
-      <div className="flex w-full items-start gap-2">
+      <div className="flex w-full flex-wrap items-start gap-2 gap-y-4">
         <DestinationSearch control={control} watch={watch} name="destination" />
 
         <DateField

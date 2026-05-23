@@ -28,7 +28,7 @@ export default function HotelsPageSkeleton() {
       </div>
 
       {/* Top Section */}
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between gap-3">
         <Skeleton className="h-5 w-52" />
 
         <div className="flex items-center gap-2">
@@ -43,13 +43,13 @@ export default function HotelsPageSkeleton() {
         {Array.from({ length: 4 }).map((_, i) => (
           <div
             key={i}
-            className="box-shadow-sm flex overflow-hidden rounded-[12px] bg-white"
+            className="box-shadow-sm flex flex-col overflow-hidden rounded-[12px] bg-white md:flex-row border border-foreground/15"
           >
             {/* Image */}
-            <Skeleton className="h-[260px] w-[320px]" />
+            <Skeleton className="h-[260px] w-full md:w-[320px]" />
 
             {/* Content */}
-            <div className="flex w-full flex-col justify-between p-6">
+            <div className="flex w-full flex-col justify-between gap-3 p-6">
               <div className="space-y-6">
                 <div className="flex justify-between gap-8">
                   <div className="flex-1 space-y-4">
@@ -64,7 +64,7 @@ export default function HotelsPageSkeleton() {
                     </div>
                   </div>
 
-                  <div className="space-y-3 text-end">
+                  <div className="space-y-3 text-end hidden md:block">
                     <Skeleton className="ml-auto h-8 w-24" />
                     <Skeleton className="ml-auto h-5 w-20" />
                     <Skeleton className="ml-auto h-10 w-32 rounded-md" />

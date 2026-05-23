@@ -7,12 +7,9 @@ export const Route = createFileRoute("/_main")({
 
 function RouteComponent() {
   return (
-     <>
+    <>
       <Header />
-      <div className="mx-20 mt-34">
-        <Outlet />
-      </div>
-     </>
-     
+      <Outlet />
+    </>
   );
 }

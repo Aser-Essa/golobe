@@ -59,34 +59,38 @@ export default function AvailableRooms({ rooms }: AvailableRoomsProps) {
             i,
           ) => (
             <Fragment key={`${id}-${description}`}>
-              <div className="flex h-12 items-center justify-between gap-12">
-                <div className="flex items-center gap-4">
-                  <div className="aspect-square size-12 overflow-hidden rounded-sm">
-                    <img
-                      src={image_url || ""}
-                      alt={name}
-                      className="h-full w-full object-cover"
-                    />
+              <div className="flex flex-col items-center justify-between gap-x-12 gap-y-3 min-[880px]:flex-row">
+                <div className="flex w-full items-center justify-between gap-6 sm:gap-12">
+                  <div className="flex items-center gap-4">
+                    <div className="aspect-square size-12 min-w-12 overflow-hidden rounded-sm">
+                      <img
+                        src={image_url || ""}
+                        alt={name}
+                        className="h-full w-full object-cover"
+                      />
+                    </div>
+                    <p className="flex gap-1 text-sm sm:text-base font-medium">
+                      <span>{name}</span>
+                      <span className="sm:block hidden">
+                        {view_type ? `- ${view_type}` : ""} - {bed_type}
+                      </span>
+                    </p>
                   </div>
-                  <p className="text-base font-medium">
-                    {name} {view_type ? `- ${view_type}` : ""} - {bed_type}
-                  </p>
-                </div>
-                <div className="flex items-center gap-16">
-                  <p className="text-2xl font-semibold">
+
+                  <p className=" text-xl sm:text-2xl font-semibold">
                     ${price_per_night}
                     <span className="text-sm">/night</span>
                   </p>
-                  <div className="flex items-center gap-2">
-                    <ViewRoomDetails room={avaliableRoomsCapacity[i]} />
+                </div>
 
-                    <Button
-                      className="h-12 w-37.5 px-4 py-2 font-semibold"
-                      onClick={() => handleBookNow(id)}
-                    >
-                      Book now
-                    </Button>
-                  </div>
+                <div className="flex w-full items-center gap-2 min-[880px]:w-auto">
+                  <ViewRoomDetails room={avaliableRoomsCapacity[i]} />
+                  <Button
+                    className="h-10 flex-1 px-4 py-2 font-semibold min-[880px]:h-12 lg:w-37.5"
+                    onClick={() => handleBookNow(id)}
+                  >
+                    Book now
+                  </Button>
                 </div>
               </div>
 

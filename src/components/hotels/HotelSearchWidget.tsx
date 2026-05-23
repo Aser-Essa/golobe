@@ -9,7 +9,7 @@ export default function HotelSearchWidget({
   searchParams: HotelSearchWidgetType;
 }) {
   return (
-    <div className="box-shadow-sm z-50 mx-20 translate-y-[-29%] space-y-8 rounded-[16px] bg-white px-6 py-8">
+    <div className="box-shadow-sm z-50  translate-y-[-29%] space-y-8 rounded-[16px] bg-white px-6 py-8">
       <p className="text-xl font-semibold">Where are you flying? </p>
 
       <HotelSearchBar

@@ -29,7 +29,7 @@ export default function InputField<T extends FieldValues>({
       name={name}
       control={control}
       render={({ field, fieldState }) => (
-        <Field data-invalid={fieldState.invalid} className="relative w-full">
+        <Field data-invalid={fieldState.invalid} className="relative w-full min-w-37.5">
           <FieldLabel
             htmlFor={field.name}
             className="absolute -top-2.25 left-3 z-10 w-fit! rounded-[8px] bg-white px-1 text-sm font-normal"

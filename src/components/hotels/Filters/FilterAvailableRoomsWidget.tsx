@@ -55,12 +55,15 @@ export default function FilterAvailableRoomsWidget({
   return (
     <div
       className={cn(
-        "box-shadow-sm z-50 mx-20 translate-y-[-29%] space-y-8 rounded-[16px] bg-white px-6 py-8",
+        "box-shadow-sm z-50  space-y-8 rounded-[16px] bg-white pb-8",
         className,
       )}
     >
-      <form onSubmit={handleSubmit(onSubmit)} className={cn("flex gap-2")}>
-        <div className="flex w-full items-start gap-2">
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className={cn("flex flex-col gap-x-2 gap-y-4 md:flex-row")}
+      >
+        <div className="flex w-full flex-wrap items-start gap-x-2 gap-y-4">
           <DateField
             name="checkIn"
             label="Check In"

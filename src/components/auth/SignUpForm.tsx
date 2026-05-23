@@ -57,7 +57,7 @@ export default function SignUpForm({ signUp, fetchStatus }: UseSignUpProps) {
       </div>
 
       <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
-        <div className="flex items-center gap-6">
+        <div className="flex flex-col sm:flex-row  items-center gap-6">
           <InputField
             name="firstName"
             control={control}
@@ -73,7 +73,7 @@ export default function SignUpForm({ signUp, fetchStatus }: UseSignUpProps) {
           />
         </div>
 
-        <div className="flex items-center gap-6">
+        <div className="flex flex-col sm:flex-row items-center gap-6">
           <InputField
             name="email"
             control={control}
@@ -123,7 +123,7 @@ export default function SignUpForm({ signUp, fetchStatus }: UseSignUpProps) {
                   ref={field.ref}
                   className="aspect-square! h-4.5! w-4.5!"
                 />
-                <FieldLabel htmlFor={field.name} className="text-sm text-black">
+                <FieldLabel htmlFor={field.name} className=" text-xs sm:text-sm text-black">
                   I agree to all the{" "}
                   <Link to="/" className="text-salmon font-semibold">
                     Terms

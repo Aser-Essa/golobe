@@ -28,7 +28,7 @@ export default function HotelTypeFilter({
   return (
     <Tabs defaultValue={hotelType}>
       <TabsList
-        className="box-shadow-sm h-20! w-full gap-6 rounded-[12px]! bg-white px-6 py-4"
+        className="box-shadow-sm h-20! w-full gap-4 rounded-[12px]! bg-white p-3 md:gap-6 md:px-6 md:py-4"
         variant={"line"}
       >
         {HOTEL_TYPES.map(({ value, label }) => (
@@ -44,8 +44,8 @@ export default function HotelTypeFilter({
               className="after:bg-primary h-11.25 w-full cursor-pointer! justify-start bg-transparent! p-0! text-start shadow-none! after:-bottom-4.5! after:h-1!"
             >
               <div className="space-y-2">
-                <p className="text-base font-semibold text-black">{label}</p>
-                <span className="text-foreground/40">
+                <p className=" text-sm md:text-base font-semibold text-black">{label}</p>
+                <span className="text-foreground/40 text-xs md:text-sm">
                   {typePlaceCounts[value]} places
                 </span>
               </div>

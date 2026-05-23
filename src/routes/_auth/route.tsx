@@ -14,23 +14,21 @@ export const Route = createFileRoute("/_auth")({
 
 function RouteComponent() {
   return (
-     
-      <div className="flex justify-between gap-26 p-26">
-        <div className="flex w-full flex-col justify-start">
-          <div className="mb-16">
-            <Logo />
-          </div>
-          <Outlet />
+    <div className="flex justify-between gap-10 lg:gap-16 px-4 py-26 sm:px-8 md:px-16 xl:gap-26 xl:px-26">
+      <div className="flex w-full flex-col justify-start">
+        <div className="mb-16">
+          <Logo />
         </div>
-
-        <div className="w-full overflow-hidden rounded-[30px]">
-          <img
-            src="/auth-slider-1.png"
-            alt="Auth Slider"
-            className="max-h-204 w-full object-cover"
-          />
-        </div>
+        <Outlet />
       </div>
-     
+
+      <div className="w-full overflow-hidden rounded-[30px] hidden min-[850px]:block">
+        <img
+          src="/auth-slider-1.png"
+          alt="Auth Slider"
+          className="h-full w-full object-cover lg:max-h-204"
+        />
+      </div>
+    </div>
   );
 }

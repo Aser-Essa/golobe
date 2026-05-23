@@ -1,3 +1,4 @@
+import Container from "#/components/common/Container";
 import HotelSearchWidget from "#/components/hotels/HotelSearchWidget";
 import Herosection from "#/components/layout/Herosection";
 import type { FilterSearchParams } from "#/lib/types";
@@ -14,8 +15,10 @@ function Home() {
   return (
     <>
       <Herosection />
-      <HotelSearchWidget searchParams={normalizedSearchParams} />
-      <div className="h-screen"></div>
+      <Container>
+        <HotelSearchWidget searchParams={normalizedSearchParams} />
+        <div className="h-screen"></div>
+      </Container>
     </>
   );
 }
