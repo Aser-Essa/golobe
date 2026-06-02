@@ -7,7 +7,7 @@ export const getRoom = createServerFn({ method: "GET" })
   .handler(async ({ data }) => {
     const { data: roomData, error } = await supabase
       .from("rooms")
-      .select(`*,bookings(*),hotel:hotels(*)`)
+      .select(`*,bookings(*),hotel:hotels(*,hotel_images:hotel_images(*))`)
       .eq("id", data.id);
 
     if (error) {

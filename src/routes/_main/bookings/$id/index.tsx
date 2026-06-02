@@ -1,5 +1,8 @@
+import CheckoutSummarySidebar from "#/components/booking/CheckoutSummarySidebar";
+import PaymentType from "#/components/booking/PaymentType";
 import RoomSummaryCard from "#/components/booking/RoomSummaryCard";
 import HotelBreadCrumb from "#/components/hotels/detail/HotelBreadCrumb";
+import Container from "#/components/layout/Container";
 import { getRoom } from "#/server/rooms";
 import { createFileRoute } from "@tanstack/react-router";
 
@@ -17,19 +20,23 @@ function RouteComponent() {
   const hotel = room.hotel;
 
   return (
-    <>
+    <Container>
       <HotelBreadCrumb
         name={hotel.name}
         city={hotel.city}
         country={hotel.country}
       />
-      <div className="mt-8 flex gap-10">
-        <div className="flex-3">
+      <div className="mt-8 flex items-start gap-10">
+        <div className="flex-3 space-y-10">
           <RoomSummaryCard room={room} hotel={hotel} />
+          <PaymentType
+            price_per_night={room.price_per_night}
+            tax_rate={hotel.tax_rate}
+          />
         </div>
-
-        <div className="box-shadow-sm h-[200px] flex-2 rounded-[12px] bg-white"></div>
+        <CheckoutSummarySidebar hotel={hotel} room={room} />
       </div>
-    </>
+      <div className="h-screen"></div>
+    </Container>
   );
 }

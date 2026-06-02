@@ -1,4 +1,4 @@
-import Container from "#/components/common/Container";
+import Container from "#/components/layout/Container";
 import RouteError from "#/components/common/RouteError";
 import { FilterSidebarSheet } from "#/components/hotels/Filters/FilterSidebarSheet";
 import HotelFilterSidebar from "#/components/hotels/Filters/HotelFilterSidebar";
@@ -8,20 +8,25 @@ import { HotelPagination } from "#/components/hotels/HotelPagination";
 import HotelsEmptyState from "#/components/hotels/HotelsEmptyState";
 import HotelsList from "#/components/hotels/HotelsList";
 import HotelSortBy from "#/components/hotels/HotelSortBy";
-import HotelsPageSkeleton from "#/components/hotels/HotelsPageSkeleton";
+import HotelsPageSkeleton from "#/components/skeleton/HotelsPageSkeleton";
 import PaginationResultsSummary from "#/components/hotels/PaginationResultsSummary";
 import { Button } from "#/components/ui/button";
 import { Separator } from "#/components/ui/separator";
 import { filterSearchParamsSchema } from "#/lib/schemas/search";
 import { mapSearchParamsToHotelWidget } from "#/lib/utils";
 import { getFilterOptions, getHotels } from "#/server/hotels";
-import { Await, createFileRoute } from "@tanstack/react-router";
+import { Await, createFileRoute, redirect } from "@tanstack/react-router";
 import { Search } from "lucide-react";
 
 export const Route = createFileRoute("/_main/hotels/")({
   component: RouteComponent,
   validateSearch: filterSearchParamsSchema,
   loaderDeps: ({ search }) => search,
+  beforeLoad: ({ search }) => {
+    if (!search.destination || search.destination.trim().length === 0) {
+      throw redirect({ to: "/" });
+    }
+  },
   loader: async ({ deps }) => {
     const hotelsPromise = getHotels({ data: deps });
     const SidebarFilterOptions = await getFilterOptions();

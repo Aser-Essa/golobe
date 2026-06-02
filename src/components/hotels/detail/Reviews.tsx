@@ -15,30 +15,28 @@ export default function Reviews({ avg_rating, reviews }: ReviewsProps) {
   if (verifiedReviews.length === 0) return null;
 
   return (
-     
-      <div className="space-y-6">
-        <p className="text-xl font-bold">Reviews</p>
-        <div>
-          <div className="flex items-center gap-4">
-            <p className="text-[50px] font-bold">{avg_rating || 0}</p>
-            <div>
-              <span className="text-xl font-semibold">
-                {getRatingLabel(avg_rating || 0)}
-              </span>
-              <p className="text-sm">
-                {verifiedReviews.length || 0} verified reviews
-              </p>
-            </div>
+    <div className="space-y-6">
+      <p className="text-xl font-bold">Reviews</p>
+      <div>
+        <div className="flex items-center gap-4">
+          <p className="text-[50px] font-bold">{avg_rating || 0}</p>
+          <div>
+            <span className="text-xl font-semibold">
+              {getRatingLabel(avg_rating || 0)}
+            </span>
+            <p className="text-sm">
+              {verifiedReviews.length || 0} verified reviews
+            </p>
           </div>
         </div>
-        <Separator />
-        {verifiedReviews.map((review) => (
-          <Fragment key={review.id}>
-            <ReviewCard review={review} />
-            <Separator />
-          </Fragment>
-        ))}
       </div>
-     
+      <Separator />
+      {verifiedReviews.map((review) => (
+        <Fragment key={review.id}>
+          <ReviewCard review={review} />
+          <Separator />
+        </Fragment>
+      ))}
+    </div>
   );
 }

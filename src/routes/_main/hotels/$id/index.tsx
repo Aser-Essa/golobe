@@ -1,4 +1,4 @@
-import Container from "#/components/common/Container";
+import Container from "#/components/layout/Container";
 import Amenities from "#/components/hotels/detail/Amenities";
 import AvailableRooms from "#/components/hotels/detail/AvailableRooms";
 import HotelBreadCrumb from "#/components/hotels/detail/HotelBreadCrumb";

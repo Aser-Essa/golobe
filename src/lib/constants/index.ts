@@ -52,7 +52,7 @@ export const HOTELS_PER_PAGE = 4;
 export const MAX_ROOMS = 10;
 export const MAX_GUESTS = MAX_ROOMS * 3;
 
-export const MAX_DESTINATION_OPTIONS = 6
+export const MAX_DESTINATION_OPTIONS = 6;
 
 export const HOTEL_TYPES: {
   value: FilterSearchParams["hotelType"];
@@ -63,4 +63,20 @@ export const HOTEL_TYPES: {
   { value: "resort", label: "Resorts" },
 ];
 
+export const FAVOURITE_TYPES: {
+  value: FilterSearchParams["favType"];
+  label: string;
+}[] = [
+  {
+    value: "hotel",
+    label: "Hotels",
+  },
+  {
+    value: "flight",
+    label: "Flights",
+  },
+];
+
 export const FALLBACK_IMAGE = "/dummy-hotel-img.png";
+
+export const SERVICE_FEE = 10;

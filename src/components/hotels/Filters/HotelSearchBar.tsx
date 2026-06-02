@@ -9,6 +9,8 @@ import { useForm } from "react-hook-form";
 import DateField from "#/components/common/DateField";
 import DestinationSearch from "./DestinationSearch";
 import RoomGuestFilter from "./RoomGuestFilter";
+import { startOfToday } from "date-fns";
+import { useBookingDates } from "#/hooks/useBookingDates";
 
 export default function HotelSearchBar({
   searchParams,
@@ -19,38 +21,28 @@ export default function HotelSearchBar({
   className?: string;
   submitButton?: React.ReactNode;
 }) {
-  const defaultValues = searchParams;
+  const defaultValues = {
+    destination: searchParams.destination || "",
+    checkIn: new Date(searchParams.checkIn),
+    checkOut: new Date(searchParams.checkOut),
+    rooms: searchParams.rooms || 1,
+    guests: searchParams.guests || 1,
+  };
 
   const { control, watch, setValue, handleSubmit } = useForm({
     resolver: zodResolver(hotelSearchWidgetSchema),
-    defaultValues: defaultValues,
+    defaultValues,
   });
 
-  const checkInDate = watch("checkIn");
-  const checkOutDate = watch("checkOut");
+  const { checkInDate, checkOutDate } = useBookingDates({ watch, setValue });
+
   const roomsFormValue = watch("rooms");
   const guestsFormValue = watch("guests");
-
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
-
+  const today = startOfToday();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (checkOutDate > checkInDate) return;
-    setValue("checkOut", checkInDate);
-  }, [checkInDate]);
-
   function onSubmit(data: HotelSearchWidgetType) {
-    if (data.destination.trim().length === 0) {
-      navigate({
-        to: "/",
-      });
-      return;
-    }
-
     const mappedSearchParams = mapHotelWidgetToSearchParams(data);
-
     navigate({
       to: "/hotels",
       search: (prev) => ({ ...prev, ...mappedSearchParams }),
@@ -75,7 +67,7 @@ export default function HotelSearchBar({
           label="Check Out"
           control={control}
           date={checkOutDate}
-          disabledDays={(day) => day < checkInDate}
+          disabledDays={(day) => day <= checkInDate}
         />
         <RoomGuestFilter
           setValue={setValue}

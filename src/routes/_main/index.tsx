@@ -1,4 +1,4 @@
-import Container from "#/components/common/Container";
+import Container from "#/components/layout/Container";
 import HotelSearchWidget from "#/components/hotels/HotelSearchWidget";
 import Herosection from "#/components/layout/Herosection";
 import type { FilterSearchParams } from "#/lib/types";
@@ -13,12 +13,12 @@ function Home() {
   const normalizedSearchParams = mapSearchParamsToHotelWidget(searchParams);
 
   return (
-    <>
+    <div className="mt-22">
       <Herosection />
-      <Container>
+      <Container className="mt-0">
         <HotelSearchWidget searchParams={normalizedSearchParams} />
-        <div className="h-screen"></div>
       </Container>
-    </>
+      <div className="h-screen"></div>
+    </div>
   );
 }

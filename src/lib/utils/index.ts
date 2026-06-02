@@ -1,6 +1,14 @@
 import type { ClassValue } from "clsx";
 import { clsx } from "clsx";
+import {
+  differenceInDays,
+  isWithinInterval,
+  parseISO,
+  startOfDay,
+  subDays,
+} from "date-fns";
 import { twMerge } from "tailwind-merge";
+import { FALLBACK_IMAGE, SERVICE_FEE } from "../constants";
 import type {
   FilterSearchParams,
   GeneratePageButtonsParams,
@@ -9,7 +17,6 @@ import type {
   PageButtonItem,
 } from "../types";
 import type { Tables } from "../types/supabase";
-import { FALLBACK_IMAGE } from "../constants";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -114,3 +121,59 @@ export function mapHotelWidgetToSearchParams(data: HotelSearchWidgetType) {
     guests: data.guests,
   };
 }
+
+export function isBookedDay({
+  day,
+  bookings,
+}: {
+  day: Date;
+  bookings: Tables<"bookings">[];
+}) {
+  const normalizedDay = startOfDay(day);
+  return bookings.some((booking) => {
+    const checkIn = startOfDay(parseISO(booking.check_in));
+    const checkOut = subDays(startOfDay(parseISO(booking.check_out)), 1);
+    return isWithinInterval(normalizedDay, {
+      start: checkIn,
+      end: checkOut,
+    });
+  });
+}
+
+type PricingParams = {
+  checkIn: string;
+  checkOut: string;
+  pricePerNight: number;
+  taxRate: number;
+};
+
+export function calculateBookingPrice({
+  checkIn,
+  checkOut,
+  pricePerNight,
+  taxRate,
+}: PricingParams) {
+  const totalNights = Math.max(0, differenceInDays(checkOut, checkIn));
+
+  const baseFare = pricePerNight * totalNights;
+  const taxes = baseFare * (taxRate / 100);
+  const total = baseFare + taxes + SERVICE_FEE;
+
+  return {
+    totalNights,
+    baseFare,
+    taxes,
+    total,
+  };
+}
+
+type MinimalUser = {
+  unsafeMetadata: Record<string, unknown>;
+  fullName?: string | null;
+};
+
+export const getUserName = (user: MinimalUser | null | undefined) => {
+  return typeof user?.unsafeMetadata.displayName === "string"
+    ? user.unsafeMetadata.displayName
+    : (user?.fullName ?? "");
+};

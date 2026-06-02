@@ -10,3 +10,16 @@ export async function createUser({ user }: { user: CreateUserType }) {
     throw new Error(error.message);
   }
 }
+
+
+
+
+export async function deleteUser({ id }: { id: string }) {
+  const { error } = await supabase.from("users").delete().eq("id", id);
+
+  console.log(error);
+
+  if (error) {
+    throw new Error(error.message);
+  }
+}

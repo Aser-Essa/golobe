@@ -3,11 +3,12 @@ import type { FilterAvailableRoomsWidgetType } from "#/lib/types";
 import { cn } from "#/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useNavigate } from "@tanstack/react-router";
-import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 
 import DateField from "#/components/common/DateField";
 import { Button } from "#/components/ui/button";
+import { useBookingDates } from "#/hooks/useBookingDates";
+import { startOfToday } from "date-fns";
 import { Search } from "lucide-react";
 import RoomGuestFilter from "./RoomGuestFilter";
 
@@ -30,20 +31,14 @@ export default function FilterAvailableRoomsWidget({
     defaultValues: defaultValues,
   });
 
-  const checkInDate = watch("checkIn");
-  const checkOutDate = watch("checkOut");
+  const { checkInDate, checkOutDate } = useBookingDates({ watch, setValue });
+
   const roomsFormValue = watch("rooms");
   const guestsFormValue = watch("guests");
 
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
+  const today = startOfToday();
 
   const navigate = useNavigate({ from: "/hotels/$id/" });
-
-  useEffect(() => {
-    if (checkOutDate > checkInDate) return;
-    setValue("checkOut", checkInDate);
-  }, [checkInDate]);
 
   function onSubmit(data: FilterAvailableRoomsWidgetType) {
     navigate({
@@ -55,7 +50,7 @@ export default function FilterAvailableRoomsWidget({
   return (
     <div
       className={cn(
-        "box-shadow-sm z-50  space-y-8 rounded-[16px] bg-white pb-8",
+        "box-shadow-sm z-50 space-y-8 rounded-[16px] bg-white pb-8",
         className,
       )}
     >
@@ -77,7 +72,7 @@ export default function FilterAvailableRoomsWidget({
             label="Check Out"
             control={control}
             date={checkOutDate}
-            disabledDays={(day) => day < checkInDate}
+            disabledDays={(day) => day <= checkInDate}
           />
           <RoomGuestFilter
             setValue={setValue}

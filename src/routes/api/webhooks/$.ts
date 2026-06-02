@@ -1,4 +1,4 @@
-import { createUser } from "#/server/user";
+import { createUser, deleteUser } from "#/server/user";
 import { verifyWebhook } from "@clerk/tanstack-react-start/webhooks";
 import { createFileRoute } from "@tanstack/react-router";
 
@@ -9,13 +9,7 @@ export const Route = createFileRoute("/api/webhooks/$")({
         try {
           const evt = await verifyWebhook(request);
 
-          // Do something with payload
-          // For this guide, log payload to console
-
           const eventType = evt.type;
-
-          console.log(evt.data);
-          console.log(eventType);
 
           if (eventType === "user.created") {
             const user = {
@@ -28,6 +22,10 @@ export const Route = createFileRoute("/api/webhooks/$")({
             };
 
             await createUser({ user });
+          }
+
+          if (eventType === "user.deleted") {
+            await deleteUser({ id: String(evt.data.id) });
           }
 
           return new Response("Webhook received", { status: 200 });

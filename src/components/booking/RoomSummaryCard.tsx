@@ -1,8 +1,15 @@
+import { useBookingDates } from "#/hooks/useBookingDates";
 import { FALLBACK_IMAGE } from "#/lib/constants";
 import type { FilterSearchParams, HotelType } from "#/lib/types";
-import { formatDate } from "#/lib/utils";
-import { useSearch } from "@tanstack/react-router";
+import { cn, isBookedDay } from "#/lib/utils";
+import { useNavigate, useSearch } from "@tanstack/react-router";
+import {
+  startOfToday
+} from "date-fns";
 import { MapPin } from "lucide-react";
+import { useEffect } from "react";
+import { useForm } from "react-hook-form";
+import DateField from "../common/DateField";
 
 type RoomSummaryCardProps = {
   room: HotelType["rooms"][number];
@@ -10,24 +17,44 @@ type RoomSummaryCardProps = {
 };
 
 export default function RoomSummaryCard({ room, hotel }: RoomSummaryCardProps) {
-  const search: FilterSearchParams = useSearch({
+  const searchParams: FilterSearchParams = useSearch({
     from: "/_main/bookings/$id/",
   });
 
-  const searchParams = search;
+  const defaultValues = {
+    checkIn: new Date(searchParams.checkIn),
+    checkOut: new Date(searchParams.checkOut),
+    rooms: searchParams.rooms || 1,
+    guests: searchParams.guests || 1,
+  };
 
-  const checkInDate = searchParams.checkIn
-    ? formatDate(searchParams.checkIn)
-    : "-";
-  const checkOutDate = searchParams.checkOut
-    ? formatDate(searchParams.checkOut)
-    : "-";
+  const { control, watch, setValue } = useForm({
+    defaultValues: defaultValues,
+  });
+
+  const { checkInDate, checkOutDate } = useBookingDates({ watch, setValue });
+
+  const today = startOfToday();
+  const navigate = useNavigate({ from: "/bookings/$id/" });
+
+  useEffect(() => {
+    navigate({
+      search: (prev) => ({
+        ...prev,
+        checkIn: checkInDate,
+        checkOut: checkOutDate,
+      }),
+      resetScroll: false,
+    });
+  }, [checkInDate, checkOutDate]);
 
   return (
     <div className="box-shadow-sm rounded-[12px] bg-white px-6 py-8">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-4">
-          <h3 className="text-2xl font-bold">{hotel.name}</h3>
+          <h3 className="text-2xl font-bold">
+            {room.name} - {room.bed_type}
+          </h3>
         </div>
         <p className="text-salmon text-[32px] font-bold">
           ${room.price_per_night}
@@ -54,25 +81,35 @@ export default function RoomSummaryCard({ room, hotel }: RoomSummaryCardProps) {
         </div>
       </div>
 
-      <div className="mt-10 flex items-center justify-between">
-        <div className="space-y-2">
-          <div className="text-xl font-semibold">{checkInDate}</div>
-          <span className="text-foreground/60 text-sm font-medium">
-            Check-In
-          </span>
-        </div>
+      <form
+        className={cn(
+          "mt-10 flex flex-col items-center justify-between gap-x-10 gap-y-4 md:flex-row",
+        )}
+      >
+        <DateField
+          name="checkIn"
+          label="Check In"
+          control={control}
+          date={checkInDate}
+          disabledDays={(day) =>
+            day < today || isBookedDay({ day, bookings: room.bookings })
+          }
+        />
 
         <div className="h-12 w-42">
           <img src="/from-to-arrow.svg" className="h-full w-full" />
         </div>
 
-        <div className="space-y-2">
-          <div className="text-xl font-semibold">{checkOutDate}</div>
-          <span className="text-foreground/60 text-sm font-medium">
-            Check-Out
-          </span>
-        </div>
-      </div>
+        <DateField
+          name="checkOut"
+          label="Check Out"
+          control={control}
+          date={checkOutDate}
+          disabledDays={(day) =>
+            day <= checkInDate || isBookedDay({ day, bookings: room.bookings })
+          }
+        />
+      </form>
     </div>
   );
 }

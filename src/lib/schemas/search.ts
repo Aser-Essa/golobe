@@ -36,6 +36,7 @@ export const filterSearchParamsSchema = z.object({
   freebies: z.array(z.string()).optional(),
   amenities: z.array(z.string()).optional(),
   hotelType: z.enum(["hotel", "motel", "resort"]).default("hotel"),
+  favType: z.enum(["hotel", "flight"]).default("hotel"),
   sortBy: z.string().trim().default("avg_rating-desc"),
   page: z.coerce.number().int().min(1).catch(1).default(1),
 });

@@ -11,8 +11,8 @@ import type {
   filterSearchParamsSchema,
   hotelSearchWidgetSchema,
 } from "../schemas/search";
-import type { Tables } from "./supabase";
 import type { createUserSchema } from "../schemas/user";
+import type { Tables } from "./supabase";
 
 export type SignupFormType = z.infer<typeof signUpSchema>;
 

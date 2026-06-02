@@ -1,4 +1,4 @@
-import z from "zod";
+import { z } from "zod";
 
 export const createUserSchema = z.object({
   id: z.string(),
@@ -27,3 +27,4 @@ export const createUserSchema = z.object({
 
   is_active: z.boolean().default(true),
 });
+

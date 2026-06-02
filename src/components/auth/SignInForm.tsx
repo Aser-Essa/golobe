@@ -32,6 +32,7 @@ export default function SignInForm({ signIn, fetchStatus }: UseSignInProps) {
     const { error } = await signIn.password({
       emailAddress: data.email,
       password: data.password,
+      
     });
 
     if (error) {

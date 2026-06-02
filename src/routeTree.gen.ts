@@ -13,6 +13,7 @@ import { Route as MainRouteRouteImport } from './routes/_main/route'
 import { Route as AuthRouteRouteImport } from './routes/_auth/route'
 import { Route as MainIndexRouteImport } from './routes/_main/index'
 import { Route as MainHotelsIndexRouteImport } from './routes/_main/hotels/index'
+import { Route as MainFavouritesIndexRouteImport } from './routes/_main/favourites/index'
 import { Route as MainBookingsIndexRouteImport } from './routes/_main/bookings/index'
 import { Route as AuthSignUpIndexRouteImport } from './routes/_auth/sign-up/index'
 import { Route as AuthSignInIndexRouteImport } from './routes/_auth/sign-in/index'
@@ -37,6 +38,11 @@ const MainIndexRoute = MainIndexRouteImport.update({
 const MainHotelsIndexRoute = MainHotelsIndexRouteImport.update({
   id: '/hotels/',
   path: '/hotels/',
+  getParentRoute: () => MainRouteRoute,
+} as any)
+const MainFavouritesIndexRoute = MainFavouritesIndexRouteImport.update({
+  id: '/favourites/',
+  path: '/favourites/',
   getParentRoute: () => MainRouteRoute,
 } as any)
 const MainBookingsIndexRoute = MainBookingsIndexRouteImport.update({
@@ -82,6 +88,7 @@ export interface FileRoutesByFullPath {
   '/sign-in/': typeof AuthSignInIndexRoute
   '/sign-up/': typeof AuthSignUpIndexRoute
   '/bookings/': typeof MainBookingsIndexRoute
+  '/favourites/': typeof MainFavouritesIndexRoute
   '/hotels/': typeof MainHotelsIndexRoute
   '/bookings/$id/': typeof MainBookingsIdIndexRoute
   '/hotels/$id/': typeof MainHotelsIdIndexRoute
@@ -93,6 +100,7 @@ export interface FileRoutesByTo {
   '/sign-in': typeof AuthSignInIndexRoute
   '/sign-up': typeof AuthSignUpIndexRoute
   '/bookings': typeof MainBookingsIndexRoute
+  '/favourites': typeof MainFavouritesIndexRoute
   '/hotels': typeof MainHotelsIndexRoute
   '/bookings/$id': typeof MainBookingsIdIndexRoute
   '/hotels/$id': typeof MainHotelsIdIndexRoute
@@ -107,6 +115,7 @@ export interface FileRoutesById {
   '/_auth/sign-in/': typeof AuthSignInIndexRoute
   '/_auth/sign-up/': typeof AuthSignUpIndexRoute
   '/_main/bookings/': typeof MainBookingsIndexRoute
+  '/_main/favourites/': typeof MainFavouritesIndexRoute
   '/_main/hotels/': typeof MainHotelsIndexRoute
   '/_main/bookings/$id/': typeof MainBookingsIdIndexRoute
   '/_main/hotels/$id/': typeof MainHotelsIdIndexRoute
@@ -120,6 +129,7 @@ export interface FileRouteTypes {
     | '/sign-in/'
     | '/sign-up/'
     | '/bookings/'
+    | '/favourites/'
     | '/hotels/'
     | '/bookings/$id/'
     | '/hotels/$id/'
@@ -131,6 +141,7 @@ export interface FileRouteTypes {
     | '/sign-in'
     | '/sign-up'
     | '/bookings'
+    | '/favourites'
     | '/hotels'
     | '/bookings/$id'
     | '/hotels/$id'
@@ -144,6 +155,7 @@ export interface FileRouteTypes {
     | '/_auth/sign-in/'
     | '/_auth/sign-up/'
     | '/_main/bookings/'
+    | '/_main/favourites/'
     | '/_main/hotels/'
     | '/_main/bookings/$id/'
     | '/_main/hotels/$id/'
@@ -183,6 +195,13 @@ declare module '@tanstack/react-router' {
       path: '/hotels'
       fullPath: '/hotels/'
       preLoaderRoute: typeof MainHotelsIndexRouteImport
+      parentRoute: typeof MainRouteRoute
+    }
+    '/_main/favourites/': {
+      id: '/_main/favourites/'
+      path: '/favourites'
+      fullPath: '/favourites/'
+      preLoaderRoute: typeof MainFavouritesIndexRouteImport
       parentRoute: typeof MainRouteRoute
     }
     '/_main/bookings/': {
@@ -256,6 +275,7 @@ const AuthRouteRouteWithChildren = AuthRouteRoute._addFileChildren(
 interface MainRouteRouteChildren {
   MainIndexRoute: typeof MainIndexRoute
   MainBookingsIndexRoute: typeof MainBookingsIndexRoute
+  MainFavouritesIndexRoute: typeof MainFavouritesIndexRoute
   MainHotelsIndexRoute: typeof MainHotelsIndexRoute
   MainBookingsIdIndexRoute: typeof MainBookingsIdIndexRoute
   MainHotelsIdIndexRoute: typeof MainHotelsIdIndexRoute
@@ -264,6 +284,7 @@ interface MainRouteRouteChildren {
 const MainRouteRouteChildren: MainRouteRouteChildren = {
   MainIndexRoute: MainIndexRoute,
   MainBookingsIndexRoute: MainBookingsIndexRoute,
+  MainFavouritesIndexRoute: MainFavouritesIndexRoute,
   MainHotelsIndexRoute: MainHotelsIndexRoute,
   MainBookingsIdIndexRoute: MainBookingsIdIndexRoute,
   MainHotelsIdIndexRoute: MainHotelsIdIndexRoute,

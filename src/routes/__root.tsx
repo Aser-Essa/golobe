@@ -1,5 +1,6 @@
 import { ClerkProvider } from "@clerk/tanstack-react-start";
 import { TanStackDevtools } from "@tanstack/react-devtools";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { HeadContent, Scripts, createRootRoute } from "@tanstack/react-router";
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
 import { Toaster } from "sonner";
@@ -30,14 +31,20 @@ export const Route = createRootRoute({
 });
 
 function RootDocument({ children }: { children: React.ReactNode }) {
+  const queryClient = new QueryClient();
+
   return (
     <html lang="en">
       <head>
         <HeadContent />
       </head>
-      <body className=" overflow-x-hidden">
+      <body className="overflow-x-hidden">
         <Toaster position="top-center" />
-        <ClerkProvider>{children}</ClerkProvider>
+        <ClerkProvider>
+          <QueryClientProvider client={queryClient}>
+            {children}
+          </QueryClientProvider>
+        </ClerkProvider>
         <TanStackDevtools
           config={{
             position: "bottom-right",

@@ -1,9 +1,10 @@
+import ToggleFavorite from "#/components/favourites/ToggleFavorite";
 import type { HotelType } from "#/lib/types";
-import { cn, getMinRoomPrice, getRatingLabel } from "#/lib/utils";
+import { cn, getMinRoomPrice } from "#/lib/utils";
 import { MapPin, Star } from "lucide-react";
-import AddToFavorite from "../../common/AddToFavorite";
 import ShareButton from "../../common/ShareButton";
 import { buttonVariants } from "../../ui/button";
+import RatingSummary from "./RatingSummary";
 
 type HotelHeaderProps = {
   hotel: HotelType;
@@ -35,17 +36,10 @@ export default function HotelHeader({ hotel }: HotelHeaderProps) {
               {hotel.address}
             </p>
           </div>
-          <div className="flex items-center gap-1 text-xs font-medium">
-            <div className="border-primary flex h-8 w-10 items-center justify-center rounded-[4px] border">
-              {hotel.avg_rating}
-            </div>
-            <div className="flex items-center gap-1">
-              <p className="font-bold">
-                {getRatingLabel(hotel.avg_rating || 0)}
-              </p>
-              <p>{hotel.review_count} reviews</p>
-            </div>
-          </div>
+          <RatingSummary
+            avg_rating={hotel.avg_rating}
+            review_count={hotel.review_count}
+          />
         </div>
       </div>
 
@@ -65,7 +59,7 @@ export default function HotelHeader({ hotel }: HotelHeaderProps) {
             Book now
           </a>
           <ShareButton />
-          <AddToFavorite />
+          <ToggleFavorite hotelId={hotel.id} />
         </div>
       </div>
     </div>
