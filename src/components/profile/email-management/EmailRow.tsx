@@ -1,9 +1,9 @@
 import type { EmailAddressResource } from "@clerk/types";
 import { CircleCheck } from "lucide-react";
-import { Badge } from "../ui/badge";
-import { Button } from "../ui/button";
-import { Dialog, DialogTrigger } from "../ui/dialog";
-import { Skeleton } from "../ui/skeleton";
+import { Badge } from "#/components/ui/badge";
+import { Button } from "#/components/ui/button";
+import { Dialog, DialogTrigger } from "#/components/ui/dialog";
+import { Skeleton } from "#/components/ui/skeleton";
 import MakeEmailPrimary from "./MakeEmailPrimary";
 import RemoveEmail from "./RemoveEmail";
 import VerifyCodeForm from "./VerifyCodeForm";

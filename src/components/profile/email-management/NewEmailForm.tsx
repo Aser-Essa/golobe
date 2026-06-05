@@ -11,11 +11,12 @@ import type { EmailAddressResource } from "@clerk/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import z from "zod";
-import InputField from "../common/InputField";
-import { Button } from "../ui/button";
+
 import type { User } from "#/lib/types";
-import { Separator } from "../ui/separator";
 import { toast } from "sonner";
+import { Separator } from "#/components/ui/separator";
+import InputField from "#/components/common/InputField";
+import { Button } from "#/components/ui/button";
 
 type NewEmailFormProps = {
   user: User;

@@ -1,10 +1,10 @@
+import { Button } from "#/components/ui/button";
 import { deleteClerkUser } from "#/server/user";
 import { useUser } from "@clerk/tanstack-react-start";
 import type { EmailAddressResource } from "@clerk/types";
 import { useNavigate } from "@tanstack/react-router";
 import { CircleX } from "lucide-react";
 import { toast } from "sonner";
-import { Button } from "../ui/button";
 
 export default function RemoveEmail({
   email,

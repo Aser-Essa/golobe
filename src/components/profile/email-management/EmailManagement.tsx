@@ -1,8 +1,8 @@
 import { useUser } from "@clerk/tanstack-react-start";
-import { Badge } from "../ui/badge";
-import { Skeleton } from "../ui/skeleton";
 import AddEmailDialog from "./AddEmailDialog";
 import EmailRow from "./EmailRow";
+import { Badge } from "#/components/ui/badge";
+import { Skeleton } from "#/components/ui/skeleton";
 
 export default function EmailManagement() {
   const { user, isLoaded } = useUser();
