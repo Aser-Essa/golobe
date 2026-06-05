@@ -60,13 +60,11 @@ export default function NewEmailForm({
 
       setIsVerifying(true);
     } catch (error) {
-      console.error(error);
-
       if (error instanceof Error) {
         toast.error(error.message);
-        throw new Error(error.message);
+        return;
       }
-
+      toast.error("Unknown error occurred");
       throw new Error("Unknown error occurred");
     }
   }

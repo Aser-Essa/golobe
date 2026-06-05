@@ -2,7 +2,7 @@ import type { ForgotPasswordFormProps } from "#/lib/types";
 import { toast } from "sonner";
 import VerifyForm from "./VerifyForm";
 
-export default function ForgotPasswordVerifyForm({
+export default function ForgotPasswordVerifyCodeForm({
   sendEmailCode,
   fetchStatus,
   signIn,
@@ -19,12 +19,10 @@ export default function ForgotPasswordVerifyForm({
   }
 
   return (
-     
-      <VerifyForm
-        handleVerify={handleVerify}
-        sendEmailCode={sendEmailCode}
-        fetchStatus={fetchStatus}
-      />
-     
+    <VerifyForm
+      handleVerify={handleVerify}
+      sendEmailCode={sendEmailCode}
+      fetchStatus={fetchStatus}
+    />
   );
 }

@@ -1,3 +1,4 @@
+import { startOfToday } from "date-fns";
 import { z } from "zod";
 
 export const createUserSchema = z.object({
@@ -38,3 +39,38 @@ export const nameSchema = z
 export const phoneSchema = z
   .string()
   .regex(/^\+?[0-9]\d{7,14}$/, "Invalid phone number");
+
+export const addressSchema = z
+  .string()
+  .min(5, "Address must be at least 5 characters")
+  .max(200, "Address must be less than 200 characters");
+
+export const dateOfBirthSchema = z.object({
+  birthDate: z
+    .date()
+    .refine(
+      (date) => date <= startOfToday(),
+      "Date of birth cannot be today or in the future",
+    ),
+});
+
+export const passwordSchema = z
+  .string()
+  .min(8, { message: "Password must be at least 8 characters" });
+
+export const confirmNewPasswordSchema = z
+  .object({
+    newPassword: passwordSchema,
+    confirmPassword: passwordSchema,
+  })
+  .refine((data) => data.newPassword === data.confirmPassword, {
+    message: "Passwords do not match",
+    path: ["confirmPassword"],
+  });
+
+export const updatePasswordSchema = z.object({
+  userId: z.string(),
+  currentPassword: passwordSchema.optional(),
+  newPassword: passwordSchema,
+  hasPassword: z.boolean(),
+});

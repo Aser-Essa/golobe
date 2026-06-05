@@ -9,7 +9,6 @@ import { Loader2 } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import InputField from "../common/InputField";
-import { SocialAuthButton } from "./SocialAuthButton";
 import SocialAuthButtons from "./SocialAuthButtons";
 
 export default function ForgotPasswordForm({

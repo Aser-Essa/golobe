@@ -1,11 +1,10 @@
-import { FilePenLine } from "lucide-react";
-import { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
+import { cn } from "#/lib/utils";
+import { Check, FilePenLine, X } from "lucide-react";
+import { useState } from "react";
+import type { z } from "zod";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
-import { Skeleton } from "../ui/skeleton";
+import ProfileFieldSkeleton from "./ProfileFieldSkeleton";
 
 type EditableProfileFieldProps = {
   defaultValue: string;
@@ -13,10 +12,8 @@ type EditableProfileFieldProps = {
   onSave: (value: string) => Promise<any>;
   type?: string;
   isLoaded: boolean;
-  schema?: z.ZodString | z.ZodEmail;
+  schema?: z.ZodString;
 };
-
-type FormValues = { value: string };
 
 export default function EditableProfileField({
   defaultValue,
@@ -27,67 +24,114 @@ export default function EditableProfileField({
   schema,
 }: EditableProfileFieldProps) {
   const [isEditable, setIsEditable] = useState(false);
+  const [value, setValue] = useState(defaultValue);
+  const [error, setError] = useState<string | null>(null);
+  const [isSaving, setIsSaving] = useState(false);
 
-  const formSchema = z.object({ value: schema ?? z.string() });
-
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    reset,
-  } = useForm<FormValues>({
-    defaultValues: { value: defaultValue },
-    resolver: zodResolver(formSchema),
-  });
-
-  useEffect(() => {
-    reset({ value: defaultValue });
-  }, [defaultValue, reset]);
-
-  async function onSubmit(data: FormValues) {
-    await onSave(data.value);
-    setIsEditable(false);
+  function handleEdit() {
+    setValue(defaultValue);
+    setError(null);
+    setIsEditable(true);
   }
+
+  function handleCancel() {
+    setIsEditable(false);
+    setError(null);
+  }
+
+  function onInputChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const newValue = e.target.value;
+
+    setValue(newValue);
+    if (schema) {
+      const result = schema.safeParse(newValue);
+      if (!result.success) {
+        setError(result.error.issues[0].message);
+        return;
+      } else {
+        setError(null);
+      }
+    }
+  }
+
+  async function handleSave() {
+    if (schema) {
+      const result = schema.safeParse(value);
+      if (!result.success) {
+        setError(result.error.issues[0].message);
+        return;
+      }
+    }
+
+    setIsSaving(true);
+    try {
+      await onSave(value);
+      setIsEditable(false);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Something went wrong");
+    } finally {
+      setIsSaving(false);
+    }
+  }
+
+  if (!isLoaded) return <ProfileFieldSkeleton label={label} />;
 
   return (
     <div className="flex items-center justify-between">
       <div className="space-y-2">
         <p className="text-foreground/75 text-sm">{label}</p>
+
         {isEditable ? (
           <div className="space-y-1">
             <Input
-              {...register("value")}
-              className={`rounded-sm text-base! font-semibold! ${errors.value ? "border-red-500 focus-visible:ring-red-500" : ""}`}
+              autoFocus
+              value={value}
+              onChange={onInputChange}
               type={type}
+              className={`rounded-sm text-base! font-semibold! ${
+                error ? "border-red-500 focus-visible:ring-red-500" : ""
+              }`}
             />
-            {errors.value && (
-              <p className="text-xs text-red-500">{errors.value.message}</p>
-            )}
+            {error && <p className="text-xs text-red-500">{error}</p>}
           </div>
         ) : (
-          <>
-            {isLoaded ? (
-              <p className="text-base font-semibold">{defaultValue}</p>
-            ) : (
-              <Skeleton className="h-6 w-32" />
+          <p
+            className={cn(
+              "text-base font-semibold",
+              !defaultValue && "text-foreground/40 italic select-none",
             )}
-          </>
+          >
+            {defaultValue || `No ${label} available`}
+          </p>
         )}
       </div>
 
       {isEditable ? (
-        <Button
-          onClick={handleSubmit(onSubmit)}
-          variant={"outline"}
-          className="h-12 w-35 bg-white font-medium"
-        >
-          <FilePenLine />
-          <p>Save</p>
-        </Button>
+        <div className="flex gap-2">
+          <Button
+            type="button"
+            onClick={handleCancel}
+            variant="outline"
+            className="h-12 w-12 bg-white"
+          >
+            <X />
+          </Button>
+          <Button
+            type="button"
+            onClick={handleSave}
+            disabled={isSaving}
+            variant="outline"
+            className="h-12 w-35 bg-white font-medium"
+          >
+            <Check />
+            <p>{isSaving ? "Saving..." : "Save"}</p>
+          </Button>
+        </div>
       ) : (
         <Button
-          onClick={() => setIsEditable(true)}
-          variant={"outline"}
+          type="button"
+          onClick={handleEdit}
+          variant="outline"
           className="h-12 w-35 bg-white font-medium"
         >
           <FilePenLine />

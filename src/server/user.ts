@@ -1,4 +1,4 @@
-import { createUserSchema } from "#/lib/schemas/user";
+import { createUserSchema, updatePasswordSchema } from "#/lib/schemas/user";
 import { supabase } from "#/lib/supabase";
 import { clerkClient } from "@clerk/tanstack-react-start/server";
 import { createServerFn } from "@tanstack/react-start";
@@ -46,13 +46,48 @@ export const deleteClerkUser = createServerFn({ method: "POST" })
       }
 
       await clerkClient().emailAddresses.deleteEmailAddress(emailId);
-    } catch (error) {
+    } catch (error: any) {
       console.error(error);
-
-      if (error instanceof Error) {
-        throw new Error(error.message);
-      }
-
-      throw new Error("Unknown error occurred");
+      throw new Error(error.message || error.errors[0].message);
     }
   });
+
+export const verifyPassword = createServerFn({ method: "POST" })
+  .inputValidator(z.object({ userId: z.string(), currentPassword: z.string() }))
+  .handler(async ({ data: { userId, currentPassword } }) => {
+    if (!currentPassword) throw new Error("Current password is required");
+    try {
+      const { verified } = await clerkClient().users.verifyPassword({
+        userId,
+        password: currentPassword,
+      });
+
+      return verified;
+    } catch (error: any) {
+      console.error(error);
+      throw new Error(error.message || error.errors[0].message);
+    }
+  });
+
+export const updatePassword = createServerFn({ method: "POST" })
+  .inputValidator(updatePasswordSchema)
+  .handler(
+    async ({ data: { userId, hasPassword, currentPassword, newPassword } }) => {
+      try {
+        if (hasPassword) {
+          if (currentPassword === newPassword) {
+            throw new Error(
+              "New password must be different from current password",
+            );
+          }
+        }
+
+        await clerkClient().users.updateUser(userId, {
+          password: newPassword,
+        });
+      } catch (error: any) {
+        console.error(error);
+        throw new Error(error.message || error.errors[0].message);
+      }
+    },
+  );

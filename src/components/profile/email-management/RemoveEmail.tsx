@@ -35,7 +35,7 @@ export default function RemoveEmail({
 
     await new Promise((resolve) => setTimeout(resolve, 1000));
 
-    navigate({ reloadDocument: true });
+    navigate({ reloadDocument: true  , resetScroll: false});
   }
   return (
     <Button

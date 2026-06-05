@@ -1,5 +1,5 @@
 import ForgotPasswordForm from "#/components/auth/ForgotPasswordForm";
-import ForgotPasswordVerifyForm from "#/components/auth/ForgotPasswordVerifyForm";
+import ForgotPasswordVerifyCodeForm from "#/components/auth/ForgotPasswordVerifyCodeForm";
 import ResetPasswordForm from "#/components/auth/ResetPasswordForm";
 import { useSignIn } from "@clerk/tanstack-react-start";
 import { createFileRoute } from "@tanstack/react-router";
@@ -23,7 +23,7 @@ function RouteComponent() {
 
   if (signIn.status === "needs_first_factor") {
     return (
-      <ForgotPasswordVerifyForm
+      <ForgotPasswordVerifyCodeForm
         sendEmailCode={sendEmailCode}
         fetchStatus={fetchStatus}
         signIn={signIn}

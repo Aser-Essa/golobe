@@ -17,6 +17,7 @@ type DateFieldProps<T extends FieldValues> = {
   label: string;
   date: Date | null;
   disabledDays?: (date: Date) => boolean;
+  captionLayout?: "dropdown" | "label";
 };
 
 export default function DateField<T extends FieldValues>({
@@ -25,6 +26,7 @@ export default function DateField<T extends FieldValues>({
   label,
   date,
   disabledDays,
+  captionLayout = "label",
 }: DateFieldProps<T>) {
   return (
     <Popover>
@@ -52,6 +54,7 @@ export default function DateField<T extends FieldValues>({
               selected={field.value}
               onSelect={field.onChange}
               defaultMonth={field.value}
+              captionLayout={captionLayout}
               disabled={disabledDays}
             />
           )}
