@@ -1,4 +1,8 @@
-import type { useSignIn, useSignUp } from "@clerk/tanstack-react-start";
+import type {
+  useSignIn,
+  useSignUp,
+  useUser,
+} from "@clerk/tanstack-react-start";
 import type z from "zod";
 import type {
   forgotPasswordSchema,
@@ -88,3 +92,5 @@ export type SidebarFilterOptions = {
 };
 
 export type CreateUserType = z.infer<typeof createUserSchema>;
+
+export type User = ReturnType<typeof useUser>["user"];

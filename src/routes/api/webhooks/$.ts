@@ -1,4 +1,4 @@
-import { createUser, deleteUser } from "#/server/user";
+import { createUser, deleteUserFromDB } from "#/server/user";
 import { verifyWebhook } from "@clerk/tanstack-react-start/webhooks";
 import { createFileRoute } from "@tanstack/react-router";
 
@@ -21,11 +21,11 @@ export const Route = createFileRoute("/api/webhooks/$")({
               is_active: !evt.data.locked,
             };
 
-            await createUser({ user });
+            await createUser({ data: user });
           }
 
           if (eventType === "user.deleted") {
-            await deleteUser({ id: String(evt.data.id) });
+            await deleteUserFromDB({ data: { id: String(evt.data.id) } });
           }
 
           return new Response("Webhook received", { status: 200 });
