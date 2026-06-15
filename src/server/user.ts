@@ -1,3 +1,4 @@
+import { SupabaseStorageAvatarPath } from "#/lib/constants";
 import { createUserSchema, updatePasswordSchema } from "#/lib/schemas/user";
 import { supabase } from "#/lib/supabase";
 import { clerkClient } from "@clerk/tanstack-react-start/server";
@@ -91,3 +92,74 @@ export const updatePassword = createServerFn({ method: "POST" })
       }
     },
   );
+
+export const UpdateUserAvatar = createServerFn({ method: "POST" })
+  .inputValidator(
+    z.object({
+      userId: z.string(),
+      dataUrl: z.string(),
+    }),
+  )
+  .handler(async ({ data: { userId, dataUrl } }) => {
+    try {
+      const base64 = dataUrl.replace(/^data:image\/\w+;base64,/, "");
+      const buffer = Buffer.from(base64, "base64");
+      const file = new File([buffer], "avatar.png", {
+        type: "image/png",
+      });
+
+      await clerkClient().users.updateUserProfileImage(userId, { file });
+    } catch (error: any) {
+      console.error(error);
+      throw new Error(error.message || error.errors?.[0]?.message);
+    }
+  });
+
+export const deleteUserAvatar = createServerFn({ method: "POST" })
+  .inputValidator(
+    z.object({
+      userId: z.string(),
+      imagePath: z.string(),
+    }),
+  )
+  .handler(async ({ data: { userId, imagePath } }) => {
+    try {
+      await clerkClient().users.deleteUserProfileImage(userId);
+
+      const { error } = await supabase.storage
+        .from("avatars")
+        .remove([`${imagePath}`]);
+
+      if (error) throw new Error(error.message);
+    } catch (error: any) {
+      console.error(error);
+      throw new Error(error.message || error.errors?.[0]?.message);
+    }
+  });
+
+export const UploadUserAvatar = createServerFn({ method: "POST" })
+  .inputValidator(
+    z.object({
+      userId: z.string(),
+      fileBase64: z.string(),
+      fileName: z.string(),
+      fileType: z.string(),
+    }),
+  )
+  .handler(async ({ data: { userId, fileBase64, fileName, fileType } }) => {
+    try {
+      const buffer = Buffer.from(fileBase64, "base64");
+      const file = new File([buffer], fileName, { type: fileType });
+
+      await clerkClient().users.updateUserProfileImage(userId, { file });
+
+      await clerkClient().users.updateUserMetadata(userId, {
+        publicMetadata: {
+          originalAvatarUrl: `${SupabaseStorageAvatarPath}/${userId}/${fileName}`,
+        },
+      });
+    } catch (error: any) {
+      console.error(error);
+      throw new Error(error.message || error.errors?.[0]?.message);
+    }
+  });

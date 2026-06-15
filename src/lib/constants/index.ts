@@ -80,3 +80,6 @@ export const FAVOURITE_TYPES: {
 export const FALLBACK_IMAGE = "/dummy-hotel-img.png";
 
 export const SERVICE_FEE = 10;
+
+export const SupabaseStorageAvatarPath =
+  "https://zypocyviadephfsrsucv.supabase.co/storage/v1/object/public/avatars";

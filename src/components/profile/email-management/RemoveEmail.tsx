@@ -2,7 +2,6 @@ import { Button } from "#/components/ui/button";
 import { deleteClerkUser } from "#/server/user";
 import { useUser } from "@clerk/tanstack-react-start";
 import type { EmailAddressResource } from "@clerk/types";
-import { useNavigate } from "@tanstack/react-router";
 import { CircleX } from "lucide-react";
 import { toast } from "sonner";
 
@@ -11,8 +10,6 @@ export default function RemoveEmail({
 }: {
   email: EmailAddressResource;
 }) {
-  const navigate = useNavigate({ from: "/profile/account/" });
-
   const { user } = useUser();
 
   const userId = user?.id;
@@ -35,7 +32,7 @@ export default function RemoveEmail({
 
     await new Promise((resolve) => setTimeout(resolve, 1000));
 
-    navigate({ reloadDocument: true  , resetScroll: false});
+    await user.reload();
   }
   return (
     <Button

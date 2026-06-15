@@ -1,6 +1,7 @@
 import { useUser } from "@clerk/tanstack-react-start";
 import { ProfileHeaderSkeleton } from "./ProfileHeaderSkeleton";
 import { getUserName } from "#/lib/utils";
+import ManageAvatar from "./avatar-management/ManageAvatar";
 
 export default function ProfileHeader() {
   const { user, isLoaded } = useUser();
@@ -14,11 +15,14 @@ export default function ProfileHeader() {
   return (
     <>
       <div className="flex flex-col items-center space-y-6 text-center">
-        <div className="border-salmon aspect-square w-40 overflow-hidden rounded-full border-4">
-          <img
-            src={avatar || "/profile.png"}
-            className="h-full w-full object-cover"
-          />
+        <div className="relative">
+          <div className="border-salmon aspect-square w-40 overflow-hidden rounded-full border-4">
+            <img
+              src={avatar || "/profile.png"}
+              className="h-full w-full object-cover"
+            />
+          </div>
+          <ManageAvatar />
         </div>
         <div className="space-y-2">
           <p className="text-base font-semibold sm:text-2xl">{fullUserName}.</p>

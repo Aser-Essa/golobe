@@ -17,6 +17,7 @@ export default function AddEmailDialog() {
   const [emailObj, setEmailObj] = useState<EmailAddressResource | undefined>();
   const [isVerifying, setIsVerifying] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const [sessionKey, setSessionKey] = useState(0);
 
   if (!isLoaded) return <Skeleton className="h-12 w-35 rounded-sm" />;
 
@@ -24,8 +25,16 @@ export default function AddEmailDialog() {
     navigate({ to: "/" });
   }
 
+  function handleOpenChange(open: boolean) {
+    setIsOpen(open);
+    setIsVerifying(false);
+    if (open) {
+      setSessionKey((prev) => prev + 1);
+    }
+  }
+
   return (
-    <Dialog open={isOpen} onOpenChange={setIsOpen}>
+    <Dialog open={isOpen} onOpenChange={handleOpenChange} key={sessionKey}>
       <DialogTrigger asChild>
         <Button
           variant={"outline"}

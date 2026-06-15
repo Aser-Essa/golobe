@@ -216,3 +216,13 @@ header nav .active::before {
 * {
   scrollbar-width: thin;
 }
+
+
+.avatar-scale [data-slot="slider-track"] {
+  height: 4px !important;
+}
+
+.avatar-scale [data-slot="slider-thumb"] {
+  width: 20px !important;
+  height: 20px !important;
+}

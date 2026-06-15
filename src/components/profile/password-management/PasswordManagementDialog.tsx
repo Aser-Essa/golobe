@@ -10,6 +10,7 @@ import UpdatePasswordForm from "./UpdatePasswordForm";
 
 export default function PasswordManagementDialog() {
   const [isOpen, setIsOpen] = useState(false);
+  const [sessionKey, setSessionKey] = useState(0);
 
   const { isLoaded, isSignedIn, user } = useUser();
   const hasPassword = user?.passwordEnabled;
@@ -17,18 +18,24 @@ export default function PasswordManagementDialog() {
   const navigate = useNavigate({ from: "/profile/account/" });
 
   if (!isLoaded) return <Skeleton className="h-12 w-35 rounded-sm" />;
-
   if (!isSignedIn) {
     navigate({ to: "/" });
   }
 
-  function onSuccess() {
+  function handleOpenChange(open: boolean) {
+    setIsOpen(open);
+    if (open) {
+      setSessionKey((prev) => prev + 1);
+    }
+  }
+
+  async function onSuccess() {
     setIsOpen(false);
-    navigate({ reloadDocument: true, resetScroll: false });
+    await user?.reload();
   }
 
   return (
-    <Dialog open={isOpen} onOpenChange={setIsOpen}>
+    <Dialog open={isOpen} onOpenChange={handleOpenChange} key={sessionKey}>
       <DialogTrigger asChild>
         <Button
           variant={"outline"}
