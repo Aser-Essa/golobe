@@ -218,11 +218,13 @@ header nav .active::before {
 }
 
 
-.avatar-scale [data-slot="slider-track"] {
+.avatar-scale [data-slot="slider-track"] , 
+.banner-scale [data-slot="slider-track"] {
   height: 4px !important;
 }
 
-.avatar-scale [data-slot="slider-thumb"] {
+.avatar-scale [data-slot="slider-thumb"] , 
+.banner-scale [data-slot="slider-thumb"] {
   width: 20px !important;
   height: 20px !important;
 }

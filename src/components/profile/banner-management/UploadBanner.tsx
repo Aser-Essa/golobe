@@ -14,27 +14,26 @@ import {
   DropzoneEmptyState,
 } from "#/components/common/DropZone";
 import { Button } from "#/components/ui/button";
-import { setUserAvatarMetadata } from "#/server/user";
+import { setUserBannerMetadata } from "#/server/user";
 
-export default function UploadAvatar({
+export default function UploadBanner({
   setIsChange,
 }: {
   setIsChange: (value: boolean) => void;
 }) {
   const { user } = useUser();
   const userId = user?.id;
-  const hasImage = user?.hasImage;
 
   const props = useSupabaseUpload({
-    bucketName: "avatars",
-    path: userId,
-    upsert: true,
+    bucketName: "banners",
+    path: `${userId}`,
     allowedMimeTypes: ["image/*"],
-    fixedFileName: "avatar.png",
+    fixedFileName: "banner.png",
     maxFiles: 1,
     maxFileSize: 1000 * 1000 * 10,
+    upsert: true,
     onUploadSuccess: async () => {
-      await setUserAvatarMetadata();
+      await setUserBannerMetadata();
       await user?.reload();
       setIsChange(false);
     },
@@ -49,9 +48,9 @@ export default function UploadAvatar({
   return (
     <DialogContent className="w-[90vw] gap-10 sm:max-w-187.5 lg:w-187.5">
       <DialogHeader>
-        <DialogTitle>{hasImage ? "Edit" : "Upload"} Avatar</DialogTitle>
+        <DialogTitle>Upload Banner</DialogTitle>
         <DialogDescription>
-          Choose an image to upload as your avatar.
+          Choose an image to upload as your banner.
         </DialogDescription>
       </DialogHeader>
 
@@ -61,19 +60,15 @@ export default function UploadAvatar({
           <DropzoneContent />
         </Dropzone>
       </div>
-      {hasImage ? (
-        <Button onClick={() => setIsChange(false)}>Cancel</Button>
-      ) : (
-        <DialogClose asChild>
-          <Button
-            onClick={() => setIsChange(false)}
-            variant={"outline"}
-            className="bg-primary/25"
-          >
-            Cancel
-          </Button>
-        </DialogClose>
-      )}
+      <DialogClose asChild>
+        <Button
+          onClick={() => setIsChange(false)}
+          variant={"outline"}
+          className="bg-primary/25"
+        >
+          Cancel
+        </Button>
+      </DialogClose>
     </DialogContent>
   );
 }

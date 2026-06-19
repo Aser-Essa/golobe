@@ -21,7 +21,11 @@ export default function HeaderUserMenu() {
     lastName: fullUserName.split(" ")[1],
   });
 
-  const avatar = user?.imageUrl || "/profile.png";
+  const avatar =
+    (user?.publicMetadata.avatarUrl as string) ||
+    (user?.publicMetadata.originalAvatarUrl as string) ||
+    user?.imageUrl ||
+    "/profile.png";
 
   return (
     <>

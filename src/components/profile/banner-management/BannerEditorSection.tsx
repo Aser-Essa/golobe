@@ -1,11 +1,12 @@
 import { RotateCcw, RotateCw, ZoomIn, ZoomOut } from "lucide-react";
 import type { useAvatarEditor } from "react-avatar-editor";
-import AvatarEditor from "react-avatar-editor";
+import BannerEditor from "react-avatar-editor";
 import { Slider } from "../../ui/slider";
-import DeleteAvatar from "./DeleteAvatar";
+import { useEffect, useState } from "react";
+import { Skeleton } from "#/components/ui/skeleton";
 
-interface AvatarEditorSectionProps {
-  userAvatar: string;
+interface BannerEditorSectionProps {
+  userBanner: string;
   editor: ReturnType<typeof useAvatarEditor>;
   setScale: (value: number) => void;
   scale: number;
@@ -14,15 +15,17 @@ interface AvatarEditorSectionProps {
   setImage: (value: string) => void;
 }
 
-export default function AvatarEditorSection({
-  userAvatar,
+export default function BannerEditorSection({
+  userBanner,
   editor,
   setScale,
   scale,
   setRotate,
   rotate,
   setImage,
-}: AvatarEditorSectionProps) {
+}: BannerEditorSectionProps) {
+  const [isBannerLoading, setBannerLoading] = useState(true);
+
   function handleScaleChange(value: number[]) {
     setScale(value[0]);
   }
@@ -38,24 +41,36 @@ export default function AvatarEditorSection({
     setImage(dataUrl);
   }
 
+  useEffect(() => {
+    setBannerLoading(true);
+  }, [userBanner]);
+
   return (
     <div className="flex flex-col items-center space-y-4">
-      <AvatarEditor
-        ref={editor.ref}
-        image={userAvatar}
-        width={300}
-        height={300}
-        border={0}
-        color={[255, 255, 255, 0.6]}
-        scale={scale}
-        rotate={rotate}
-        borderRadius={300}
-        style={{ borderRadius: "50%" }}
-        crossOrigin="anonymous"
-        onMouseUp={handlePositonChange}
-      
-      />
-      <div className="avatar-scale flex w-full flex-1 items-center gap-3">
+      <div className="relative w-full">
+        {isBannerLoading && (
+          <Skeleton className="absolute inset-0 z-10 h-[350px] w-full" />
+        )}
+
+        <BannerEditor
+          ref={editor.ref}
+          image={userBanner}
+          width={1350}
+          height={350}
+          border={0}
+          scale={scale}
+          rotate={rotate}
+          crossOrigin="anonymous"
+          onMouseUp={handlePositonChange}
+          style={{
+            width: "100%",
+            borderRadius: "12px",
+            opacity: isBannerLoading ? 0 : 1,
+          }}
+          onLoadSuccess={() => setBannerLoading(false)}
+        />
+      </div>
+      <div className="banner-scale flex w-full flex-1 items-center gap-3">
         <ZoomOut />
         <Slider
           onValueChange={handleScaleChange}
@@ -67,8 +82,7 @@ export default function AvatarEditorSection({
         />
         <ZoomIn />
       </div>
-
-      <div className="avatar-scale flex w-full flex-1 items-center gap-3">
+      <div className="banner-scale flex w-full flex-1 items-center gap-3">
         <RotateCcw />
         <Slider
           onValueChange={handleRotateChange}
@@ -80,7 +94,7 @@ export default function AvatarEditorSection({
         />
         <RotateCw />
       </div>
-      <DeleteAvatar />
+      {/* <DeleteBanner /> */}
     </div>
   );
 }

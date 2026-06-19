@@ -192,3 +192,29 @@ export function formatFileName(file: File, prefix?: string) {
 
   return `${prefix ? prefix + "-" : ""}${baseName}.${ext}`;
 }
+
+export function extractSupabasePath({
+  url,
+  bucket,
+}: {
+  url: string;
+  bucket: string;
+}) {
+  try {
+    const u = new URL(url);
+
+    // /storage/v1/object/public/avatars/user_xxx/file.webp
+    const parts = u.pathname.split("/");
+
+    const bucketIndex = parts.findIndex((p) => p === bucket);
+
+    if (bucketIndex === -1) return "";
+
+    // everything after bucket name
+    const path = parts.slice(bucketIndex + 1).join("/");
+
+    return path;
+  } catch {
+    return "";
+  }
+}

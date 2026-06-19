@@ -2,17 +2,13 @@ import { deleteUserAvatar } from "#/server/user";
 import { useUser } from "@clerk/tanstack-react-start";
 import { Trash } from "lucide-react";
 import { Button } from "../../ui/button";
+import { extractSupabasePath } from "#/lib/utils";
 
 export default function DeleteAvatar() {
   const { user } = useUser();
 
-  const userAvatar = user?.publicMetadata.originalAvatarUrl as string;
-  const avatarPath = userAvatar.split("/avatars/")[1];
-
   async function handleDeleteAvatar() {
-    await deleteUserAvatar({
-      data: { userId: user?.id || "", imagePath: avatarPath },
-    });
+    await deleteUserAvatar();
     await user?.reload();
   }
 

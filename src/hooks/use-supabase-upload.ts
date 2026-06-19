@@ -1,7 +1,5 @@
 import { supabase } from "#/lib/supabase";
 import { formatFileName } from "#/lib/utils";
-import { UploadUserAvatar } from "#/server/user";
-import { useUser } from "@clerk/tanstack-react-start";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import type { FileError, FileRejection } from "react-dropzone";
 import { useDropzone } from "react-dropzone";
@@ -50,6 +48,15 @@ type UseSupabaseUploadOptions = {
    * When set to false, an error is thrown if the object already exists. Defaults to `false`
    */
   upsert?: boolean;
+
+  onUploadSuccess?: (
+    files: {
+      name: string;
+      file: File;
+    }[],
+  ) => Promise<void> | void;
+
+  fixedFileName?: string;
 };
 
 type UseSupabaseUploadReturn = ReturnType<typeof useSupabaseUpload>;
@@ -63,13 +70,13 @@ const useSupabaseUpload = (options: UseSupabaseUploadOptions) => {
     maxFiles = 1,
     cacheControl = 3600,
     upsert = false,
+    fixedFileName,
   } = options;
 
   const [files, setFiles] = useState<FileWithPreview[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [errors, setErrors] = useState<{ name: string; message: string }[]>([]);
   const [successes, setSuccesses] = useState<string[]>([]);
-  const { user } = useUser();
 
   const isSuccess = useMemo(() => {
     if (errors.length === 0 && successes.length === 0) {
@@ -132,7 +139,7 @@ const useSupabaseUpload = (options: UseSupabaseUploadOptions) => {
 
     const responses = await Promise.all(
       filesToUpload.map(async (file) => {
-        const safeName = formatFileName(file);
+        const safeName = fixedFileName ? fixedFileName : formatFileName(file);
 
         const { error } = await supabase.storage
           .from(bucketName)
@@ -160,34 +167,12 @@ const useSupabaseUpload = (options: UseSupabaseUploadOptions) => {
     setSuccesses(newSuccesses);
 
     if (responseSuccesses.length > 0) {
-      const uploadedFile = responseSuccesses[0].file;
-      const uploadedFileName = responseSuccesses[0].name;
-      const userId = user?.id;
-
-      if (userId) {
-        // Convert File to base64 — Seroval can serialize strings
-        const fileBase64 = await new Promise<string>((resolve, reject) => {
-          const reader = new FileReader();
-          reader.onload = () => {
-            // result is "data:<type>;base64,<data>" — strip the prefix
-            const base64 = (reader.result as string).split(",")[1];
-            resolve(base64);
-          };
-          reader.onerror = reject;
-          reader.readAsDataURL(uploadedFile);
-        });
-
-        await UploadUserAvatar({
-          data: {
-            userId,
-            fileBase64,
-            fileName: uploadedFileName,
-            fileType: uploadedFile.type,
-          },
-        });
-
-        await user.reload();
-      }
+      await options.onUploadSuccess?.(
+        responseSuccesses.map((x) => ({
+          name: x.name,
+          file: x.file,
+        })),
+      );
     }
 
     setLoading(false);

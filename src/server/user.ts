@@ -1,7 +1,10 @@
-import { SupabaseStorageAvatarPath } from "#/lib/constants";
+import {
+  SupabaseStorageAvatarPath,
+  SupabaseStorageBannerPath,
+} from "#/lib/constants";
 import { createUserSchema, updatePasswordSchema } from "#/lib/schemas/user";
 import { supabase } from "#/lib/supabase";
-import { clerkClient } from "@clerk/tanstack-react-start/server";
+import { auth, clerkClient } from "@clerk/tanstack-react-start/server";
 import { createServerFn } from "@tanstack/react-start";
 import z from "zod";
 
@@ -93,69 +96,56 @@ export const updatePassword = createServerFn({ method: "POST" })
     },
   );
 
-export const UpdateUserAvatar = createServerFn({ method: "POST" })
-  .inputValidator(
-    z.object({
-      userId: z.string(),
-      dataUrl: z.string(),
-    }),
-  )
-  .handler(async ({ data: { userId, dataUrl } }) => {
+export const setUserAvatarMetadata = createServerFn({ method: "POST" }).handler(
+  async () => {
     try {
-      const base64 = dataUrl.replace(/^data:image\/\w+;base64,/, "");
-      const buffer = Buffer.from(base64, "base64");
-      const file = new File([buffer], "avatar.png", {
-        type: "image/png",
-      });
-
-      await clerkClient().users.updateUserProfileImage(userId, { file });
-    } catch (error: any) {
-      console.error(error);
-      throw new Error(error.message || error.errors?.[0]?.message);
-    }
-  });
-
-export const deleteUserAvatar = createServerFn({ method: "POST" })
-  .inputValidator(
-    z.object({
-      userId: z.string(),
-      imagePath: z.string(),
-    }),
-  )
-  .handler(async ({ data: { userId, imagePath } }) => {
-    try {
-      await clerkClient().users.deleteUserProfileImage(userId);
-
-      const { error } = await supabase.storage
-        .from("avatars")
-        .remove([`${imagePath}`]);
-
-      if (error) throw new Error(error.message);
-    } catch (error: any) {
-      console.error(error);
-      throw new Error(error.message || error.errors?.[0]?.message);
-    }
-  });
-
-export const UploadUserAvatar = createServerFn({ method: "POST" })
-  .inputValidator(
-    z.object({
-      userId: z.string(),
-      fileBase64: z.string(),
-      fileName: z.string(),
-      fileType: z.string(),
-    }),
-  )
-  .handler(async ({ data: { userId, fileBase64, fileName, fileType } }) => {
-    try {
-      const buffer = Buffer.from(fileBase64, "base64");
-      const file = new File([buffer], fileName, { type: fileType });
-
-      await clerkClient().users.updateUserProfileImage(userId, { file });
+      const { userId } = await auth();
+      if (!userId) throw new Error("User not found");
 
       await clerkClient().users.updateUserMetadata(userId, {
         publicMetadata: {
-          originalAvatarUrl: `${SupabaseStorageAvatarPath}/${userId}/${fileName}`,
+          originalAvatarUrl: `${SupabaseStorageAvatarPath}/${userId}/avatar.png?t=${Date.now()}`,
+          avatarUrl: `${SupabaseStorageAvatarPath}/${userId}/avatar.png?t=${Date.now()}`,
+        },
+      });
+    } catch (error: any) {
+      console.error(error);
+      throw new Error(error.message || error.errors?.[0]?.message);
+    }
+  },
+);
+
+export const updateUserAvatar = createServerFn({ method: "POST" })
+  .inputValidator(
+    z.object({
+      dataUrl: z.string(),
+    }),
+  )
+  .handler(async ({ data: { dataUrl } }) => {
+    try {
+      const { userId } = await auth();
+      if (!userId) throw new Error("User not found");
+
+      const [, base64] = dataUrl.split(",");
+      const buffer = Buffer.from(base64, "base64");
+      const file = new File([buffer], `cropped-avatar.png`, {
+        type: "image/png",
+      });
+
+      const { error } = await supabase.storage
+        .from("avatars")
+        .upload(`${userId}/${file.name}`, file, {
+          upsert: true,
+          cacheControl: "3600",
+        });
+
+      if (error) {
+        throw new Error(error.message);
+      }
+
+      await clerkClient().users.updateUserMetadata(userId, {
+        publicMetadata: {
+          avatarUrl: `${SupabaseStorageAvatarPath}/${userId}/${file.name}?t=${Date.now()}`,
         },
       });
     } catch (error: any) {
@@ -163,3 +153,139 @@ export const UploadUserAvatar = createServerFn({ method: "POST" })
       throw new Error(error.message || error.errors?.[0]?.message);
     }
   });
+
+export const deleteUserAvatar = createServerFn({ method: "POST" }).handler(
+  async () => {
+    try {
+      const { userId } = await auth();
+      if (!userId) throw new Error("User not found");
+
+      const imagePaths = [
+        `${userId}/avatar.png`,
+        `${userId}/cropped-avatar.png`,
+      ];
+
+      const { error } = await supabase.storage
+        .from("avatars")
+        .remove(imagePaths);
+
+      if (error && error.message !== "Object not found")
+        throw new Error(error.message);
+
+      await clerkClient().users.updateUserMetadata(userId, {
+        publicMetadata: {
+          avatarUrl: "",
+          originalAvatarUrl: "",
+        },
+      });
+
+      try {
+        await clerkClient().users.deleteUserProfileImage(userId);
+      } catch (err: any) {
+        if (err?.errors?.[0]?.code !== "image_not_found") {
+          throw err;
+        }
+      }
+    } catch (error: any) {
+      console.error(error);
+      throw new Error(error.message || error.errors?.[0]?.message);
+    }
+  },
+);
+
+export const setUserBannerMetadata = createServerFn({ method: "POST" }).handler(
+  async () => {
+    try {
+      const { userId } = await auth();
+      if (!userId) throw new Error("User not found");
+
+      await clerkClient().users.updateUserMetadata(userId, {
+        publicMetadata: {
+          originalBannerUrl: `${SupabaseStorageBannerPath}/${userId}/banner.png?t=${Date.now()}`,
+          bannerUrl: `${SupabaseStorageBannerPath}/${userId}/banner.png?t=${Date.now()}`,
+        },
+      });
+    } catch (error: any) {
+      console.error(error);
+      throw new Error(error.message || error.errors?.[0]?.message);
+    }
+  },
+);
+
+export const updateUserBanner = createServerFn({ method: "POST" })
+  .inputValidator(
+    z.object({
+      dataUrl: z.string(),
+    }),
+  )
+  .handler(async ({ data: { dataUrl } }) => {
+    try {
+      const { userId } = await auth();
+      if (!userId) throw new Error("User not found");
+
+      const [, base64] = dataUrl.split(",");
+      const buffer = Buffer.from(base64, "base64");
+      const file = new File([buffer], `cropped-banner.png`, {
+        type: "image/png",
+      });
+
+      const { error } = await supabase.storage
+        .from("banners")
+        .upload(`${userId}/${file.name}`, file, {
+          upsert: true,
+          cacheControl: "3600",
+        });
+
+      if (error) {
+        throw new Error(error.message);
+      }
+
+      await clerkClient().users.updateUserMetadata(userId, {
+        publicMetadata: {
+          bannerUrl: `${SupabaseStorageBannerPath}/${userId}/${file.name}?t=${Date.now()}`,
+        },
+      });
+    } catch (error: any) {
+      console.error(error);
+      throw new Error(error.message || error.errors?.[0]?.message);
+    }
+  });
+
+export const deleteUserBanner = createServerFn({ method: "POST" }).handler(
+  async () => {
+    try {
+      const { userId } = await auth();
+      if (!userId) throw new Error("User not found");
+
+      const imagePaths = [
+        `${userId}/banner.png`,
+        `${userId}/cropped-banner.png`,
+      ];
+
+      const { error } = await supabase.storage
+        .from("banners")
+        .remove(imagePaths);
+
+      if (error && error.message !== "Object not found")
+        throw new Error(error.message);
+
+      await clerkClient().users.updateUserMetadata(userId, {
+        publicMetadata: {
+          bannerUrl: "",
+          originalBannerUrl: "",
+        },
+      });
+
+      try {
+        await clerkClient().users.deleteUserProfileImage(userId);
+      } catch (err: any) {
+        if (err?.errors?.[0]?.code !== "image_not_found") {
+          throw err;
+        }
+      }
+    } catch (error: any) {
+      console.error(error);
+      throw new Error(error.message || error.errors?.[0]?.message);
+    }
+  },
+);

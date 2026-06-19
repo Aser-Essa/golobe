@@ -4,14 +4,16 @@ import {
   DialogHeader,
   DialogTitle,
 } from "#/components/ui/dialog";
-import { UpdateUserAvatar } from "#/server/user";
+import { updateUserAvatar } from "#/server/user";
 import { useUser } from "@clerk/tanstack-react-start";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
-import { Button } from "../ui/button";
-import PreviewAvatar from "./avatar-management/PreviewAvatar";
-import AvatarEditorSection from "./avatar-management/AvatarEditorSection";
+
 import { useAvatarEditor } from "react-avatar-editor";
+import AvatarEditorSection from "./AvatarEditorSection";
+import PreviewAvatar from "./PreviewAvatar";
+import { Button } from "#/components/ui/button";
+import { Loader2 } from "lucide-react";
 
 type UpdateAvatarProps = {
   setIsChange: (value: boolean) => void;
@@ -30,13 +32,16 @@ export default function UpdateAvatar({
   const [image, setImage] = useState<string>("");
   const [scale, setScale] = useState(1);
   const [rotate, setRotate] = useState(0);
+  const [isLoding, setIsLoading] = useState(false);
 
   const editor = useAvatarEditor();
 
   async function handleSave() {
     if (!userId || !image) return;
-    await UpdateUserAvatar({ data: { userId, dataUrl: image } });
+    setIsLoading(true);
+    await updateUserAvatar({ data: { dataUrl: image } });
     await user.reload();
+    setIsLoading(false);
     toast.success("Avatar updated successfully");
     setIsOpen(false);
   }
@@ -78,7 +83,13 @@ export default function UpdateAvatar({
               Change Image
             </Button>
             <Button onClick={handleSave} className="h-10 flex-1">
-              Save Photo
+              {isLoding ? (
+                <>
+                  <Loader2 className="animate-spin" /> saving...
+                </>
+              ) : (
+                "Save Photo"
+              )}
             </Button>
           </div>
         </div>
