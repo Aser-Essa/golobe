@@ -10,6 +10,7 @@ import { format } from "date-fns";
 import { CalendarDays } from "lucide-react";
 import { Controller } from "react-hook-form";
 import { FieldLabel } from "../ui/field";
+import { cn } from "#/lib/utils";
 
 type DateFieldProps<T extends FieldValues> = {
   name: FieldPath<T>;
@@ -18,6 +19,7 @@ type DateFieldProps<T extends FieldValues> = {
   date: Date | null;
   disabledDays?: (date: Date) => boolean;
   captionLayout?: "dropdown" | "label";
+  className?: string;
 };
 
 export default function DateField<T extends FieldValues>({
@@ -27,6 +29,7 @@ export default function DateField<T extends FieldValues>({
   date,
   disabledDays,
   captionLayout = "label",
+  className,
 }: DateFieldProps<T>) {
   return (
     <Popover>
@@ -34,7 +37,10 @@ export default function DateField<T extends FieldValues>({
         <Button
           variant="outline"
           data-empty={!date}
-          className="data-[empty=true]:text-muted-foreground relative h-14 w-[212px] flex-1 justify-between rounded-[4px] border-[#79747E] bg-white! px-4 text-left font-normal"
+          className={cn(
+            "data-[empty=true]:text-muted-foreground relative h-14 w-[212px] flex-1 justify-between rounded-[4px] border-[#79747E] bg-white! px-4 text-left font-normal",
+            className,
+          )}
         >
           {date ? format(date, "PPP") : <span>Pick a date</span>}
           <CalendarDays className="size-5" />

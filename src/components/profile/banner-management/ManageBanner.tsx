@@ -13,9 +13,11 @@ export default function ManageBanner() {
     <>
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
         <DialogTrigger asChild>
-          <Button className="hover:primary-80 absolute right-6.5 bottom-6.5 z-50 flex h-12 items-center gap-2 p-4">
+          <Button className="hover:primary-80 absolute top-5 sm:top-auto right-5 z-50 flex h-12 items-center gap-2 p-4 sm:right-6.5 sm:bottom-6.5">
             <CloudUpload />
-            <p>Upload new cover</p>
+            <p>
+              Upload <span className="hidden sm:inline-block">new banner</span>
+            </p>
           </Button>
         </DialogTrigger>
         {isChange ? (

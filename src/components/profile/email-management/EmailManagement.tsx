@@ -15,8 +15,8 @@ export default function EmailManagement() {
 
   return (
     <>
-      <div className="space-y-4">
-        <div className="flex justify-between">
+      <div className="space-y-5 sm:space-y-4">
+        <div className="flex flex-col justify-between gap-3 sm:flex-row sm:items-center">
           <div className="space-y-2">
             <p className="text-foreground/75 text-sm">Email</p>
             {isLoaded ? (

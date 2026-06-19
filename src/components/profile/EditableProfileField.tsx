@@ -77,7 +77,7 @@ export default function EditableProfileField({
   if (!isLoaded) return <ProfileFieldSkeleton label={label} />;
 
   return (
-    <div className="flex items-center justify-between">
+    <div className="flex flex-col justify-between gap-3 sm:flex-row sm:items-center">
       <div className="space-y-2">
         <p className="text-foreground/75 text-sm">{label}</p>
 
@@ -112,7 +112,7 @@ export default function EditableProfileField({
             type="button"
             onClick={handleCancel}
             variant="outline"
-            className="h-12 w-12 bg-white"
+            className="h-12 flex-1 sm:w-12 bg-white"
           >
             <X />
           </Button>
@@ -121,7 +121,7 @@ export default function EditableProfileField({
             onClick={handleSave}
             disabled={isSaving}
             variant="outline"
-            className="h-12 w-35 bg-white font-medium"
+            className="h-12 flex-1 sm:w-35 bg-white font-medium"
           >
             <Check />
             <p>{isSaving ? "Saving..." : "Save"}</p>
@@ -132,7 +132,7 @@ export default function EditableProfileField({
           type="button"
           onClick={handleEdit}
           variant="outline"
-          className="h-12 w-35 bg-white font-medium"
+          className="h-12  sm:w-35 bg-white font-medium"
         >
           <FilePenLine />
           <p>Change</p>

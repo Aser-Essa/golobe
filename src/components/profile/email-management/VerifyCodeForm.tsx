@@ -88,11 +88,11 @@ export default function VerifyCodeForm({
             type="button"
             variant={"outline"}
             onClick={resendVerificationCode}
-            className="flex-1"
+            className="flex-1 min-h-8"
           >
             Resend code
           </Button>
-          <Button type="submit" className="flex-1">
+          <Button type="submit" className="flex-1 min-h-8">
             Verify
           </Button>
         </DialogFooter>

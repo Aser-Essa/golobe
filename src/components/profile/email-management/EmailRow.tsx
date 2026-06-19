@@ -22,7 +22,7 @@ export default function EmailRow({ email, isLoaded }: EmailRowProps) {
   const isVerified = emailStatus === "verified";
 
   return (
-    <div className="flex items-center justify-between">
+    <div className="flex items-center justify-between flex-col gap-3 sm:flex-row">
       {isLoaded ? (
         <div className="flex items-center gap-4">
           <p className="text-base font-semibold">{email.emailAddress}</p>

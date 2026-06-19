@@ -61,7 +61,7 @@ export default function EditableDateOfBirth({
   return (
     <form onSubmit={handleSubmit(onSubmit, onError)}>
       <div className="space-y-4">
-        <div className="flex justify-between">
+        <div className="flex flex-col justify-between gap-3 sm:flex-row sm:items-center">
           <div className="space-y-3">
             <p className="text-foreground/75 text-sm">Date of birth</p>
             {isEditable ? (
@@ -74,6 +74,7 @@ export default function EditableDateOfBirth({
                 disabledDays={(date) =>
                   date >= isToday || date < new Date(1900, 0, 1)
                 }
+                className="w-full! sm:w-[212px]!"
               />
             ) : (
               <p
@@ -95,14 +96,14 @@ export default function EditableDateOfBirth({
                 type="button"
                 onClick={handleCancel}
                 variant="outline"
-                className="h-12 w-12 bg-white"
+                className="h-12 flex-1 bg-white sm:w-12"
               >
                 <X />
               </Button>
               <Button
                 type="submit"
                 variant="outline"
-                className="h-12 w-35 bg-white font-medium"
+                className="h-12 flex-1 bg-white font-medium sm:w-35"
               >
                 <Check />
                 <p>Save</p>
@@ -116,7 +117,7 @@ export default function EditableDateOfBirth({
                 setIsEditable(true);
               }}
               variant={"outline"}
-              className="h-12 w-35 bg-white font-medium"
+              className="h-12 bg-white font-medium sm:w-35"
             >
               <FilePenLine />
               <p>Change</p>

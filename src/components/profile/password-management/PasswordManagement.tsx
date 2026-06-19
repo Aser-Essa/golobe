@@ -11,7 +11,7 @@ export default function PasswordManagement() {
   return (
     <>
       <div className="space-y-4">
-        <div className="flex justify-between">
+        <div className="flex justify-between flex-col gap-3 sm:flex-row sm:items-center">
           <div className="space-y-2">
             <p className="text-foreground/75 text-sm">Password</p>
             {isLoaded ? (
