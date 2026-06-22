@@ -21,7 +21,7 @@ export default function AddCardForm() {
     const { error } = await stripe.confirmSetup({
       elements,
       confirmParams: {
-        return_url: window.location.origin,
+        return_url: window.location.href,
       },
     });
 

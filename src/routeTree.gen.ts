@@ -12,8 +12,6 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as MainRouteRouteImport } from './routes/_main/route'
 import { Route as AuthRouteRouteImport } from './routes/_auth/route'
 import { Route as MainIndexRouteImport } from './routes/_main/index'
-import { Route as ApiGetCardsRouteImport } from './routes/api/get-cards'
-import { Route as ApiCreateSetupIntentRouteImport } from './routes/api/create-setup-intent'
 import { Route as MainProfileRouteRouteImport } from './routes/_main/profile/route'
 import { Route as MainProfileIndexRouteImport } from './routes/_main/profile/index'
 import { Route as MainHotelsIndexRouteImport } from './routes/_main/hotels/index'
@@ -39,16 +37,6 @@ const MainIndexRoute = MainIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => MainRouteRoute,
-} as any)
-const ApiGetCardsRoute = ApiGetCardsRouteImport.update({
-  id: '/api/get-cards',
-  path: '/api/get-cards',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ApiCreateSetupIntentRoute = ApiCreateSetupIntentRouteImport.update({
-  id: '/api/create-setup-intent',
-  path: '/api/create-setup-intent',
-  getParentRoute: () => rootRouteImport,
 } as any)
 const MainProfileRouteRoute = MainProfileRouteRouteImport.update({
   id: '/profile',
@@ -114,8 +102,6 @@ const MainBookingsIdIndexRoute = MainBookingsIdIndexRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof MainIndexRoute
   '/profile': typeof MainProfileRouteRouteWithChildren
-  '/api/create-setup-intent': typeof ApiCreateSetupIntentRoute
-  '/api/get-cards': typeof ApiGetCardsRoute
   '/api/webhooks/$': typeof ApiWebhooksSplatRoute
   '/forgot-password/': typeof AuthForgotPasswordIndexRoute
   '/sign-in/': typeof AuthSignInIndexRoute
@@ -130,8 +116,6 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof MainIndexRoute
-  '/api/create-setup-intent': typeof ApiCreateSetupIntentRoute
-  '/api/get-cards': typeof ApiGetCardsRoute
   '/api/webhooks/$': typeof ApiWebhooksSplatRoute
   '/forgot-password': typeof AuthForgotPasswordIndexRoute
   '/sign-in': typeof AuthSignInIndexRoute
@@ -149,8 +133,6 @@ export interface FileRoutesById {
   '/_auth': typeof AuthRouteRouteWithChildren
   '/_main': typeof MainRouteRouteWithChildren
   '/_main/profile': typeof MainProfileRouteRouteWithChildren
-  '/api/create-setup-intent': typeof ApiCreateSetupIntentRoute
-  '/api/get-cards': typeof ApiGetCardsRoute
   '/_main/': typeof MainIndexRoute
   '/api/webhooks/$': typeof ApiWebhooksSplatRoute
   '/_auth/forgot-password/': typeof AuthForgotPasswordIndexRoute
@@ -169,8 +151,6 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/profile'
-    | '/api/create-setup-intent'
-    | '/api/get-cards'
     | '/api/webhooks/$'
     | '/forgot-password/'
     | '/sign-in/'
@@ -185,8 +165,6 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
-    | '/api/create-setup-intent'
-    | '/api/get-cards'
     | '/api/webhooks/$'
     | '/forgot-password'
     | '/sign-in'
@@ -203,8 +181,6 @@ export interface FileRouteTypes {
     | '/_auth'
     | '/_main'
     | '/_main/profile'
-    | '/api/create-setup-intent'
-    | '/api/get-cards'
     | '/_main/'
     | '/api/webhooks/$'
     | '/_auth/forgot-password/'
@@ -222,8 +198,6 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   AuthRouteRoute: typeof AuthRouteRouteWithChildren
   MainRouteRoute: typeof MainRouteRouteWithChildren
-  ApiCreateSetupIntentRoute: typeof ApiCreateSetupIntentRoute
-  ApiGetCardsRoute: typeof ApiGetCardsRoute
   ApiWebhooksSplatRoute: typeof ApiWebhooksSplatRoute
 }
 
@@ -249,20 +223,6 @@ declare module '@tanstack/react-router' {
       fullPath: '/'
       preLoaderRoute: typeof MainIndexRouteImport
       parentRoute: typeof MainRouteRoute
-    }
-    '/api/get-cards': {
-      id: '/api/get-cards'
-      path: '/api/get-cards'
-      fullPath: '/api/get-cards'
-      preLoaderRoute: typeof ApiGetCardsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/api/create-setup-intent': {
-      id: '/api/create-setup-intent'
-      path: '/api/create-setup-intent'
-      fullPath: '/api/create-setup-intent'
-      preLoaderRoute: typeof ApiCreateSetupIntentRouteImport
-      parentRoute: typeof rootRouteImport
     }
     '/_main/profile': {
       id: '/_main/profile'
@@ -407,8 +367,6 @@ const MainRouteRouteWithChildren = MainRouteRoute._addFileChildren(
 const rootRouteChildren: RootRouteChildren = {
   AuthRouteRoute: AuthRouteRouteWithChildren,
   MainRouteRoute: MainRouteRouteWithChildren,
-  ApiCreateSetupIntentRoute: ApiCreateSetupIntentRoute,
-  ApiGetCardsRoute: ApiGetCardsRoute,
   ApiWebhooksSplatRoute: ApiWebhooksSplatRoute,
 }
 export const routeTree = rootRouteImport

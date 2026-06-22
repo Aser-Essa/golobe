@@ -39,7 +39,7 @@ export default function PaymentType({
 
   return (
     <>
-      <div className="box-shadow-sm rounded-[12px] bg-white p-6">
+      <div className="box-shadow-sm rounded-[12px] bg-white p-4 sm:p-6">
         <RadioGroup defaultValue="full" className="gap-4">
           <FieldLabel
             htmlFor="full-pay"

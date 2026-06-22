@@ -10,10 +10,7 @@ export default function ProfileBanner() {
 
   const [imgLoaded, setImgLoaded] = useState(false);
 
-    const { banner} = getFormattedUser(user);
-  
-
- 
+  const { banner } = getFormattedUser(user);
 
   return (
     <div className="bg-foreground/30! relative h-87.5 w-full overflow-hidden rounded-[12px]">

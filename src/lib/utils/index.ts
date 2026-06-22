@@ -1,6 +1,7 @@
 import type { ClassValue } from "clsx";
 import { clsx } from "clsx";
 import {
+  addDays,
   differenceInCalendarDays,
   isWithinInterval,
   parseISO,
@@ -91,7 +92,10 @@ export function mapSearchParamsToHotelWidget(
   return {
     destination: searchParams.destination,
     checkIn: toValidDate(searchParams.checkIn),
-    checkOut: toValidDate(searchParams.checkOut),
+    checkOut: toValidDate(
+      searchParams.checkOut,
+      addDays(toValidDate(searchParams.checkIn), 1),
+    ),
     rooms: searchParams.rooms ?? 1,
     guests: searchParams.guests ?? 1,
   };
@@ -157,7 +161,6 @@ export function calculateBookingPrice({
 }
 
 export function formatFileName(file: File, prefix?: string) {
-  // get extension
   const ext = file.name.split(".").pop()?.toLowerCase();
 
   // clean original name

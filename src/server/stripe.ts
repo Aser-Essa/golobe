@@ -4,6 +4,7 @@ import { createServerFn } from "@tanstack/react-start";
 import { stripe } from "#/lib/stripe/stripe-server";
 import z from "zod";
 import { getUser } from "./user";
+import { getFormattedUser } from "#/lib/utils/user";
 
 export const getOrCreateStripeCustomer = createServerFn({ method: "POST" })
   .inputValidator(
@@ -14,9 +15,9 @@ export const getOrCreateStripeCustomer = createServerFn({ method: "POST" })
   )
   .handler(async ({ data: { email, name } }) => {
     const { userId } = await auth();
+    const { privateMetadata } = await clerkClient().users.getUser(userId!);
 
-    const { publicMetadata } = await clerkClient().users.getUser(userId!);
-    const customerId = publicMetadata.stripeCustomerId as string;
+    const customerId = privateMetadata.stripeCustomerId as string;
 
     if (customerId) return customerId;
 
@@ -26,7 +27,7 @@ export const getOrCreateStripeCustomer = createServerFn({ method: "POST" })
     });
 
     await clerkClient().users.updateUserMetadata(userId!, {
-      publicMetadata: { stripeCustomerId: customer.id },
+      privateMetadata: { stripeCustomerId: customer.id },
     });
 
     return customer.id;
@@ -38,9 +39,20 @@ export const createSetupIntent = createServerFn({ method: "POST" })
     try {
       const user: User = await getUser();
 
-      const stripeCustomerId = (user.publicMetadata as any).stripeCustomerId;
+      let stripeCustomerId = await (user.privateMetadata as any)
+        .stripeCustomerId;
 
-      if (!stripeCustomerId) throw new Error("No stripe customer id");
+      const { fullName, email } = getFormattedUser(user);
+
+      if (!stripeCustomerId) {
+        console.log("START CREATEING CUSTOMER");
+        stripeCustomerId = await getOrCreateStripeCustomer({
+          data: {
+            email: email || user.emailAddresses.at(0)?.emailAddress || "",
+            name: fullName,
+          },
+        });
+      }
 
       const cardMethod = {
         payment_method_types: ["card"],
@@ -75,15 +87,23 @@ export const createPaymentIntent = createServerFn({ method: "POST" })
   .handler(async ({ data }) => {
     const user: User = await getUser();
 
-    const stripeCustomerId = (user.publicMetadata as any).stripeCustomerId;
+    let stripeCustomerId = (user.privateMetadata as any).stripeCustomerId;
 
-    if (!stripeCustomerId) throw new Error("No customer");
+    const { email, fullName } = getFormattedUser(user);
+
+    if (!stripeCustomerId) {
+      stripeCustomerId = await getOrCreateStripeCustomer({
+        data: {
+          email: email || user.emailAddresses.at(0)?.emailAddress || "",
+          name: fullName,
+        },
+      });
+    }
 
     const paymentIntent = await stripe.paymentIntents.create({
       amount: data.amount * 100,
       currency: "usd",
       customer: stripeCustomerId,
-
       ...(data.paymentMethodId
         ? {
             payment_method: data.paymentMethodId,
@@ -105,7 +125,7 @@ export const getCards = createServerFn({ method: "GET" }).handler(async () => {
   try {
     const user: User = await getUser();
 
-    const stripeCustomerId = (user.publicMetadata as any).stripeCustomerId;
+    const stripeCustomerId = (user.privateMetadata as any).stripeCustomerId;
 
     if (!stripeCustomerId) throw new Error("No stripe customer id");
 

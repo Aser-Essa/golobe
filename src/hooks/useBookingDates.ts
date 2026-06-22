@@ -1,4 +1,4 @@
-import { addDays, differenceInDays } from "date-fns";
+import { addDays, differenceInDays, startOfDay } from "date-fns";
 import { useEffect } from "react";
 
 type UseBookingDatesProps = {
@@ -13,7 +13,7 @@ export function useBookingDates({ watch, setValue }: UseBookingDatesProps) {
   useEffect(() => {
     if (!checkInDate) return;
 
-    const minCheckout = addDays(checkInDate, 1);
+    const minCheckout = addDays(startOfDay(checkInDate), 1);
 
     if (!checkOutDate || checkOutDate <= checkInDate) {
       setValue("checkOut", minCheckout);

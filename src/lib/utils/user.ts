@@ -7,12 +7,25 @@ export type ClerkUser = ReturnType<typeof useUser>["user"];
 type MinimalUser = {
   unsafeMetadata: Record<string, unknown>;
   fullName?: string | null;
+  firstName?: string | null;
+  lastName?: string | null;
 };
 
-export const getUserName = (user: MinimalUser | null | undefined) => {
-  return typeof user?.unsafeMetadata.displayName === "string"
-    ? user.unsafeMetadata.displayName
-    : (user?.fullName ?? "");
+export const getFullName = (user?: MinimalUser | null) => {
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+  const displayName = (user?.unsafeMetadata.displayName as string)?.trim();
+
+  if (displayName) return displayName;
+
+  if (user?.fullName?.trim()) return user.fullName;
+
+  const first = user?.firstName?.trim();
+  const last = user?.lastName?.trim();
+
+  if (first || last) {
+    return `${first ?? ""} ${last ?? ""}`.trim();
+  }
+  return "";
 };
 
 export const formatUserName = ({
@@ -43,11 +56,11 @@ export function getFormattedUser(user: ClerkUser | null | undefined | User) {
     };
   }
 
-  const fullUserName = getUserName(user);
+  const fullName = getFullName(user);
 
   const userName = formatUserName({
-    firstName: fullUserName.split(" ")[0],
-    lastName: fullUserName.split(" ")[1],
+    firstName: fullName.split(" ")[0],
+    lastName: fullName.split(" ")[1],
   });
 
   const avatar =
@@ -56,7 +69,9 @@ export function getFormattedUser(user: ClerkUser | null | undefined | User) {
     user.imageUrl ||
     "/profile.png";
 
-  const email = user.primaryEmailAddress?.emailAddress;
+  const email =
+    user.primaryEmailAddress?.emailAddress ||
+    user.emailAddresses.at(0)?.emailAddress;
 
   const banner =
     (user.publicMetadata.bannerUrl as string) ||
@@ -76,7 +91,7 @@ export function getFormattedUser(user: ClerkUser | null | undefined | User) {
     : undefined;
 
   return {
-    fullName: fullUserName,
+    fullName,
     userName,
     avatar,
     email,

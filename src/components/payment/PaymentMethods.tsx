@@ -18,7 +18,7 @@ export default function PaymentMethods({
       value={selectedMethod}
       onValueChange={setSelectedMethod}
     >
-      <div className="box-shadow-sm space-y-6 rounded-[12px] bg-white p-6">
+      <div className="box-shadow-sm space-y-6 rounded-[12px] bg-white p-4 sm:p-6">
         <PaymentCards selectedMethod={selectedMethod} />
         <Separator />
         <OtherPaymentMethods selected={selectedMethod === "other"} />

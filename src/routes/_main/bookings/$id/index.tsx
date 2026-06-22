@@ -21,7 +21,6 @@ export const Route = createFileRoute("/_main/bookings/$id/")({
 function RouteComponent() {
   const [room] = Route.useLoaderData();
   const hotel = room.hotel;
-
   const [selectedMethod, setSelectedMethod] = useState("");
 
   return (
@@ -32,8 +31,8 @@ function RouteComponent() {
           city={hotel.city}
           country={hotel.country}
         />
-        <div className="relative mt-8 flex items-start gap-10">
-          <div className="flex-3 space-y-10">
+        <div className="relative mt-8 flex flex-col items-start gap-10 lg:flex-row">
+          <div className="space-y-10 lg:flex-3">
             <RoomSummaryCard room={room} hotel={hotel} />
             <PaymentType
               price_per_night={room.price_per_night}

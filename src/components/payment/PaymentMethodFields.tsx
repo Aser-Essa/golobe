@@ -26,7 +26,7 @@ export default function PaymentMethodFields() {
         elements,
         clientSecret,
         confirmParams: {
-          return_url: window.location.origin + "/success",
+          return_url: window.location.href,
         },
       });
 

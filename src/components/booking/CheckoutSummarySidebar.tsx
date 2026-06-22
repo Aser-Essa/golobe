@@ -31,9 +31,9 @@ export default function CheckoutSummarySidebar({
   });
 
   return (
-    <div className="box-shadow-sm sticky top-32 flex-2 space-y-4 rounded-[12px] bg-white p-6">
-      <div className="flex gap-6">
-        <div className="aspect-square size-30 min-w-30 overflow-hidden rounded-[12px]">
+    <div className="box-shadow-sm top-32 w-full space-y-4 rounded-[12px] bg-white p-4 sm:p-6 lg:sticky lg:flex-2">
+      <div className="flex flex-col gap-6 sm:flex-row">
+        <div className="sm:aspect-square aspect-video w-full  sm:size-30 min-w-30 overflow-hidden rounded-[12px]">
           <img
             src={coverImage}
             alt={hotel.name}

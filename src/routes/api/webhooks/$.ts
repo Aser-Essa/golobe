@@ -1,3 +1,5 @@
+import { formatUserName } from "#/lib/utils/user";
+import { getOrCreateStripeCustomer } from "#/server/stripe";
 import { createUser, deleteUserFromDB } from "#/server/user";
 import { verifyWebhook } from "@clerk/tanstack-react-start/webhooks";
 import { createFileRoute } from "@tanstack/react-router";
@@ -12,7 +14,7 @@ export const Route = createFileRoute("/api/webhooks/$")({
           const eventType = evt.type;
 
           if (eventType === "user.created") {
-            const user = {
+            const supabaseUser = {
               id: evt.data.id,
               full_name: evt.data.first_name + " " + evt.data.last_name,
               email: evt.data.email_addresses.at(0)?.email_address || null,
@@ -21,7 +23,19 @@ export const Route = createFileRoute("/api/webhooks/$")({
               is_active: !evt.data.locked,
             };
 
-            await createUser({ data: user });
+            await createUser({ data: supabaseUser });
+
+            const userName = formatUserName({
+              firstName: evt.data.first_name,
+              lastName: evt.data.last_name,
+            });
+
+            await getOrCreateStripeCustomer({
+              data: {
+                name: userName,
+                email: evt.data.email_addresses.at(0)?.email_address || "",
+              },
+            });
           }
 
           if (eventType === "user.deleted") {

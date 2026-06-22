@@ -21,7 +21,7 @@ export default function PaymentCards({
 
       const { error } = await stripe.confirmCardPayment(clientSecret, {
         payment_method: selectedMethod,
-        return_url: window.location.origin,
+        return_url: window.location.href,
       });
 
       if (error) throw new Error(error.message);
