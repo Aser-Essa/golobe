@@ -47,7 +47,7 @@ export default function ViewRoomDetails({ room }: ViewRoomDetailsProps) {
       <Dialog>
         <DialogTrigger asChild>
           <Button
-            className="w-37.5 min-[880px]:h-12 h-10 flex-1 px-4 py-2 font-semibold"
+            className="h-10 w-37.5 flex-1 px-4 py-2 font-semibold min-[880px]:h-12"
             variant={"outline"}
           >
             View details
@@ -66,7 +66,7 @@ export default function ViewRoomDetails({ room }: ViewRoomDetailsProps) {
             </div>
           )}
 
-          <div className="pt-4 pb-0  max-h-[37vh] pr-2 overflow-y-scroll">
+          <div className="max-h-[37vh] overflow-y-scroll pt-4 pr-2 pb-0">
             <DialogHeader>
               <div className="mb-2 flex flex-wrap gap-1.5">
                 <Badge className="gap-1 text-xs">

@@ -3,16 +3,17 @@ import ManageBanner from "./banner-management/ManageBanner";
 import { Skeleton } from "../ui/skeleton";
 import { useState } from "react";
 import { cn } from "#/lib/utils";
+import { getFormattedUser } from "#/lib/utils/user";
 
 export default function ProfileBanner() {
   const { user, isLoaded } = useUser();
 
   const [imgLoaded, setImgLoaded] = useState(false);
 
-  const banner =
-    (user?.publicMetadata.bannerUrl as string) ||
-    (user?.publicMetadata.originalBannerUrl as string) ||
-    "/user-banner.png";
+    const { banner} = getFormattedUser(user);
+  
+
+ 
 
   return (
     <div className="bg-foreground/30! relative h-87.5 w-full overflow-hidden rounded-[12px]">

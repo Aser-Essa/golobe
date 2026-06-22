@@ -8,6 +8,17 @@ import { auth, clerkClient } from "@clerk/tanstack-react-start/server";
 import { createServerFn } from "@tanstack/react-start";
 import z from "zod";
 
+export const getUser = createServerFn({ method: "GET" }).handler(async () => {
+  const { userId } = await auth();
+  if (!userId) {
+    throw new Error("User not found");
+  }
+
+  const user = await clerkClient().users.getUser(userId);
+
+  return JSON.parse(JSON.stringify(user));
+});
+
 export const createUser = createServerFn({ method: "POST" })
   .inputValidator(createUserSchema)
   .handler(async ({ data: user }) => {

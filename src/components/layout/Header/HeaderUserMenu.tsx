@@ -1,7 +1,3 @@
-import { Skeleton } from "#/components/ui/skeleton";
-import { formatUserName, getUserName } from "#/lib/utils";
-import { SignOutButton, useUser } from "@clerk/tanstack-react-start";
-import { Link } from "@tanstack/react-router";
 import { Button } from "#/components/ui/button";
 import {
   Popover,
@@ -9,23 +5,16 @@ import {
   PopoverTrigger,
 } from "#/components/ui/popover";
 import { Separator } from "#/components/ui/separator";
+import { Skeleton } from "#/components/ui/skeleton";
+import { getFormattedUser } from "#/lib/utils/user";
+import { SignOutButton, useUser } from "@clerk/tanstack-react-start";
+import { Link } from "@tanstack/react-router";
 import { ChevronRight, CreditCard, Info, LogOut, User } from "lucide-react";
 
 export default function HeaderUserMenu() {
   const { user, isLoaded } = useUser();
 
-  const fullUserName = getUserName(user);
-
-  const userName = formatUserName({
-    firstName: fullUserName.split(" ")[0],
-    lastName: fullUserName.split(" ")[1],
-  });
-
-  const avatar =
-    (user?.publicMetadata.avatarUrl as string) ||
-    (user?.publicMetadata.originalAvatarUrl as string) ||
-    user?.imageUrl ||
-    "/profile.png";
+  const { avatar, userName, fullName } = getFormattedUser(user);
 
   return (
     <>
@@ -59,7 +48,7 @@ export default function HeaderUserMenu() {
               </div>
               <div className="space-y-1">
                 <p className="hidden text-sm font-semibold sm:block">
-                  {fullUserName}.
+                  {fullName}.
                 </p>
                 <p className="text-foreground/75 text-xs">Online</p>
               </div>

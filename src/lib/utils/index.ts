@@ -1,7 +1,7 @@
 import type { ClassValue } from "clsx";
 import { clsx } from "clsx";
 import {
-  differenceInDays,
+  differenceInCalendarDays,
   isWithinInterval,
   parseISO,
   startOfDay,
@@ -76,20 +76,6 @@ export function getTypePlacesCount({ hotels, type }: GetTypePlacesCountParams) {
   return count;
 }
 
-export const formatUserName = ({
-  firstName,
-  lastName,
-}: {
-  firstName: string | null | undefined;
-  lastName: string | null | undefined;
-}) => {
-  const userName = `${firstName ?? ""} ${
-    lastName ? lastName[0].toUpperCase() + "." : ""
-  }`.trim();
-
-  return userName;
-};
-
 export function sanitizeString(value: string) {
   return value.trim().replace(/[.,\/#!$%\^&*;:{}=\-_`~()]/g, "");
 }
@@ -153,7 +139,10 @@ export function calculateBookingPrice({
   pricePerNight,
   taxRate,
 }: PricingParams) {
-  const totalNights = Math.max(0, differenceInDays(checkOut, checkIn));
+  const totalNights = Math.max(
+    0,
+    differenceInCalendarDays(startOfDay(checkOut), startOfDay(checkIn)),
+  );
 
   const baseFare = pricePerNight * totalNights;
   const taxes = baseFare * (taxRate / 100);
@@ -166,17 +155,6 @@ export function calculateBookingPrice({
     total,
   };
 }
-
-type MinimalUser = {
-  unsafeMetadata: Record<string, unknown>;
-  fullName?: string | null;
-};
-
-export const getUserName = (user: MinimalUser | null | undefined) => {
-  return typeof user?.unsafeMetadata.displayName === "string"
-    ? user.unsafeMetadata.displayName
-    : (user?.fullName ?? "");
-};
 
 export function formatFileName(file: File, prefix?: string) {
   // get extension
@@ -191,30 +169,4 @@ export function formatFileName(file: File, prefix?: string) {
     .replace(/^-|-$/g, ""); // trim dashes
 
   return `${prefix ? prefix + "-" : ""}${baseName}.${ext}`;
-}
-
-export function extractSupabasePath({
-  url,
-  bucket,
-}: {
-  url: string;
-  bucket: string;
-}) {
-  try {
-    const u = new URL(url);
-
-    // /storage/v1/object/public/avatars/user_xxx/file.webp
-    const parts = u.pathname.split("/");
-
-    const bucketIndex = parts.findIndex((p) => p === bucket);
-
-    if (bucketIndex === -1) return "";
-
-    // everything after bucket name
-    const path = parts.slice(bucketIndex + 1).join("/");
-
-    return path;
-  } catch {
-    return "";
-  }
 }

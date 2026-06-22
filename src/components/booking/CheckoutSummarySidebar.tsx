@@ -3,16 +3,19 @@ import type { FilterSearchParams, HotelType } from "#/lib/types";
 import { calculateBookingPrice, getCoverImageUrl } from "#/lib/utils";
 import { useSearch } from "@tanstack/react-router";
 import RatingSummary from "../hotels/detail/RatingSummary";
+import Checkout from "../payment/Checkout";
 import { Separator } from "../ui/separator";
 
 interface CheckoutSummarySidebarProps {
   hotel: HotelType;
   room: HotelType["rooms"][number];
+  selectedMethod: string;
 }
 
 export default function CheckoutSummarySidebar({
   hotel,
   room,
+  selectedMethod,
 }: CheckoutSummarySidebarProps) {
   const searchParams: FilterSearchParams = useSearch({
     from: "/_main/bookings/$id/",
@@ -28,7 +31,7 @@ export default function CheckoutSummarySidebar({
   });
 
   return (
-    <div className="box-shadow-sm flex-2 space-y-4 rounded-[12px] bg-white p-6">
+    <div className="box-shadow-sm sticky top-32 flex-2 space-y-4 rounded-[12px] bg-white p-6">
       <div className="flex gap-6">
         <div className="aspect-square size-30 min-w-30 overflow-hidden rounded-[12px]">
           <img
@@ -79,6 +82,9 @@ export default function CheckoutSummarySidebar({
         <p className="text-base font-medium">Total</p>
         <p className="text-base font-semibold">${total}</p>
       </div>
+      <Separator />
+
+      <Checkout selectedMethod={selectedMethod} total={total} />
     </div>
   );
 }

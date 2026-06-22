@@ -4,10 +4,9 @@ import EmailManagement from "#/components/profile/email-management/EmailManageme
 import PasswordManagement from "#/components/profile/password-management/PasswordManagement";
 import { Separator } from "#/components/ui/separator";
 import { addressSchema, nameSchema, phoneSchema } from "#/lib/schemas/user";
-import { getUserName } from "#/lib/utils";
+import { getFormattedUser } from "#/lib/utils/user";
 import { useUser } from "@clerk/tanstack-react-start";
 import { createFileRoute } from "@tanstack/react-router";
-import { parseISO } from "date-fns";
 
 export const Route = createFileRoute("/_main/profile/account/")({
   component: RouteComponent,
@@ -15,27 +14,16 @@ export const Route = createFileRoute("/_main/profile/account/")({
 
 function RouteComponent() {
   const { user, isLoaded } = useUser();
-  const fullUserName = getUserName(user);
 
-  const phoneNumber = user?.unsafeMetadata.phoneNumber
-    ? String(user.unsafeMetadata.phoneNumber)
-    : "";
-
-  const address = user?.unsafeMetadata.address
-    ? String(user.unsafeMetadata.address)
-    : "";
-
-  const birthDate = user?.unsafeMetadata.birthDate
-    ? parseISO(user.unsafeMetadata.birthDate as string)
-    : undefined;
+  const { fullName, phoneNumber, address, birthDate } = getFormattedUser(user);
 
   return (
     <div>
-      <h3 className="text-[32px] font-bold">Account</h3>
+      <h3 className="text-[28px] font-bold sm:text-[32px]">Account</h3>
       <div className="box-shadow-sm mt-4 space-y-3 rounded-[16px] bg-white px-6 py-8">
         <EditableProfileField
           label="Name"
-          defaultValue={fullUserName}
+          defaultValue={fullName}
           isLoaded={isLoaded}
           schema={nameSchema}
           onSave={async (value) => {

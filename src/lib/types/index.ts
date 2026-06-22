@@ -94,3 +94,16 @@ export type SidebarFilterOptions = {
 export type CreateUserType = z.infer<typeof createUserSchema>;
 
 export type User = ReturnType<typeof useUser>["user"];
+
+export type StripeCardBrand =
+  | "visa"
+  | "mastercard"
+  | "amex"
+  | "discover"
+  | "diners"
+  | "jcb"
+  | "unionpay"
+  | "cartes_bancaires"
+  | "eftpos_au"
+  | "interac"
+  | "unknown";

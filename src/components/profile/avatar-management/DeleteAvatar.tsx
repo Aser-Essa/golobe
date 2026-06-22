@@ -2,7 +2,6 @@ import { deleteUserAvatar } from "#/server/user";
 import { useUser } from "@clerk/tanstack-react-start";
 import { Trash } from "lucide-react";
 import { Button } from "../../ui/button";
-import { extractSupabasePath } from "#/lib/utils";
 
 export default function DeleteAvatar() {
   const { user } = useUser();

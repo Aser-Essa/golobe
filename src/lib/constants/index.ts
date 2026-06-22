@@ -16,6 +16,15 @@ import {
   AirVent,
 } from "lucide-react";
 import type { FilterSearchParams } from "../types";
+import {
+  VisaIcon,
+  MastercardIcon,
+  AmexIcon,
+  DiscoverIcon,
+  DinersIcon,
+  JcbIcon,
+  UnionpayIcon,
+} from "react-svg-credit-card-payment-icons";
 
 export const amenityIcons = {
   // wellness
@@ -86,3 +95,15 @@ export const SupabaseStorageAvatarPath =
 
 export const SupabaseStorageBannerPath =
   "https://zypocyviadephfsrsucv.supabase.co/storage/v1/object/public/banners";
+
+export const YOUR_DOMAIN = "http://localhost:3000/";
+
+export const cardBrandIcons = {
+  visa: VisaIcon,
+  mastercard: MastercardIcon,
+  amex: AmexIcon,
+  discover: DiscoverIcon,
+  diners: DinersIcon,
+  jcb: JcbIcon,
+  unionpay: UnionpayIcon,
+};
