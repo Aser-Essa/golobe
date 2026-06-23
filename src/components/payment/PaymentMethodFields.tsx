@@ -34,7 +34,7 @@ export default function PaymentMethodFields() {
         throw new Error(paymentError.message);
       }
 
-      toast.success("Payment successful");
+      toast.success("Your payment was completed successfully");
     } catch (error) {
       toast.error((error as Error).message);
       console.error("PAYMENT ERROR:", error);

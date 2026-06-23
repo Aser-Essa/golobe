@@ -38,7 +38,7 @@ export default function FilterAvailableRoomsWidget({
 
   const today = startOfToday();
 
-  const navigate = useNavigate({ from: "/hotels/$id/" });
+  const navigate = useNavigate({ from: "/hotels/$hotelId/" });
 
   function onSubmit(data: FilterAvailableRoomsWidgetType) {
     navigate({

@@ -1,10 +1,11 @@
-import { auth, clerkClient } from "@clerk/tanstack-react-start/server";
-import type { User } from "@clerk/tanstack-react-start/server";
-import { createServerFn } from "@tanstack/react-start";
+import { createBookingSchema } from "#/lib/schemas";
 import { stripe } from "#/lib/stripe/stripe-server";
+import { getFormattedUser } from "#/lib/utils/user";
+import type { User } from "@clerk/tanstack-react-start/server";
+import { auth, clerkClient } from "@clerk/tanstack-react-start/server";
+import { createServerFn } from "@tanstack/react-start";
 import z from "zod";
 import { getUser } from "./user";
-import { getFormattedUser } from "#/lib/utils/user";
 
 export const getOrCreateStripeCustomer = createServerFn({ method: "POST" })
   .inputValidator(
@@ -78,48 +79,66 @@ export const createSetupIntent = createServerFn({ method: "POST" })
   });
 
 export const createPaymentIntent = createServerFn({ method: "POST" })
-  .inputValidator(
-    z.object({
-      amount: z.number(),
-      paymentMethodId: z.string().optional(),
-    }),
-  )
-  .handler(async ({ data }) => {
-    const user: User = await getUser();
+  .inputValidator(createBookingSchema)
+  .handler(
+    async ({
+      data: {
+        roomId,
+        hotelId,
+        guests,
+        BookingPriceBreakdown,
+        paymentMode,
+        paymentMethodId,
+        checkIn,
+        checkOut,
+      },
+    }) => {
+      const user: User = await getUser();
+      const { email, fullName } = getFormattedUser(user);
 
-    let stripeCustomerId = (user.privateMetadata as any).stripeCustomerId;
+      let stripeCustomerId = (user.privateMetadata as any).stripeCustomerId;
 
-    const { email, fullName } = getFormattedUser(user);
+      if (!stripeCustomerId) {
+        stripeCustomerId = await getOrCreateStripeCustomer({
+          data: {
+            email: email || user.emailAddresses.at(0)?.emailAddress || "",
+            name: fullName,
+          },
+        });
+      }
 
-    if (!stripeCustomerId) {
-      stripeCustomerId = await getOrCreateStripeCustomer({
-        data: {
-          email: email || user.emailAddresses.at(0)?.emailAddress || "",
-          name: fullName,
+      const paymentIntent = await stripe.paymentIntents.create({
+        amount: BookingPriceBreakdown.amountToPay * 100,
+        currency: "usd",
+        customer: stripeCustomerId,
+        metadata: {
+          userId: user.id,
+          roomId,
+          hotelId,
+          guests,
+          checkIn,
+          checkOut,
+          BookingPriceBreakdown: JSON.stringify(BookingPriceBreakdown),
+          paymentMode,
+          discount: 0,
         },
+        ...(paymentMethodId
+          ? {
+              payment_method: paymentMethodId,
+              payment_method_types: ["card"],
+            }
+          : {
+              automatic_payment_methods: {
+                enabled: true,
+              },
+            }),
       });
-    }
 
-    const paymentIntent = await stripe.paymentIntents.create({
-      amount: data.amount * 100,
-      currency: "usd",
-      customer: stripeCustomerId,
-      ...(data.paymentMethodId
-        ? {
-            payment_method: data.paymentMethodId,
-            payment_method_types: ["card"],
-          }
-        : {
-            automatic_payment_methods: {
-              enabled: true,
-            },
-          }),
-    });
-
-    return {
-      clientSecret: paymentIntent.client_secret,
-    };
-  });
+      return {
+        clientSecret: paymentIntent.client_secret,
+      };
+    },
+  );
 
 export const getCards = createServerFn({ method: "GET" }).handler(async () => {
   try {

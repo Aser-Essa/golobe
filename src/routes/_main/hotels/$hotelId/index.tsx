@@ -14,11 +14,11 @@ import { mapSearchParamsToHotelWidget } from "#/lib/utils";
 import { getHotel } from "#/server/hotels";
 import { createFileRoute, redirect } from "@tanstack/react-router";
 
-export const Route = createFileRoute("/_main/hotels/$id/")({
+export const Route = createFileRoute("/_main/hotels/$hotelId/")({
   component: RouteComponent,
   loaderDeps: ({ search }) => search as FilterSearchParams,
   loader: async ({ params, deps: searchParams }) => {
-    const id = params.id;
+    const id = params.hotelId;
     const data = await getHotel({ data: { id } });
     if (data.length === 0) {
       throw redirect({ to: "/hotels", search: searchParams });

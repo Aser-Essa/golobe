@@ -8,11 +8,14 @@ export const getRoom = createServerFn({ method: "GET" })
     const { data: roomData, error } = await supabase
       .from("rooms")
       .select(`*,bookings(*),hotel:hotels(*,hotel_images:hotel_images(*))`)
-      .eq("id", data.id);
+      .eq("id", data.id)
+      .single();
 
     if (error) {
       throw new Error(error.message);
     }
+
+    console.log(roomData);
 
     return roomData;
   });

@@ -5,6 +5,9 @@ import type {
 } from "@clerk/tanstack-react-start";
 import type z from "zod";
 import type {
+  BookingPriceBreakdownSchema,
+  bookingToInsertSchema,
+  createBookingSchema,
   forgotPasswordSchema,
   resetPasswordSchema,
   signInSchema,
@@ -107,3 +110,20 @@ export type StripeCardBrand =
   | "eftpos_au"
   | "interac"
   | "unknown";
+
+export type paymentMode = "full" | "split";
+
+export type BookingPriceBreakdown = z.infer<typeof BookingPriceBreakdownSchema>;
+
+export type createBookingType = z.infer<typeof createBookingSchema>;
+
+export type stripeBookingMetadata = Omit<
+  createBookingType,
+  "BookingPriceBreakdown"
+> & {
+  userId: string;
+  discount?: number;
+  BookingPriceBreakdown: string;
+};
+
+export type BookingToInsert = z.infer<typeof bookingToInsertSchema>;

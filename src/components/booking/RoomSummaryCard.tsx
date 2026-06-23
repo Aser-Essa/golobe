@@ -16,7 +16,7 @@ type RoomSummaryCardProps = {
 
 export default function RoomSummaryCard({ room, hotel }: RoomSummaryCardProps) {
   const searchParams: FilterSearchParams = useSearch({
-    from: "/_main/bookings/$id/",
+    from: "/_main/hotels/$hotelId/checkout/$roomId/",
   });
 
   const normalizedSearchParams = mapSearchParamsToHotelWidget(searchParams);
@@ -35,7 +35,7 @@ export default function RoomSummaryCard({ room, hotel }: RoomSummaryCardProps) {
   const { checkInDate, checkOutDate } = useBookingDates({ watch, setValue });
 
   const today = startOfToday();
-  const navigate = useNavigate({ from: "/bookings/$id/" });
+  const navigate = useNavigate({ from: "/hotels/$hotelId/checkout/$roomId/" });
 
   useEffect(() => {
     navigate({

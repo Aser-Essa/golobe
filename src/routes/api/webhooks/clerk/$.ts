@@ -4,7 +4,7 @@ import { createUser, deleteUserFromDB } from "#/server/user";
 import { verifyWebhook } from "@clerk/tanstack-react-start/webhooks";
 import { createFileRoute } from "@tanstack/react-router";
 
-export const Route = createFileRoute("/api/webhooks/$")({
+export const Route = createFileRoute("/api/webhooks/clerk/$")({
   server: {
     handlers: {
       POST: async ({ request }) => {

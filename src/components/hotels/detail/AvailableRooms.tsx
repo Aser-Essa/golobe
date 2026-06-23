@@ -14,7 +14,7 @@ export default function AvailableRooms({ rooms }: AvailableRoomsProps) {
   const navigate = useNavigate();
 
   const searchParams: FilterSearchParams = useSearch({
-    from: "/_main/hotels/$id/",
+    from: "/_main/hotels/$hotelId/",
   });
 
   const availableRooms = getAvailableRooms({
@@ -34,7 +34,7 @@ export default function AvailableRooms({ rooms }: AvailableRoomsProps) {
 
   const handleBookNow = (roomId: string) => {
     navigate({
-      to: `/bookings/${roomId}`,
+      to: `/hotels/$hotelId/checkout/${roomId}`,
       search: (prev) => ({
         ...prev,
       }),
@@ -69,15 +69,15 @@ export default function AvailableRooms({ rooms }: AvailableRoomsProps) {
                         className="h-full w-full object-cover"
                       />
                     </div>
-                    <p className="flex gap-1 text-sm sm:text-base font-medium">
+                    <p className="flex gap-1 text-sm font-medium sm:text-base">
                       <span>{name}</span>
-                      <span className="sm:block hidden">
+                      <span className="hidden sm:block">
                         {view_type ? `- ${view_type}` : ""} - {bed_type}
                       </span>
                     </p>
                   </div>
 
-                  <p className=" text-xl sm:text-2xl font-semibold">
+                  <p className="text-xl font-semibold sm:text-2xl">
                     ${price_per_night}
                     <span className="text-sm">/night</span>
                   </p>

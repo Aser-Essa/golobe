@@ -25,7 +25,7 @@ export default function PaymentCards({
       });
 
       if (error) throw new Error(error.message);
-      toast.success("Payment successful, Booking is confirmed");
+      toast.success("Your payment was completed successfully");
     };
   }, [selectedMethod]);
 

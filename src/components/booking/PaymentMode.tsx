@@ -6,41 +6,47 @@ import {
   FieldTitle,
 } from "#/components/ui/field";
 import { RadioGroup, RadioGroupItem } from "#/components/ui/radio-group";
-import type { FilterSearchParams } from "#/lib/types";
-import { calculateBookingPrice } from "#/lib/utils";
-import { useSearch } from "@tanstack/react-router";
+import type {
+  BookingPriceBreakdown,
+  FilterSearchParams,
+  paymentMode,
+} from "#/lib/types";
+import { useNavigate, useSearch } from "@tanstack/react-router";
 import { formatDate } from "date-fns";
 
-interface PaymentTypeProps {
-  price_per_night: number;
-  tax_rate: number;
+interface paymentModeProps {
+  bookingPrice: BookingPriceBreakdown;
 }
 
-export default function PaymentType({
-  price_per_night,
-  tax_rate,
-}: PaymentTypeProps) {
-  const searchParams: FilterSearchParams = useSearch({
-    from: "/_main/bookings/$id/",
-  });
+export default function PaymentMode({ bookingPrice }: paymentModeProps) {
+  const { restToPay, amountToPay } = bookingPrice;
 
-  const { total } = calculateBookingPrice({
-    checkIn: searchParams.checkIn,
-    checkOut: searchParams.checkOut,
-    pricePerNight: price_per_night,
-    taxRate: tax_rate,
-  });
-
-  const splitedPrice = total / 2;
+  const searchParams: FilterSearchParams & { paymentMode?: paymentMode } =
+    useSearch({
+      from: "/_main/hotels/$hotelId/checkout/$roomId/",
+    });
 
   const formattedCheckOut = searchParams.checkOut
     ? formatDate(new Date(searchParams.checkOut), "MMM d, yyyy")
     : "";
 
+  const navigate = useNavigate({ from: "/hotels/$hotelId/checkout/$roomId/" });
+
+  const handlepaymentModeChange = (value: string) => {
+    navigate({
+      search: (prev) => ({ ...prev, paymentMode: value }),
+      resetScroll: false,
+    });
+  };
+
   return (
     <>
       <div className="box-shadow-sm rounded-[12px] bg-white p-4 sm:p-6">
-        <RadioGroup defaultValue="full" className="gap-4">
+        <RadioGroup
+          className="gap-4"
+          defaultValue={searchParams.paymentMode || "full"}
+          onValueChange={handlepaymentModeChange}
+        >
           <FieldLabel
             htmlFor="full-pay"
             className="has-data-checked:bg-primary"
@@ -67,8 +73,8 @@ export default function PaymentType({
                   Pay part now, part later
                 </FieldTitle>
                 <FieldDescription className="text-sm">
-                  Pay ${splitedPrice} now, and the rest (${splitedPrice}) will
-                  be automatically charged to the same payment method on{" "}
+                  Pay ${amountToPay} now, and the rest (${restToPay}) will be
+                  automatically charged to the same payment method on{" "}
                   {formattedCheckOut}. No extra fees.
                 </FieldDescription>
               </FieldContent>

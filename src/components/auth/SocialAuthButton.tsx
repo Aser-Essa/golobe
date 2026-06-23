@@ -17,8 +17,6 @@ export function SocialAuthButton({
 
   const action = mode === "signup" ? signUp : signIn;
 
-  console.log(action);
-
   const [loading, setLoading] = useState(false);
 
   const handleClick = async () => {
@@ -40,11 +38,12 @@ export function SocialAuthButton({
   };
 
   return (
-    <div
+    <button
       onClick={handleClick}
+      disabled={loading}
       className="border-primary hover:bg-primary/15 flex h-14 w-full cursor-pointer items-center justify-center rounded-sm border transition-all"
     >
       {children}
-    </div>
+    </button>
   );
 }
