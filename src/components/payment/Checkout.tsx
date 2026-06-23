@@ -55,6 +55,7 @@ export default function Checkout({
         if (!res.clientSecret) return;
 
         await confirmPaymentRef.current?.(res.clientSecret);
+        
       } catch (err) {
         console.error(err);
       }

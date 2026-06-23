@@ -2,36 +2,22 @@ import { createBookingSchema } from "#/lib/schemas";
 import { stripe } from "#/lib/stripe/stripe-server";
 import { getFormattedUser } from "#/lib/utils/user";
 import type { User } from "@clerk/tanstack-react-start/server";
-import { auth, clerkClient } from "@clerk/tanstack-react-start/server";
+import { auth } from "@clerk/tanstack-react-start/server";
 import { createServerFn } from "@tanstack/react-start";
 import z from "zod";
+import { getOrCreateStripeCustomerCore } from "./stripe-core";
 import { getUser } from "./user";
 
 export const getOrCreateStripeCustomer = createServerFn({ method: "POST" })
   .inputValidator(
     z.object({
-      email: z.string(),
+      email: z.email(),
       name: z.string(),
     }),
   )
   .handler(async ({ data: { email, name } }) => {
     const { userId } = await auth();
-    const { privateMetadata } = await clerkClient().users.getUser(userId!);
-
-    const customerId = privateMetadata.stripeCustomerId as string;
-
-    if (customerId) return customerId;
-
-    const customer = await stripe.customers.create({
-      email,
-      name,
-    });
-
-    await clerkClient().users.updateUserMetadata(userId!, {
-      privateMetadata: { stripeCustomerId: customer.id },
-    });
-
-    return customer.id;
+    return getOrCreateStripeCustomerCore({ userId: userId!, email, name });
   });
 
 export const createSetupIntent = createServerFn({ method: "POST" })

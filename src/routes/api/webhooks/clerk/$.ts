@@ -1,6 +1,6 @@
 import { formatUserName } from "#/lib/utils/user";
-import { getOrCreateStripeCustomer } from "#/server/stripe";
-import { createUser, deleteUserFromDB } from "#/server/user";
+import { getOrCreateStripeCustomerCore } from "#/server/stripe-core";
+import { createUserDB, deleteUserDB } from "#/server/user";
 import { verifyWebhook } from "@clerk/tanstack-react-start/webhooks";
 import { createFileRoute } from "@tanstack/react-router";
 
@@ -23,23 +23,22 @@ export const Route = createFileRoute("/api/webhooks/clerk/$")({
               is_active: !evt.data.locked,
             };
 
-            await createUser({ data: supabaseUser });
+            await createUserDB({ user: supabaseUser });
 
             const userName = formatUserName({
               firstName: evt.data.first_name,
               lastName: evt.data.last_name,
             });
 
-            await getOrCreateStripeCustomer({
-              data: {
-                name: userName,
-                email: evt.data.email_addresses.at(0)?.email_address || "",
-              },
+            await getOrCreateStripeCustomerCore({
+              name: userName,
+              email: evt.data.email_addresses.at(0)?.email_address || "",
+              userId: evt.data.id,
             });
           }
 
           if (eventType === "user.deleted") {
-            await deleteUserFromDB({ data: { id: String(evt.data.id) } });
+            await deleteUserDB(String(evt.data.id));
           }
 
           return new Response("Webhook received", { status: 200 });

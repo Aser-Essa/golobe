@@ -16,11 +16,13 @@ import { Route as MainProfileRouteRouteImport } from './routes/_main/profile/rou
 import { Route as MainProfileIndexRouteImport } from './routes/_main/profile/index'
 import { Route as MainHotelsIndexRouteImport } from './routes/_main/hotels/index'
 import { Route as MainFavouritesIndexRouteImport } from './routes/_main/favourites/index'
+import { Route as MainBookingsIndexRouteImport } from './routes/_main/bookings/index'
 import { Route as AuthSignUpIndexRouteImport } from './routes/_auth/sign-up/index'
 import { Route as AuthSignInIndexRouteImport } from './routes/_auth/sign-in/index'
 import { Route as AuthForgotPasswordIndexRouteImport } from './routes/_auth/forgot-password/index'
 import { Route as MainProfileAccountIndexRouteImport } from './routes/_main/profile/account/index'
 import { Route as MainHotelsHotelIdIndexRouteImport } from './routes/_main/hotels/$hotelId/index'
+import { Route as MainBookingsBookingIdIndexRouteImport } from './routes/_main/bookings/$bookingId/index'
 import { Route as ApiWebhooksStripeSplatRouteImport } from './routes/api/webhooks/stripe/$'
 import { Route as ApiWebhooksClerkSplatRouteImport } from './routes/api/webhooks/clerk/$'
 import { Route as MainHotelsHotelIdCheckoutIndexRouteImport } from './routes/_main/hotels/$hotelId/checkout/index'
@@ -59,6 +61,11 @@ const MainFavouritesIndexRoute = MainFavouritesIndexRouteImport.update({
   path: '/favourites/',
   getParentRoute: () => MainRouteRoute,
 } as any)
+const MainBookingsIndexRoute = MainBookingsIndexRouteImport.update({
+  id: '/bookings/',
+  path: '/bookings/',
+  getParentRoute: () => MainRouteRoute,
+} as any)
 const AuthSignUpIndexRoute = AuthSignUpIndexRouteImport.update({
   id: '/sign-up/',
   path: '/sign-up/',
@@ -84,6 +91,12 @@ const MainHotelsHotelIdIndexRoute = MainHotelsHotelIdIndexRouteImport.update({
   path: '/hotels/$hotelId/',
   getParentRoute: () => MainRouteRoute,
 } as any)
+const MainBookingsBookingIdIndexRoute =
+  MainBookingsBookingIdIndexRouteImport.update({
+    id: '/bookings/$bookingId/',
+    path: '/bookings/$bookingId/',
+    getParentRoute: () => MainRouteRoute,
+  } as any)
 const ApiWebhooksStripeSplatRoute = ApiWebhooksStripeSplatRouteImport.update({
   id: '/api/webhooks/stripe/$',
   path: '/api/webhooks/stripe/$',
@@ -113,11 +126,13 @@ export interface FileRoutesByFullPath {
   '/forgot-password/': typeof AuthForgotPasswordIndexRoute
   '/sign-in/': typeof AuthSignInIndexRoute
   '/sign-up/': typeof AuthSignUpIndexRoute
+  '/bookings/': typeof MainBookingsIndexRoute
   '/favourites/': typeof MainFavouritesIndexRoute
   '/hotels/': typeof MainHotelsIndexRoute
   '/profile/': typeof MainProfileIndexRoute
   '/api/webhooks/clerk/$': typeof ApiWebhooksClerkSplatRoute
   '/api/webhooks/stripe/$': typeof ApiWebhooksStripeSplatRoute
+  '/bookings/$bookingId/': typeof MainBookingsBookingIdIndexRoute
   '/hotels/$hotelId/': typeof MainHotelsHotelIdIndexRoute
   '/profile/account/': typeof MainProfileAccountIndexRoute
   '/hotels/$hotelId/checkout/': typeof MainHotelsHotelIdCheckoutIndexRoute
@@ -128,11 +143,13 @@ export interface FileRoutesByTo {
   '/forgot-password': typeof AuthForgotPasswordIndexRoute
   '/sign-in': typeof AuthSignInIndexRoute
   '/sign-up': typeof AuthSignUpIndexRoute
+  '/bookings': typeof MainBookingsIndexRoute
   '/favourites': typeof MainFavouritesIndexRoute
   '/hotels': typeof MainHotelsIndexRoute
   '/profile': typeof MainProfileIndexRoute
   '/api/webhooks/clerk/$': typeof ApiWebhooksClerkSplatRoute
   '/api/webhooks/stripe/$': typeof ApiWebhooksStripeSplatRoute
+  '/bookings/$bookingId': typeof MainBookingsBookingIdIndexRoute
   '/hotels/$hotelId': typeof MainHotelsHotelIdIndexRoute
   '/profile/account': typeof MainProfileAccountIndexRoute
   '/hotels/$hotelId/checkout': typeof MainHotelsHotelIdCheckoutIndexRoute
@@ -147,11 +164,13 @@ export interface FileRoutesById {
   '/_auth/forgot-password/': typeof AuthForgotPasswordIndexRoute
   '/_auth/sign-in/': typeof AuthSignInIndexRoute
   '/_auth/sign-up/': typeof AuthSignUpIndexRoute
+  '/_main/bookings/': typeof MainBookingsIndexRoute
   '/_main/favourites/': typeof MainFavouritesIndexRoute
   '/_main/hotels/': typeof MainHotelsIndexRoute
   '/_main/profile/': typeof MainProfileIndexRoute
   '/api/webhooks/clerk/$': typeof ApiWebhooksClerkSplatRoute
   '/api/webhooks/stripe/$': typeof ApiWebhooksStripeSplatRoute
+  '/_main/bookings/$bookingId/': typeof MainBookingsBookingIdIndexRoute
   '/_main/hotels/$hotelId/': typeof MainHotelsHotelIdIndexRoute
   '/_main/profile/account/': typeof MainProfileAccountIndexRoute
   '/_main/hotels/$hotelId/checkout/': typeof MainHotelsHotelIdCheckoutIndexRoute
@@ -165,11 +184,13 @@ export interface FileRouteTypes {
     | '/forgot-password/'
     | '/sign-in/'
     | '/sign-up/'
+    | '/bookings/'
     | '/favourites/'
     | '/hotels/'
     | '/profile/'
     | '/api/webhooks/clerk/$'
     | '/api/webhooks/stripe/$'
+    | '/bookings/$bookingId/'
     | '/hotels/$hotelId/'
     | '/profile/account/'
     | '/hotels/$hotelId/checkout/'
@@ -180,11 +201,13 @@ export interface FileRouteTypes {
     | '/forgot-password'
     | '/sign-in'
     | '/sign-up'
+    | '/bookings'
     | '/favourites'
     | '/hotels'
     | '/profile'
     | '/api/webhooks/clerk/$'
     | '/api/webhooks/stripe/$'
+    | '/bookings/$bookingId'
     | '/hotels/$hotelId'
     | '/profile/account'
     | '/hotels/$hotelId/checkout'
@@ -198,11 +221,13 @@ export interface FileRouteTypes {
     | '/_auth/forgot-password/'
     | '/_auth/sign-in/'
     | '/_auth/sign-up/'
+    | '/_main/bookings/'
     | '/_main/favourites/'
     | '/_main/hotels/'
     | '/_main/profile/'
     | '/api/webhooks/clerk/$'
     | '/api/webhooks/stripe/$'
+    | '/_main/bookings/$bookingId/'
     | '/_main/hotels/$hotelId/'
     | '/_main/profile/account/'
     | '/_main/hotels/$hotelId/checkout/'
@@ -267,6 +292,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MainFavouritesIndexRouteImport
       parentRoute: typeof MainRouteRoute
     }
+    '/_main/bookings/': {
+      id: '/_main/bookings/'
+      path: '/bookings'
+      fullPath: '/bookings/'
+      preLoaderRoute: typeof MainBookingsIndexRouteImport
+      parentRoute: typeof MainRouteRoute
+    }
     '/_auth/sign-up/': {
       id: '/_auth/sign-up/'
       path: '/sign-up'
@@ -300,6 +332,13 @@ declare module '@tanstack/react-router' {
       path: '/hotels/$hotelId'
       fullPath: '/hotels/$hotelId/'
       preLoaderRoute: typeof MainHotelsHotelIdIndexRouteImport
+      parentRoute: typeof MainRouteRoute
+    }
+    '/_main/bookings/$bookingId/': {
+      id: '/_main/bookings/$bookingId/'
+      path: '/bookings/$bookingId'
+      fullPath: '/bookings/$bookingId/'
+      preLoaderRoute: typeof MainBookingsBookingIdIndexRouteImport
       parentRoute: typeof MainRouteRoute
     }
     '/api/webhooks/stripe/$': {
@@ -365,8 +404,10 @@ const MainProfileRouteRouteWithChildren =
 interface MainRouteRouteChildren {
   MainProfileRouteRoute: typeof MainProfileRouteRouteWithChildren
   MainIndexRoute: typeof MainIndexRoute
+  MainBookingsIndexRoute: typeof MainBookingsIndexRoute
   MainFavouritesIndexRoute: typeof MainFavouritesIndexRoute
   MainHotelsIndexRoute: typeof MainHotelsIndexRoute
+  MainBookingsBookingIdIndexRoute: typeof MainBookingsBookingIdIndexRoute
   MainHotelsHotelIdIndexRoute: typeof MainHotelsHotelIdIndexRoute
   MainHotelsHotelIdCheckoutIndexRoute: typeof MainHotelsHotelIdCheckoutIndexRoute
   MainHotelsHotelIdCheckoutRoomIdIndexRoute: typeof MainHotelsHotelIdCheckoutRoomIdIndexRoute
@@ -375,8 +416,10 @@ interface MainRouteRouteChildren {
 const MainRouteRouteChildren: MainRouteRouteChildren = {
   MainProfileRouteRoute: MainProfileRouteRouteWithChildren,
   MainIndexRoute: MainIndexRoute,
+  MainBookingsIndexRoute: MainBookingsIndexRoute,
   MainFavouritesIndexRoute: MainFavouritesIndexRoute,
   MainHotelsIndexRoute: MainHotelsIndexRoute,
+  MainBookingsBookingIdIndexRoute: MainBookingsBookingIdIndexRoute,
   MainHotelsHotelIdIndexRoute: MainHotelsHotelIdIndexRoute,
   MainHotelsHotelIdCheckoutIndexRoute: MainHotelsHotelIdCheckoutIndexRoute,
   MainHotelsHotelIdCheckoutRoomIdIndexRoute:

@@ -1,3 +1,4 @@
+"use server";
 import { stripe } from "#/lib/stripe/stripe-server";
 import type { stripeBookingMetadata } from "#/lib/types";
 import { formatBookingData } from "#/lib/utils";

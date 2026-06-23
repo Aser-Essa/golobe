@@ -4,6 +4,7 @@ import {
 } from "#/lib/constants";
 import { createUserSchema, updatePasswordSchema } from "#/lib/schemas/user";
 import { supabase } from "#/lib/supabase";
+import type { CreateUserType } from "#/lib/types";
 import { auth, clerkClient } from "@clerk/tanstack-react-start/server";
 import { createServerFn } from "@tanstack/react-start";
 import z from "zod";
@@ -19,26 +20,35 @@ export const getUser = createServerFn({ method: "GET" }).handler(async () => {
   return JSON.parse(JSON.stringify(user));
 });
 
-export const createUser = createServerFn({ method: "POST" })
+export const createUserDB = async ({ user }: { user: CreateUserType }) => {
+  const { error } = await supabase.from("users").insert(user);
+
+  if (error) {
+    console.error(error);
+    throw new Error(error.message);
+  }
+
+  return user;
+};
+
+export const createUserServerFn = createServerFn({ method: "POST" })
   .inputValidator(createUserSchema)
   .handler(async ({ data: user }) => {
-    const { error } = await supabase.from("users").insert(user);
-
-    if (error) {
-      console.error(error);
-      throw new Error(error.message);
-    }
+    return await createUserDB({ user });
   });
 
-export const deleteUserFromDB = createServerFn({ method: "POST" })
+export const deleteUserDB = async (id: string) => {
+  const { error } = await supabase.from("users").delete().eq("id", id);
+  if (error) {
+    console.error(error);
+    throw new Error(error.message);
+  }
+};
+
+export const deleteUserFromDBServerFn = createServerFn({ method: "POST" })
   .inputValidator(z.object({ id: z.string() }))
   .handler(async ({ data: { id } }) => {
-    const { error } = await supabase.from("users").delete().eq("id", id);
-
-    if (error) {
-      console.error(error);
-      throw new Error(error.message);
-    }
+    await deleteUserDB(id);
   });
 
 export const deleteClerkUser = createServerFn({ method: "POST" })
