@@ -6,7 +6,7 @@ import {
 import { toast } from "sonner";
 import { useCheckoutConfirm } from "./context/CheckoutConfirmContext";
 
-export default function PaymentMethodFields() {
+export default function OtherPaymentMethodFields() {
   const stripe = useStripe();
   const elements = useElements();
 

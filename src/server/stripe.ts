@@ -138,10 +138,26 @@ export const getCards = createServerFn({ method: "GET" }).handler(async () => {
       type: "card",
     });
 
-    console.log(paymentMethods);
-
     return { cards: JSON.parse(JSON.stringify(paymentMethods.data)) };
   } catch (err: any) {
     return { cards: [] };
   }
 });
+
+export const deletePaymentMethod = createServerFn({ method: "POST" })
+  .inputValidator(z.object({ paymentMethodId: z.string() }))
+  .handler(async ({ data }) => {
+    try {
+      const user: User = await getUser();
+
+      const stripeCustomerId = (user.privateMetadata as any).stripeCustomerId;
+
+      if (!stripeCustomerId) throw new Error("No stripe customer id");
+
+      await stripe.paymentMethods.detach(data.paymentMethodId);
+
+      return { success: true };
+    } catch (err: any) {
+      return { success: false, error: err.message };
+    }
+  });

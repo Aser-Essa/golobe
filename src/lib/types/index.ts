@@ -3,6 +3,7 @@ import type {
   useSignUp,
   useUser,
 } from "@clerk/tanstack-react-start";
+import type Stripe from "stripe";
 import type z from "zod";
 import type {
   BookingPriceBreakdownSchema,
@@ -136,4 +137,8 @@ export type Booking = Tables<"bookings"> & {
     }[];
   };
   room: Tables<"rooms">;
+};
+
+export type PaymentCardType = {
+  cards: Stripe.PaymentMethod[];
 };

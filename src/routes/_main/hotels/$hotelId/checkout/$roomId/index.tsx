@@ -5,7 +5,7 @@ import RoomSummaryCard from "#/components/booking/RoomSummaryCard";
 import HotelBreadCrumb from "#/components/hotels/detail/HotelBreadCrumb";
 import Container from "#/components/layout/Container";
 import { CheckoutConfirmProvider } from "#/components/payment/context/CheckoutConfirmContext";
-import PaymentMethods from "#/components/payment/PaymentMethods";
+import SelectPaymentMethods from "#/components/payment/SelectPaymentMethods";
 import type {
   FilterSearchParams,
   paymentMode as paymentModeType,
@@ -62,7 +62,7 @@ function RouteComponent() {
             <RoomSummaryCard room={room} hotel={hotel} />
             <PaymentMode bookingPrice={bookingPrice} />
             <Show when={"signed-in"}>
-              <PaymentMethods
+              <SelectPaymentMethods
                 selectedMethod={selectedMethod}
                 setSelectedMethod={setSelectedMethod}
               />

@@ -5,16 +5,18 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "../ui/dialog";
-import AddCardButton from "./AddCardButton";
+import AddCardRowButton from "./AddCardRowButton";
 import AddCardElementsProvider from "./AddCardElementsProvider";
 
-export default function AddCardDialog() {
+export default function AddCardDialog({
+  addCardButton = <AddCardRowButton />,
+}: {
+  addCardButton?: React.ReactNode;
+}) {
   return (
     <Dialog>
-      <DialogTrigger asChild>
-        <button className="h-22 w-full">
-          <AddCardButton />
-        </button>
+      <DialogTrigger asChild className="w-full">
+        <button>{addCardButton}</button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-md">
         <div className="flex flex-col gap-6">

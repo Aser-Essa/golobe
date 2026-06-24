@@ -8,7 +8,7 @@ type PaymentMethodsProps = {
   setSelectedMethod: (value: string) => void;
 };
 
-export default function PaymentMethods({
+export default function SelectPaymentMethods({
   selectedMethod,
   setSelectedMethod,
 }: PaymentMethodsProps) {

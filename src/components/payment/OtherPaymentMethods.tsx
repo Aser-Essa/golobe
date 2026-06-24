@@ -10,7 +10,7 @@ import { createSetupIntent } from "#/server/stripe";
 import { Elements } from "@stripe/react-stripe-js";
 import { useEffect, useRef, useState } from "react";
 import PaymentElementSkeleton from "../skeleton/PaymentElementSkeleton";
-import PaymentMethodFields from "./PaymentMethodFields";
+import OtherPaymentMethodFields from "./OtherPaymentMethodFields";
 
 const OTHER_METHOD_VALUE = "other";
 
@@ -56,7 +56,7 @@ export default function OtherPaymentMethods({
       {selected &&
         (clientSecret ? (
           <Elements stripe={stripePromise} options={{ clientSecret }}>
-            <PaymentMethodFields />
+            <OtherPaymentMethodFields />
           </Elements>
         ) : (
           <PaymentElementSkeleton />
