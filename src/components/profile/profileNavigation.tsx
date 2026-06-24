@@ -19,7 +19,7 @@ export default function profileNavigation() {
         }
         options={[
           { value: "account", label: "Account" },
-          { value: "history", label: "History" },
+          { value: "tickets-bookings", label: "Tickets/Bookings" },
           { value: "payment-methods", label: "Payment methods" },
         ]}
       />

@@ -1,13 +1,11 @@
 import RouteError from "#/components/common/RouteError";
 import FavouriteList from "#/components/favourites/FavouriteList";
 import FavouriteTypeFilter from "#/components/favourites/FavouriteTypeFilter";
+import Container from "#/components/layout/Container";
 import HotelsListSkeleton from "#/components/skeleton/HotelsListSkeleton";
 import TypeFilterSkeleton from "#/components/skeleton/TypeFilterSkeleton";
-import Container from "#/components/layout/Container";
 import { FAVOURITE_TYPES } from "#/lib/constants";
-import { getUserFavourites } from "#/server/favourites";
-import { useQueryClient } from "@tanstack/react-query";
-import { Await, createFileRoute } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 import { Suspense } from "react";
 import z from "zod";
 

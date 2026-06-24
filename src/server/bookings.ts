@@ -1,6 +1,7 @@
 import { bookingToInsertSchema } from "#/lib/schemas";
 import { supabase } from "#/lib/supabase";
-import type { BookingToInsert } from "#/lib/types";
+import type { Booking, BookingToInsert } from "#/lib/types";
+import { auth } from "@clerk/tanstack-react-start/server";
 import { createServerFn } from "@tanstack/react-start";
 import z from "zod";
 
@@ -46,6 +47,23 @@ export const checkBookingExist = createServerFn({ method: "GET" })
 
     return { exist: !!data.id, bookingId: data.id };
   });
+
+export const getUserBookings = createServerFn({ method: "GET" }).handler(
+  async () => {
+    const { userId } = await auth();
+
+    const { data, error } = await supabase
+      .from("bookings")
+      .select(
+        "*,hotel:hotels(name,address,logo_url,country,hotel_images:hotel_images(url,is_cover)),room:rooms(*)",
+      )
+      .eq("user_id", userId);
+
+    if (error) throw new Error(error.message);
+
+    return data;
+  },
+);
 
 export const getBooking = createServerFn({ method: "GET" })
   .inputValidator(

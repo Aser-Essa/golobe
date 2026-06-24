@@ -35,7 +35,7 @@ export default function InfoRow({
             <img src="/clock.svg" />
           </div>
           <div className="h-8.75">
-            <p className="text-xs font-semibold text-[rgba(17,34,17,0.6)]">
+            <p className="text-foreground/60 text-xs font-semibold">
               Check-In time
             </p>
             <p className="text-base leading-none font-medium">12:00pm</p>
@@ -47,7 +47,7 @@ export default function InfoRow({
             <img src="/clock.svg" />
           </div>
           <div className="h-8.75">
-            <p className="text-xs font-semibold text-[rgba(17,34,17,0.6)]">
+            <p className="text-foreground/60 text-xs font-semibold">
               Check-Out time
             </p>
             <p className="text-base leading-none font-medium">11:30pm</p>
@@ -59,9 +59,7 @@ export default function InfoRow({
             <img src="/door.svg" />
           </div>
           <div className="h-8.75">
-            <p className="text-xs font-semibold text-[rgba(17,34,17,0.6)]">
-              Room no.
-            </p>
+            <p className="text-foreground/60 text-xs font-semibold">Room no.</p>
             <p className="text-base leading-none font-medium">On arival</p>
           </div>
         </div>
@@ -69,7 +67,7 @@ export default function InfoRow({
       <div className="flex items-center justify-between">
         <div className="space-y-1">
           <p className="text-[28px] font-semibold sm:text-[32px]">{country}</p>
-          <p className="text-xs font-medium text-[rgba(17,34,17,0.6)]">
+          <p className="text-foreground/60 text-xs font-medium">
             {booking_ref}
           </p>
         </div>

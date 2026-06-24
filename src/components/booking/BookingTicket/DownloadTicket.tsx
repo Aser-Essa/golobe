@@ -8,7 +8,15 @@ import BookingTicket from ".";
 import { useUser } from "@clerk/tanstack-react-start";
 import { Skeleton } from "#/components/ui/skeleton";
 
-export default function DownloadTicket({ booking }: { booking: Booking }) {
+export default function DownloadTicket({
+  booking,
+  label = "Download",
+  className,
+}: {
+  booking: Booking;
+  label?: string;
+  className?: string;
+}) {
   const ticketRef = useRef<HTMLDivElement>(null);
   const { isLoaded } = useUser();
   const [isRendered, setIsRendered] = useState(false);
@@ -62,10 +70,13 @@ export default function DownloadTicket({ booking }: { booking: Booking }) {
     <>
       {isLoaded ? (
         <Button
-          className={cn("h-12 w-auto px-4 py-2 font-semibold sm:w-37.5")}
+          className={cn(
+            "h-12 w-auto px-4 py-2 font-semibold sm:w-37.5",
+            className,
+          )}
           onClick={downloadPdf}
         >
-          Download
+          {label}
         </Button>
       ) : (
         <Skeleton className="h-12 w-auto sm:w-37.5" />

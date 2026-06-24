@@ -21,6 +21,7 @@ import { Route as MainBookingsIndexRouteImport } from './routes/_main/bookings/i
 import { Route as AuthSignUpIndexRouteImport } from './routes/_auth/sign-up/index'
 import { Route as AuthSignInIndexRouteImport } from './routes/_auth/sign-in/index'
 import { Route as AuthForgotPasswordIndexRouteImport } from './routes/_auth/forgot-password/index'
+import { Route as MainProfileTicketsBookingsIndexRouteImport } from './routes/_main/profile/tickets-bookings/index'
 import { Route as MainProfileAccountIndexRouteImport } from './routes/_main/profile/account/index'
 import { Route as MainPaymentPendingIndexRouteImport } from './routes/_main/payment/pending/index'
 import { Route as MainHotelsHotelIdIndexRouteImport } from './routes/_main/hotels/$hotelId/index'
@@ -88,6 +89,12 @@ const AuthForgotPasswordIndexRoute = AuthForgotPasswordIndexRouteImport.update({
   path: '/forgot-password/',
   getParentRoute: () => AuthRouteRoute,
 } as any)
+const MainProfileTicketsBookingsIndexRoute =
+  MainProfileTicketsBookingsIndexRouteImport.update({
+    id: '/tickets-bookings/',
+    path: '/tickets-bookings/',
+    getParentRoute: () => MainProfileRouteRoute,
+  } as any)
 const MainProfileAccountIndexRoute = MainProfileAccountIndexRouteImport.update({
   id: '/account/',
   path: '/account/',
@@ -149,6 +156,7 @@ export interface FileRoutesByFullPath {
   '/hotels/$hotelId/': typeof MainHotelsHotelIdIndexRoute
   '/payment/pending/': typeof MainPaymentPendingIndexRoute
   '/profile/account/': typeof MainProfileAccountIndexRoute
+  '/profile/tickets-bookings/': typeof MainProfileTicketsBookingsIndexRoute
   '/hotels/$hotelId/checkout/': typeof MainHotelsHotelIdCheckoutIndexRoute
   '/hotels/$hotelId/checkout/$roomId/': typeof MainHotelsHotelIdCheckoutRoomIdIndexRoute
 }
@@ -168,6 +176,7 @@ export interface FileRoutesByTo {
   '/hotels/$hotelId': typeof MainHotelsHotelIdIndexRoute
   '/payment/pending': typeof MainPaymentPendingIndexRoute
   '/profile/account': typeof MainProfileAccountIndexRoute
+  '/profile/tickets-bookings': typeof MainProfileTicketsBookingsIndexRoute
   '/hotels/$hotelId/checkout': typeof MainHotelsHotelIdCheckoutIndexRoute
   '/hotels/$hotelId/checkout/$roomId': typeof MainHotelsHotelIdCheckoutRoomIdIndexRoute
 }
@@ -191,6 +200,7 @@ export interface FileRoutesById {
   '/_main/hotels/$hotelId/': typeof MainHotelsHotelIdIndexRoute
   '/_main/payment/pending/': typeof MainPaymentPendingIndexRoute
   '/_main/profile/account/': typeof MainProfileAccountIndexRoute
+  '/_main/profile/tickets-bookings/': typeof MainProfileTicketsBookingsIndexRoute
   '/_main/hotels/$hotelId/checkout/': typeof MainHotelsHotelIdCheckoutIndexRoute
   '/_main/hotels/$hotelId/checkout/$roomId/': typeof MainHotelsHotelIdCheckoutRoomIdIndexRoute
 }
@@ -213,6 +223,7 @@ export interface FileRouteTypes {
     | '/hotels/$hotelId/'
     | '/payment/pending/'
     | '/profile/account/'
+    | '/profile/tickets-bookings/'
     | '/hotels/$hotelId/checkout/'
     | '/hotels/$hotelId/checkout/$roomId/'
   fileRoutesByTo: FileRoutesByTo
@@ -232,6 +243,7 @@ export interface FileRouteTypes {
     | '/hotels/$hotelId'
     | '/payment/pending'
     | '/profile/account'
+    | '/profile/tickets-bookings'
     | '/hotels/$hotelId/checkout'
     | '/hotels/$hotelId/checkout/$roomId'
   id:
@@ -254,6 +266,7 @@ export interface FileRouteTypes {
     | '/_main/hotels/$hotelId/'
     | '/_main/payment/pending/'
     | '/_main/profile/account/'
+    | '/_main/profile/tickets-bookings/'
     | '/_main/hotels/$hotelId/checkout/'
     | '/_main/hotels/$hotelId/checkout/$roomId/'
   fileRoutesById: FileRoutesById
@@ -351,6 +364,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthForgotPasswordIndexRouteImport
       parentRoute: typeof AuthRouteRoute
     }
+    '/_main/profile/tickets-bookings/': {
+      id: '/_main/profile/tickets-bookings/'
+      path: '/tickets-bookings'
+      fullPath: '/profile/tickets-bookings/'
+      preLoaderRoute: typeof MainProfileTicketsBookingsIndexRouteImport
+      parentRoute: typeof MainProfileRouteRoute
+    }
     '/_main/profile/account/': {
       id: '/_main/profile/account/'
       path: '/account'
@@ -429,11 +449,13 @@ const AuthRouteRouteWithChildren = AuthRouteRoute._addFileChildren(
 interface MainProfileRouteRouteChildren {
   MainProfileIndexRoute: typeof MainProfileIndexRoute
   MainProfileAccountIndexRoute: typeof MainProfileAccountIndexRoute
+  MainProfileTicketsBookingsIndexRoute: typeof MainProfileTicketsBookingsIndexRoute
 }
 
 const MainProfileRouteRouteChildren: MainProfileRouteRouteChildren = {
   MainProfileIndexRoute: MainProfileIndexRoute,
   MainProfileAccountIndexRoute: MainProfileAccountIndexRoute,
+  MainProfileTicketsBookingsIndexRoute: MainProfileTicketsBookingsIndexRoute,
 }
 
 const MainProfileRouteRouteWithChildren =
