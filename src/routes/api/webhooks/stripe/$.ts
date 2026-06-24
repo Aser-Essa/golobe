@@ -1,6 +1,6 @@
 "use server";
 import { stripe } from "#/lib/stripe/stripe-server";
-import type { stripeBookingMetadata } from "#/lib/types";
+import type { BookingToInsert, stripeBookingMetadata } from "#/lib/types";
 import { formatBookingData } from "#/lib/utils";
 import { insertBookingIntoDB } from "#/server/bookings";
 import { createFileRoute } from "@tanstack/react-router";
@@ -35,7 +35,12 @@ export const Route = createFileRoute("/api/webhooks/stripe/$")({
             event.data.object.metadata as unknown as stripeBookingMetadata,
           );
 
-          await insertBookingIntoDB({ bookingData: formattedBookingData });
+          await insertBookingIntoDB({
+            bookingData: {
+              ...formattedBookingData,
+              payment_intent_id: event.data.object.id,
+            },
+          });
         }
       },
     },

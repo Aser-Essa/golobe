@@ -63,6 +63,7 @@ export type Database = {
       bookings: {
         Row: {
           base_fare: number
+          booking_ref: string
           check_in: string
           check_out: string
           created_at: string
@@ -71,9 +72,12 @@ export type Database = {
           hotel_id: string
           id: string
           nights: number | null
+          paid_amount: number | null
+          payment_intent_id: string
           payment_mode: string
           payment_status: string
           promo_code: string | null
+          remaining_amount: number | null
           room_id: string
           service_fee: number
           status: string
@@ -84,6 +88,7 @@ export type Database = {
         }
         Insert: {
           base_fare: number
+          booking_ref: string
           check_in: string
           check_out: string
           created_at?: string
@@ -92,9 +97,12 @@ export type Database = {
           hotel_id: string
           id?: string
           nights?: number | null
+          paid_amount?: number | null
+          payment_intent_id: string
           payment_mode?: string
           payment_status?: string
           promo_code?: string | null
+          remaining_amount?: number | null
           room_id: string
           service_fee?: number
           status?: string
@@ -105,6 +113,7 @@ export type Database = {
         }
         Update: {
           base_fare?: number
+          booking_ref?: string
           check_in?: string
           check_out?: string
           created_at?: string
@@ -113,9 +122,12 @@ export type Database = {
           hotel_id?: string
           id?: string
           nights?: number | null
+          paid_amount?: number | null
+          payment_intent_id?: string
           payment_mode?: string
           payment_status?: string
           promo_code?: string | null
+          remaining_amount?: number | null
           room_id?: string
           service_fee?: number
           status?: string
@@ -699,6 +711,7 @@ export type Database = {
       }
     }
     Functions: {
+      generate_booking_ref: { Args: never; Returns: string }
       search_hotels: {
         Args: {
           p_check_in?: string

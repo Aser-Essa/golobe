@@ -19,7 +19,7 @@ interface paymentModeProps {
 }
 
 export default function PaymentMode({ bookingPrice }: paymentModeProps) {
-  const { restToPay, amountToPay } = bookingPrice;
+  const { splitedAmount, total } = bookingPrice;
 
   const searchParams: FilterSearchParams & { paymentMode?: paymentMode } =
     useSearch({
@@ -73,9 +73,9 @@ export default function PaymentMode({ bookingPrice }: paymentModeProps) {
                   Pay part now, part later
                 </FieldTitle>
                 <FieldDescription className="text-sm">
-                  Pay ${amountToPay} now, and the rest (${restToPay}) will be
-                  automatically charged to the same payment method on{" "}
-                  {formattedCheckOut}. No extra fees.
+                  Pay ${splitedAmount} now, and the rest ($
+                  {total - splitedAmount}) will be automatically charged to the
+                  same payment method on {formattedCheckOut}. No extra fees.
                 </FieldDescription>
               </FieldContent>
 

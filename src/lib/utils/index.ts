@@ -158,6 +158,7 @@ export function calculateBookingPrice({
 
   const taxes = baseFare * (taxRate / 100);
   const total = baseFare + taxes + SERVICE_FEE;
+
   const splitedAmount = total / 2;
 
   let amountToPay = total;
@@ -175,6 +176,7 @@ export function calculateBookingPrice({
     total,
     restToPay,
     amountToPay,
+    splitedAmount,
     serviceFee: SERVICE_FEE,
   };
 }
@@ -199,9 +201,13 @@ export function formatBookingData(
     taxes: Number(breakdown.taxes),
     service_fee: Number(breakdown.serviceFee),
 
+    paid_amount: Number(breakdown.amountToPay),
+    remaining_amount: Number(breakdown.restToPay),
+
     payment_mode: data.paymentMode,
     payment_status: data.paymentMode === "full" ? "paid" : "partial",
     status: "confirmed",
+    payment_intent_id: "",
   };
 }
 

@@ -38,7 +38,7 @@ export default function Checkout({
 
     startTransition(async () => {
       try {
-        const res = await createPaymentIntent({
+        const { clientSecret } = await createPaymentIntent({
           data: {
             roomId,
             hotelId,
@@ -52,10 +52,9 @@ export default function Checkout({
           },
         });
 
-        if (!res.clientSecret) return;
+        if (!clientSecret) return;
 
-        await confirmPaymentRef.current?.(res.clientSecret);
-        
+        await confirmPaymentRef.current?.({ clientSecret });
       } catch (err) {
         console.error(err);
       }

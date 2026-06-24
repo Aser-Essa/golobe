@@ -2,7 +2,7 @@ import { createContext, useContext, useRef } from "react";
 
 type PaymentContextType = {
   confirmPaymentRef: React.RefObject<
-    ((clientSecret: string) => Promise<void>) | null
+    (({ clientSecret }: { clientSecret: string }) => Promise<void>) | null
   >;
 };
 
@@ -13,9 +13,9 @@ export function CheckoutConfirmProvider({
 }: {
   children: React.ReactNode;
 }) {
-  const confirmPaymentRef = useRef<((cs: string) => Promise<void>) | null>(
-    null,
-  );
+  const confirmPaymentRef = useRef<
+    (({ clientSecret }: { clientSecret: string }) => Promise<void>) | null
+  >(null);
 
   return (
     <CheckoutConfirmContext.Provider value={{ confirmPaymentRef }}>

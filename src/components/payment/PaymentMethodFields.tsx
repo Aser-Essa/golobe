@@ -12,7 +12,7 @@ export default function PaymentMethodFields() {
 
   const { confirmPaymentRef } = useCheckoutConfirm();
 
-  confirmPaymentRef.current = async (clientSecret: string) => {
+  confirmPaymentRef.current = async ({ clientSecret }) => {
     try {
       if (!stripe || !elements) return;
 
@@ -26,7 +26,7 @@ export default function PaymentMethodFields() {
         elements,
         clientSecret,
         confirmParams: {
-          return_url: window.location.href,
+          return_url: `${window.location.origin}/payment/pending`,
         },
       });
 

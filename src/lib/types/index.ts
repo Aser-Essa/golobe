@@ -127,3 +127,13 @@ export type stripeBookingMetadata = Omit<
 };
 
 export type BookingToInsert = z.infer<typeof bookingToInsertSchema>;
+
+export type Booking = Tables<"bookings"> & {
+  hotel: Pick<Tables<"hotels">, "name" | "address" | "logo_url" | "country"> & {
+    hotel_images: {
+      url: string;
+      is_cover: boolean;
+    }[];
+  };
+  room: Tables<"rooms">;
+};

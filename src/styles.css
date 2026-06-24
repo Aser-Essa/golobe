@@ -172,6 +172,29 @@ body {
   --sidebar-ring: oklch(81.355% 0.07853 170.826);
 }
 
+[data-pdf="true"] {
+  /* Primary - #8DD3BB */
+  --primary: rgb(141, 211, 187);
+  --primary-foreground: rgb(255, 255, 255);
+  --salmon: rgb(235, 140, 100);
+  --foreground: rgb(17, 34, 17);
+  --background: rgb(250, 251, 252);
+  --card: rgb(255, 255, 255);
+  --card-foreground: rgb(30, 50, 40);
+  --popover: rgb(255, 255, 255);
+  --popover-foreground: rgb(30, 50, 40);
+  --secondary: rgb(205, 234, 225);
+  --secondary-foreground: rgb(30, 50, 40);
+  --muted: rgb(240, 242, 244);
+  --muted-foreground: rgb(84, 104, 105);
+  --accent: rgb(205, 234, 225);
+  --accent-foreground: rgb(30, 50, 40);
+  --destructive: rgb(220, 80, 60);
+  --border: rgb(141, 211, 187);
+  --input: rgb(121, 116, 126);
+  --ring: rgb(141, 211, 187);
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;

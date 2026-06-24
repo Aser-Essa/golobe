@@ -32,7 +32,6 @@ export const createSetupIntent = createServerFn({ method: "POST" })
       const { fullName, email } = getFormattedUser(user);
 
       if (!stripeCustomerId) {
-        console.log("START CREATEING CUSTOMER");
         stripeCustomerId = await getOrCreateStripeCustomer({
           data: {
             email: email || user.emailAddresses.at(0)?.emailAddress || "",

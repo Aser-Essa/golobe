@@ -8,6 +8,7 @@ export const BookingPriceBreakdownSchema = z.object({
   total: z.number(),
   totalNights: z.number(),
   serviceFee: z.number(),
+  splitedAmount: z.number(),
 });
 
 export const createBookingSchema = z.object({
@@ -26,6 +27,7 @@ export const bookingToInsertSchema = z
     user_id: z.string().min(1),
     hotel_id: z.string().uuid(),
     room_id: z.string().uuid(),
+    payment_intent_id: z.string(),
 
     check_in: z.coerce.date(),
     check_out: z.coerce.date(),
@@ -36,6 +38,8 @@ export const bookingToInsertSchema = z
     discount: z.number().nonnegative().default(0),
     taxes: z.number().nonnegative().default(0),
     service_fee: z.number().nonnegative().default(0),
+    paid_amount: z.number().nonnegative().default(0),
+    remaining_amount: z.number().nonnegative().default(0),
 
     payment_mode: z.enum(["full", "split"]),
 
