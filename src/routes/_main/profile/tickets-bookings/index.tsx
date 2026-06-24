@@ -1,5 +1,6 @@
 import BookingSummaryCards from "#/components/booking/BookingSummaryCards";
 import { TabFilter } from "#/components/common/TabFilter";
+import { BookingSummaryCardsSkeleton } from "#/components/skeleton/BookingSummaryCardsSkeleton";
 import { getUserBookings } from "#/server/bookings";
 import {
   Await,
@@ -46,7 +47,10 @@ function RouteComponent() {
         ]}
       />
 
-      <Await promise={bookingsPromise} fallback={<div>Loading...</div>}>
+      <Await
+        promise={bookingsPromise}
+        fallback={<BookingSummaryCardsSkeleton />}
+      >
         {(bookings) => <BookingSummaryCards bookings={bookings} />}
       </Await>
 
