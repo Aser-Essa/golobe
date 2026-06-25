@@ -79,7 +79,6 @@ function RouteComponent() {
             bookingPrice={bookingPrice}
           />
         </div>
-        <div className="h-screen"></div>
       </Container>
     </CheckoutConfirmProvider>
   );

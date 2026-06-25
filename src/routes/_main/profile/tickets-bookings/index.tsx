@@ -53,8 +53,6 @@ function RouteComponent() {
       >
         {(bookings) => <BookingSummaryCards bookings={bookings} />}
       </Await>
-
-      <div className="h-screen"></div>
     </div>
   );
 }

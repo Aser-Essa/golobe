@@ -47,9 +47,7 @@ export default function HeaderUserMenu() {
                 />
               </div>
               <div className="space-y-1">
-                <p className="hidden text-sm font-semibold sm:block">
-                  {fullName}.
-                </p>
+                <p className="text-sm font-semibold">{fullName}.</p>
                 <p className="text-foreground/75 text-xs">Online</p>
               </div>
             </div>
@@ -69,7 +67,7 @@ export default function HeaderUserMenu() {
 
               <li className="hover:bg-foreground/5 rounded-[4px] transition-all">
                 <Link
-                  to="/profile/payment"
+                  to="/profile/payment-methods"
                   className="flex items-center justify-between gap-3 py-1"
                 >
                   <span className="flex items-center gap-2">

@@ -74,11 +74,11 @@ export function HeaderMobileMenu() {
             <Show when={"signed-in"}>
               <DrawerClose asChild>
                 <Link
-                  to="/favorites"
+                  to="/favourites"
                   className="hover:bg-muted flex items-center gap-3 rounded-xl px-4 py-3 transition-colors"
                 >
                   <Heart className="size-5" />
-                  <span className="font-medium">Favorites</span>
+                  <span className="font-medium">Favourites</span>
                 </Link>
               </DrawerClose>
 

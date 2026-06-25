@@ -28,7 +28,6 @@ function RouteComponent() {
         />
       </div>
       <TermsAndConditions />
-      <div className="h-screen"></div>
     </Container>
   );
 }

@@ -17,7 +17,6 @@ function Home() {
       <Container className="mt-0">
         <HotelSearchWidget searchParams={normalizedSearchParams} />
       </Container>
-      <div className="h-screen"></div>
     </div>
   );
 }

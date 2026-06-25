@@ -89,8 +89,6 @@ function RouteComponent() {
 
       <Separator className="my-16" />
       <Reviews avg_rating={hotel.avg_rating} reviews={hotel.reviews} />
-
-      <div className="h-[50vh]"></div>
     </Container>
   );
 }

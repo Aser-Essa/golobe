@@ -97,8 +97,6 @@ function RouteComponent() {
           )}
         </Await>
       </div>
-
-      <div className="h-screen"></div>
     </Container>
   );
 }

@@ -1,12 +1,12 @@
 import { Show } from "@clerk/tanstack-react-start";
-import { Separator } from "../ui/separator";
-import HeaderAuth from "./Header/HeaderAuth";
-import { HeaderMobileMenu } from "./Header/HeaderMobileMenu";
-import HeaderNav from "./Header/HeaderNav";
-import HeaderUserMenu from "./Header/HeaderUserMenu";
-import Logo from "./Logo";
 import { Link } from "@tanstack/react-router";
 import { Heart } from "lucide-react";
+import HeaderNav from "./HeaderNav";
+import Logo from "../Logo";
+import HeaderAuth from "./HeaderAuth";
+import { Separator } from "#/components/ui/separator";
+import HeaderUserMenu from "./HeaderUserMenu";
+import { HeaderMobileMenu } from "./HeaderMobileMenu";
 
 export default function Header() {
   return (
