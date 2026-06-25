@@ -28,16 +28,13 @@ export const Route = createFileRoute("/_main/hotels/$hotelId/")({
 });
 
 function RouteComponent() {
-  const hotel: HotelType = Route.useLoaderData()[0] || {};
+  const hotel: HotelType = Route.useLoaderData()[0];
 
   const searchParams: FilterSearchParams = Route.useSearch();
 
   const normalizedSearchParams = mapSearchParamsToHotelWidget(searchParams);
 
-  const isRenderHotelOverView =
-    !!hotel.description ||
-    hotel.hotel_tags.length > 0 ||
-    Number(hotel.review_count) > 0;
+  const hasOverviewContent = !!hotel.description || hotel.hotel_tags.length > 0;
 
   return (
     <Container>
@@ -51,7 +48,7 @@ function RouteComponent() {
 
       <HotelImages hotel_images={hotel.hotel_images} />
 
-      {isRenderHotelOverView && (
+      {hasOverviewContent && (
         <>
           <Separator className="my-16" />
           <HotelOverView
@@ -63,16 +60,14 @@ function RouteComponent() {
         </>
       )}
 
-      {hotel.rooms.length > 0 && (
-        <div id="rooms">
-          <Separator className="my-16" />
-          <FilterAvailableRoomsWidget
-            searchParams={normalizedSearchParams}
-            className="bg-transparent shadow-none!"
-          />
-          <AvailableRooms rooms={hotel.rooms} />
-        </div>
-      )}
+      <div id="rooms">
+        <Separator className="my-16" />
+        <FilterAvailableRoomsWidget
+          searchParams={normalizedSearchParams}
+          className="bg-transparent shadow-none!"
+        />
+        <AvailableRooms rooms={hotel.rooms} />
+      </div>
 
       {hotel.latitude !== null && hotel.longitude !== null && (
         <>

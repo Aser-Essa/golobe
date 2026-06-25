@@ -1,7 +1,7 @@
 import { bookingToInsertSchema } from "#/lib/schemas";
 import { supabase } from "#/lib/supabase";
-import type { Booking, BookingToInsert } from "#/lib/types";
-import { auth } from "@clerk/tanstack-react-start/server";
+import type { BookingToInsert } from "#/lib/types";
+import { authFnMiddleware } from "#/middlewares/auth";
 import { createServerFn } from "@tanstack/react-start";
 import z from "zod";
 
@@ -10,8 +10,6 @@ export async function insertBookingIntoDB({
 }: {
   bookingData: BookingToInsert;
 }) {
-  console.log(bookingData, "bookingData data");
-
   const { data, error } = await supabase
     .from("bookings")
     .insert([bookingData])
@@ -19,18 +17,18 @@ export async function insertBookingIntoDB({
 
   if (error) throw new Error(error.message);
 
-  console.log(data, "booked data");
-
   return data;
 }
 
 export const createBooking = createServerFn({ method: "POST" })
+  .middleware([authFnMiddleware])
   .inputValidator(bookingToInsertSchema)
   .handler(async ({ data: bookingData }) => {
     return await insertBookingIntoDB({ bookingData });
   });
 
 export const checkBookingExist = createServerFn({ method: "GET" })
+  .middleware([authFnMiddleware])
   .inputValidator(
     z.object({
       payment_intent_id: z.string(),
@@ -48,10 +46,9 @@ export const checkBookingExist = createServerFn({ method: "GET" })
     return { exist: !!data.id, bookingId: data.id };
   });
 
-export const getUserBookings = createServerFn({ method: "GET" }).handler(
-  async () => {
-    const { userId } = await auth();
-
+export const getUserBookings = createServerFn({ method: "GET" })
+  .middleware([authFnMiddleware])
+  .handler(async ({ context: { userId } }) => {
     const { data, error } = await supabase
       .from("bookings")
       .select(
@@ -62,10 +59,10 @@ export const getUserBookings = createServerFn({ method: "GET" }).handler(
     if (error) throw new Error(error.message);
 
     return data;
-  },
-);
+  });
 
 export const getBooking = createServerFn({ method: "GET" })
+  .middleware([authFnMiddleware])
   .inputValidator(
     z.object({
       bookingId: z.string(),

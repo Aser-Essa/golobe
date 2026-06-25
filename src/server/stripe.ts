@@ -1,26 +1,27 @@
 import { createBookingSchema } from "#/lib/schemas";
 import { stripe } from "#/lib/stripe/stripe-server";
 import { getFormattedUser } from "#/lib/utils/user";
+import { authFnMiddleware } from "#/middlewares/auth";
 import type { User } from "@clerk/tanstack-react-start/server";
-import { auth } from "@clerk/tanstack-react-start/server";
 import { createServerFn } from "@tanstack/react-start";
 import z from "zod";
 import { getOrCreateStripeCustomerCore } from "./stripe-core";
 import { getUser } from "./user";
 
 export const getOrCreateStripeCustomer = createServerFn({ method: "POST" })
+  .middleware([authFnMiddleware])
   .inputValidator(
     z.object({
       email: z.email(),
       name: z.string(),
     }),
   )
-  .handler(async ({ data: { email, name } }) => {
-    const { userId } = await auth();
-    return getOrCreateStripeCustomerCore({ userId: userId!, email, name });
+  .handler(async ({ data: { email, name }, context: { userId } }) => {
+    return getOrCreateStripeCustomerCore({ userId: userId, email, name });
   });
 
 export const createSetupIntent = createServerFn({ method: "POST" })
+  .middleware([authFnMiddleware])
   .inputValidator(z.object({ paymentMethodType: z.enum(["card", "other"]) }))
   .handler(async ({ data: { paymentMethodType } }) => {
     try {
@@ -64,6 +65,7 @@ export const createSetupIntent = createServerFn({ method: "POST" })
   });
 
 export const createPaymentIntent = createServerFn({ method: "POST" })
+  .middleware([authFnMiddleware])
   .inputValidator(createBookingSchema)
   .handler(
     async ({
@@ -125,26 +127,29 @@ export const createPaymentIntent = createServerFn({ method: "POST" })
     },
   );
 
-export const getCards = createServerFn({ method: "GET" }).handler(async () => {
-  try {
-    const user: User = await getUser();
+export const getCards = createServerFn({ method: "GET" })
+  .middleware([authFnMiddleware])
+  .handler(async () => {
+    try {
+      const user: User = await getUser();
 
-    const stripeCustomerId = (user.privateMetadata as any).stripeCustomerId;
+      const stripeCustomerId = (user.privateMetadata as any).stripeCustomerId;
 
-    if (!stripeCustomerId) throw new Error("No stripe customer id");
+      if (!stripeCustomerId) throw new Error("No stripe customer id");
 
-    const paymentMethods = await stripe.paymentMethods.list({
-      customer: stripeCustomerId,
-      type: "card",
-    });
+      const paymentMethods = await stripe.paymentMethods.list({
+        customer: stripeCustomerId,
+        type: "card",
+      });
 
-    return { cards: JSON.parse(JSON.stringify(paymentMethods.data)) };
-  } catch (err: any) {
-    return { cards: [] };
-  }
-});
+      return { cards: JSON.parse(JSON.stringify(paymentMethods.data)) };
+    } catch (err: any) {
+      return { cards: [] };
+    }
+  });
 
 export const deletePaymentMethod = createServerFn({ method: "POST" })
+  .middleware([authFnMiddleware])
   .inputValidator(z.object({ paymentMethodId: z.string() }))
   .handler(async ({ data }) => {
     try {

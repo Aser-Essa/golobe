@@ -5,6 +5,7 @@ import { Fragment } from "react/jsx-runtime";
 import { Button } from "../../ui/button";
 import { Separator } from "../../ui/separator";
 import ViewRoomDetails from "./ViewRoomDetails";
+import { NoRoomsAvailable } from "./NoRoomsAvailable";
 
 type AvailableRoomsProps = {
   rooms: HotelType["rooms"];
@@ -40,6 +41,8 @@ export default function AvailableRooms({ rooms }: AvailableRoomsProps) {
       }),
     });
   };
+
+  if (avaliableRoomsCapacity.length === 0) return <NoRoomsAvailable />;
 
   return (
     <div className="space-y-8">

@@ -3,6 +3,7 @@ import { Separator } from "../../ui/separator";
 import type { HotelType } from "#/lib/types";
 import ReviewCard from "./ReviewCard";
 import { Fragment } from "react/jsx-runtime";
+import NoReviews from "./NoReviews";
 
 type ReviewsProps = {
   avg_rating: HotelType["avg_rating"];
@@ -12,7 +13,7 @@ type ReviewsProps = {
 export default function Reviews({ avg_rating, reviews }: ReviewsProps) {
   const verifiedReviews = reviews.filter((review) => review.is_verified);
 
-  if (verifiedReviews.length === 0) return null;
+  if (verifiedReviews.length === 0) return <NoReviews />;
 
   return (
     <div className="space-y-6">

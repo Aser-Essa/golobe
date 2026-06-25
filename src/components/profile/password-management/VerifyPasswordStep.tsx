@@ -11,7 +11,6 @@ import {
 import { Separator } from "#/components/ui/separator";
 import { passwordSchema } from "#/lib/schemas/user";
 import { verifyPassword } from "#/server/user";
-import { useUser } from "@clerk/tanstack-react-start";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
@@ -37,16 +36,12 @@ export default function VerifyPasswordStep({
     },
   });
 
-  const { user } = useUser();
-  const userId = user?.id;
-
   async function onSubmit(data: {
     currentPassword: z.infer<typeof passwordSchema>;
   }) {
     try {
-      if (!userId) return;
       await verifyPassword({
-        data: { currentPassword: data.currentPassword, userId },
+        data: { currentPassword: data.currentPassword },
       });
       toast.success("Password verified successfully");
       setCurrentPassword(data.currentPassword);

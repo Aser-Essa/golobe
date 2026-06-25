@@ -5,20 +5,18 @@ import {
 import { createUserSchema, updatePasswordSchema } from "#/lib/schemas/user";
 import { supabase } from "#/lib/supabase";
 import type { CreateUserType } from "#/lib/types";
-import { auth, clerkClient } from "@clerk/tanstack-react-start/server";
+import { authFnMiddleware } from "#/middlewares/auth";
+import { clerkClient } from "@clerk/tanstack-react-start/server";
 import { createServerFn } from "@tanstack/react-start";
 import z from "zod";
 
-export const getUser = createServerFn({ method: "GET" }).handler(async () => {
-  const { userId } = await auth();
-  if (!userId) {
-    throw new Error("User not found");
-  }
+export const getUser = createServerFn({ method: "GET" })
+  .middleware([authFnMiddleware])
+  .handler(async ({ context: { userId } }) => {
+    const user = await clerkClient().users.getUser(userId);
 
-  const user = await clerkClient().users.getUser(userId);
-
-  return JSON.parse(JSON.stringify(user));
-});
+    return JSON.parse(JSON.stringify(user));
+  });
 
 export const createUserDB = async ({ user }: { user: CreateUserType }) => {
   const { error } = await supabase.from("users").insert(user);
@@ -46,22 +44,23 @@ export const deleteUserDB = async (id: string) => {
 };
 
 export const deleteUserFromDBServerFn = createServerFn({ method: "POST" })
+  .middleware([authFnMiddleware])
   .inputValidator(z.object({ id: z.string() }))
   .handler(async ({ data: { id } }) => {
     await deleteUserDB(id);
   });
 
-export const deleteClerkUser = createServerFn({ method: "POST" })
+export const removeClerkEmail = createServerFn({ method: "POST" })
+  .middleware([authFnMiddleware])
   .inputValidator(
     z.object({
-      userId: z.string(),
       externalAccountId: z.string().nullish(),
       emailId: z.string(),
     }),
   )
-  .handler(async ({ data }) => {
+  .handler(async ({ data, context: { userId } }) => {
     try {
-      const { userId, externalAccountId, emailId } = data;
+      const { externalAccountId, emailId } = data;
 
       if (externalAccountId) {
         await clerkClient().users.deleteUserExternalAccount({
@@ -78,8 +77,9 @@ export const deleteClerkUser = createServerFn({ method: "POST" })
   });
 
 export const verifyPassword = createServerFn({ method: "POST" })
-  .inputValidator(z.object({ userId: z.string(), currentPassword: z.string() }))
-  .handler(async ({ data: { userId, currentPassword } }) => {
+  .middleware([authFnMiddleware])
+  .inputValidator(z.object({ currentPassword: z.string() }))
+  .handler(async ({ data: { currentPassword }, context: { userId } }) => {
     if (!currentPassword) throw new Error("Current password is required");
     try {
       const { verified } = await clerkClient().users.verifyPassword({
@@ -95,9 +95,13 @@ export const verifyPassword = createServerFn({ method: "POST" })
   });
 
 export const updatePassword = createServerFn({ method: "POST" })
+  .middleware([authFnMiddleware])
   .inputValidator(updatePasswordSchema)
   .handler(
-    async ({ data: { userId, hasPassword, currentPassword, newPassword } }) => {
+    async ({
+      data: { hasPassword, currentPassword, newPassword },
+      context: { userId },
+    }) => {
       try {
         if (hasPassword) {
           if (currentPassword === newPassword) {
@@ -117,12 +121,10 @@ export const updatePassword = createServerFn({ method: "POST" })
     },
   );
 
-export const setUserAvatarMetadata = createServerFn({ method: "POST" }).handler(
-  async () => {
+export const setUserAvatarMetadata = createServerFn({ method: "POST" })
+  .middleware([authFnMiddleware])
+  .handler(async ({ context: { userId } }) => {
     try {
-      const { userId } = await auth();
-      if (!userId) throw new Error("User not found");
-
       await clerkClient().users.updateUserMetadata(userId, {
         publicMetadata: {
           originalAvatarUrl: `${SupabaseStorageAvatarPath}/${userId}/avatar.png?t=${Date.now()}`,
@@ -133,20 +135,17 @@ export const setUserAvatarMetadata = createServerFn({ method: "POST" }).handler(
       console.error(error);
       throw new Error(error.message || error.errors?.[0]?.message);
     }
-  },
-);
+  });
 
 export const updateUserAvatar = createServerFn({ method: "POST" })
+  .middleware([authFnMiddleware])
   .inputValidator(
     z.object({
       dataUrl: z.string(),
     }),
   )
-  .handler(async ({ data: { dataUrl } }) => {
+  .handler(async ({ data: { dataUrl }, context: { userId } }) => {
     try {
-      const { userId } = await auth();
-      if (!userId) throw new Error("User not found");
-
       const [, base64] = dataUrl.split(",");
       const buffer = Buffer.from(base64, "base64");
       const file = new File([buffer], `cropped-avatar.png`, {
@@ -175,12 +174,10 @@ export const updateUserAvatar = createServerFn({ method: "POST" })
     }
   });
 
-export const deleteUserAvatar = createServerFn({ method: "POST" }).handler(
-  async () => {
+export const deleteUserAvatar = createServerFn({ method: "POST" })
+  .middleware([authFnMiddleware])
+  .handler(async ({ context: { userId } }) => {
     try {
-      const { userId } = await auth();
-      if (!userId) throw new Error("User not found");
-
       const imagePaths = [
         `${userId}/avatar.png`,
         `${userId}/cropped-avatar.png`,
@@ -211,15 +208,12 @@ export const deleteUserAvatar = createServerFn({ method: "POST" }).handler(
       console.error(error);
       throw new Error(error.message || error.errors?.[0]?.message);
     }
-  },
-);
+  });
 
-export const setUserBannerMetadata = createServerFn({ method: "POST" }).handler(
-  async () => {
+export const setUserBannerMetadata = createServerFn({ method: "POST" })
+  .middleware([authFnMiddleware])
+  .handler(async ({ context: { userId } }) => {
     try {
-      const { userId } = await auth();
-      if (!userId) throw new Error("User not found");
-
       await clerkClient().users.updateUserMetadata(userId, {
         publicMetadata: {
           originalBannerUrl: `${SupabaseStorageBannerPath}/${userId}/banner.png?t=${Date.now()}`,
@@ -230,20 +224,17 @@ export const setUserBannerMetadata = createServerFn({ method: "POST" }).handler(
       console.error(error);
       throw new Error(error.message || error.errors?.[0]?.message);
     }
-  },
-);
+  });
 
 export const updateUserBanner = createServerFn({ method: "POST" })
+  .middleware([authFnMiddleware])
   .inputValidator(
     z.object({
       dataUrl: z.string(),
     }),
   )
-  .handler(async ({ data: { dataUrl } }) => {
+  .handler(async ({ data: { dataUrl }, context: { userId } }) => {
     try {
-      const { userId } = await auth();
-      if (!userId) throw new Error("User not found");
-
       const [, base64] = dataUrl.split(",");
       const buffer = Buffer.from(base64, "base64");
       const file = new File([buffer], `cropped-banner.png`, {
@@ -272,12 +263,10 @@ export const updateUserBanner = createServerFn({ method: "POST" })
     }
   });
 
-export const deleteUserBanner = createServerFn({ method: "POST" }).handler(
-  async () => {
+export const deleteUserBanner = createServerFn({ method: "POST" })
+  .middleware([authFnMiddleware])
+  .handler(async ({ context: { userId } }) => {
     try {
-      const { userId } = await auth();
-      if (!userId) throw new Error("User not found");
-
       const imagePaths = [
         `${userId}/banner.png`,
         `${userId}/cropped-banner.png`,
@@ -308,5 +297,4 @@ export const deleteUserBanner = createServerFn({ method: "POST" }).handler(
       console.error(error);
       throw new Error(error.message || error.errors?.[0]?.message);
     }
-  },
-);
+  });

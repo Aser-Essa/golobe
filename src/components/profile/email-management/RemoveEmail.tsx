@@ -1,5 +1,5 @@
 import { Button } from "#/components/ui/button";
-import { deleteClerkUser } from "#/server/user";
+import { removeClerkEmail } from "#/server/user";
 import { useUser } from "@clerk/tanstack-react-start";
 import type { EmailAddressResource } from "@clerk/types";
 import { CircleX } from "lucide-react";
@@ -24,8 +24,8 @@ export default function RemoveEmail({
   async function handleClick() {
     if (!userId || !emailId) return;
 
-    await deleteClerkUser({
-      data: { userId, externalAccountId, emailId },
+    await removeClerkEmail({
+      data: { externalAccountId, emailId },
     });
 
     toast.success("Email removed successfully");

@@ -27,7 +27,13 @@ export default function RouteError({ error, reset }: RouteErrorProps) {
       if (reset) {
         reset();
       } else {
-        navigate({ to: ".", search: (prev) => prev, replace: true });
+        navigate({
+          to: ".",
+          search: (prev) => prev,
+          replace: true,
+          reloadDocument: true,
+        });
+        window.location.reload();
       }
       setRetrying(false);
     }, 400);

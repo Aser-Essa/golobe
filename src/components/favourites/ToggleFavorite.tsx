@@ -4,6 +4,8 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Heart } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Button } from "../ui/button";
+import { useUser } from "@clerk/tanstack-react-start";
+import { useNavigate } from "@tanstack/react-router";
 
 type ToggleFavoriteProps = {
   hotelId?: string;
@@ -16,6 +18,8 @@ export default function ToggleFavorite({
 }: ToggleFavoriteProps) {
   const queryClient = useQueryClient();
   const [isFavouriteState, setIsFavouriteState] = useState(false);
+  const { isSignedIn } = useUser();
+  const navigate = useNavigate();
 
   const { isPending, mutate } = useMutation(
     {
@@ -26,6 +30,9 @@ export default function ToggleFavorite({
   );
 
   function handleClick() {
+    if (!isSignedIn) {
+      navigate({ to: "/sign-in" });
+    }
     if (!hotelId && !flightId) return;
     const newValue = !isFavouriteState;
     setIsFavouriteState(newValue);

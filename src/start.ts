@@ -1,10 +1,12 @@
 import { clerkMiddleware } from "@clerk/tanstack-react-start/server";
 import { createStart } from "@tanstack/react-start";
+import { authMiddleware } from "./middlewares/auth";
 
 export const startInstance = createStart(() => {
   return {
     requestMiddleware: [
       clerkMiddleware({ signInUrl: "/sign-in", signUpUrl: "/sign-up" }),
+      authMiddleware,
     ],
   };
 });

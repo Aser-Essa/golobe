@@ -1,5 +1,6 @@
 import Container from "#/components/layout/Container";
 import { checkBookingExist } from "#/server/bookings";
+import { auth } from "@clerk/tanstack-react-start/server";
 import { createFileRoute, redirect, useNavigate } from "@tanstack/react-router";
 import { Loader2, ShieldCheck } from "lucide-react";
 import { useEffect } from "react";
@@ -10,7 +11,13 @@ export const Route = createFileRoute("/_main/payment/pending/")({
   validateSearch: z.object({
     payment_intent: z.string().optional(),
   }),
-  beforeLoad: ({ search }) => {
+  beforeLoad: async ({ search }) => {
+    const { userId } = await auth();
+
+    if (!userId) {
+      throw redirect({ to: "/" });
+    }
+
     if (!search.payment_intent) {
       throw redirect({ to: "/" });
     }

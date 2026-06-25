@@ -1,22 +1,17 @@
 import { supabase } from "#/lib/supabase";
+import { authFnMiddleware } from "#/middlewares/auth";
 import { auth } from "@clerk/tanstack-react-start/server";
-import { redirect } from "@tanstack/react-router";
 import { createServerFn } from "@tanstack/react-start";
 import z from "zod";
 
 export const getUserFavourites = createServerFn({ method: "GET" })
+  .middleware([authFnMiddleware])
   .inputValidator(
     z.object({
       favType: z.enum(["hotel", "flight"]).default("hotel"),
     }),
   )
-  .handler(async ({ data }) => {
-    const { userId } = await auth();
-
-    if (!userId) {
-      throw redirect({ to: "/sign-in" });
-    }
-
+  .handler(async ({ data, context: { userId } }) => {
     if (data.favType === "hotel") {
       const { data: favourites, error } = await supabase
         .from("favourites")
@@ -66,20 +61,20 @@ export const getUserFavourites = createServerFn({ method: "GET" })
   });
 
 export const addToUserFavourites = createServerFn({ method: "POST" })
+  .middleware([authFnMiddleware])
   .inputValidator(
     z
       .object({
         hotelId: z.string().optional(),
         flightId: z.string().optional(),
-        userId: z.string(),
       })
       .refine((data) => data.hotelId || data.flightId, {
         message: "Either hotelId or flightId is required",
       }),
   )
-  .handler(async ({ data }) => {
+  .handler(async ({ data, context: { userId } }) => {
     const { error } = await supabase.from("favourites").insert({
-      user_id: data.userId,
+      user_id: userId,
       hotel_id: data.hotelId,
       flight_id: data.flightId,
     });
@@ -92,6 +87,7 @@ export const addToUserFavourites = createServerFn({ method: "POST" })
   });
 
 export const deleteFromUserFavourites = createServerFn({ method: "POST" })
+  .middleware([authFnMiddleware])
   .inputValidator(
     z.object({
       id: z.string(),
@@ -109,6 +105,7 @@ export const deleteFromUserFavourites = createServerFn({ method: "POST" })
   });
 
 export const toggleUserFavourites = createServerFn({ method: "POST" })
+  .middleware([authFnMiddleware])
   .inputValidator(
     z
       .object({
@@ -119,10 +116,7 @@ export const toggleUserFavourites = createServerFn({ method: "POST" })
         message: "Either hotelId or flightId is required",
       }),
   )
-  .handler(async ({ data }) => {
-    const { userId } = await auth();
-    if (!userId) throw redirect({ to: "/sign-in" });
-
+  .handler(async ({ data, context: { userId } }) => {
     const column = data.hotelId ? "hotel_id" : "flight_id";
     const value = data.hotelId ?? data.flightId;
 
@@ -140,7 +134,6 @@ export const toggleUserFavourites = createServerFn({ method: "POST" })
         data: {
           hotelId: data.hotelId,
           flightId: data.flightId,
-          userId: userId,
         },
       });
       return { isFavourite: true };
@@ -159,10 +152,13 @@ export const isUserFavourites = createServerFn({ method: "GET" })
       }),
   )
   .handler(async ({ data }) => {
-    const { userId } = await auth();
-    if (!userId) throw redirect({ to: "/sign-in" });
     const column = data.hotelId ? "hotel_id" : "flight_id";
     const value = data.hotelId ?? data.flightId;
+    const { userId } = await auth();
+
+    if (!userId) {
+      throw new Error("User ID is required");
+    }
 
     const { data: existing, error } = await supabase
       .from("favourites")
