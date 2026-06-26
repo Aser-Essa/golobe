@@ -40,7 +40,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
       </head>
       <body className="overflow-x-hidden">
         <Toaster position="top-center" />
-        <ClerkProvider>
+        <ClerkProvider signInUrl="/sign-in" signUpUrl="/sign-up">
           <QueryClientProvider client={queryClient}>
             {children}
           </QueryClientProvider>

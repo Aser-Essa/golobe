@@ -1,8 +1,56 @@
 import { supabase } from "#/lib/supabase";
 import { authFnMiddleware } from "#/middlewares/auth";
-import { auth } from "@clerk/tanstack-react-start/server";
 import { createServerFn } from "@tanstack/react-start";
 import z from "zod";
+
+const HOTEL_FAVOURITES_SELECT = `
+  *,
+  hotel:hotels!inner(
+    *,
+    rooms!inner(
+      *,
+      bookings(*)
+    ),
+    rooms_count:rooms(count),
+    amenities:hotel_amenity_map!inner(
+      amenities!inner(*)
+    ),
+    hotel_images(*),
+    hotel_tags(*),
+    reviews(
+      *,
+      user:user_profiles(
+        id,
+        full_name,
+        avatar_url
+      )
+    )
+  )
+` as const;
+
+const getHotelFavourites = async (userId: string) => {
+  const { data: favourites, error } = await supabase
+    .from("favourites")
+    .select(HOTEL_FAVOURITES_SELECT)
+    .eq("user_id", userId)
+    .eq("item_type", "hotel");
+
+  if (error) throw new Error(error.message);
+
+  return favourites;
+};
+
+const getFlightFavourites = async (userId: string) => {
+  const { data: favourites, error } = await supabase
+    .from("favourites")
+    .select("*")
+    .eq("user_id", userId)
+    .eq("item_type", "flight");
+
+  if (error) throw new Error(error.message);
+
+  return favourites;
+};
 
 export const getUserFavourites = createServerFn({ method: "GET" })
   .middleware([authFnMiddleware])
@@ -12,52 +60,9 @@ export const getUserFavourites = createServerFn({ method: "GET" })
     }),
   )
   .handler(async ({ data, context: { userId } }) => {
-    if (data.favType === "hotel") {
-      const { data: favourites, error } = await supabase
-        .from("favourites")
-        .select(
-          `
-          *,
-          hotel:hotels!inner(
-            *,
-            rooms!inner(
-              *,
-              bookings(*)
-            ),
-            rooms_count:rooms(count),
-            amenities:hotel_amenity_map!inner(
-              amenities!inner(*)
-            ),
-            hotel_images(*),
-            hotel_tags(*),
-            reviews(
-              *,
-              user:user_profiles(
-                id,
-                full_name,
-                avatar_url
-              )
-            )
-          )
-        `,
-        )
-        .eq("user_id", userId)
-        .eq("item_type", "hotel");
-
-      if (error) throw new Error(error.message);
-
-      return favourites;
-    }
-
-    const { data: favourites, error } = await supabase
-      .from("favourites")
-      .select("*")
-      .eq("user_id", userId)
-      .eq("item_type", "flight");
-
-    if (error) throw new Error(error.message);
-
-    return favourites;
+    return data.favType === "hotel"
+      ? getHotelFavourites(userId)
+      : getFlightFavourites(userId);
   });
 
 export const addToUserFavourites = createServerFn({ method: "POST" })
@@ -78,8 +83,6 @@ export const addToUserFavourites = createServerFn({ method: "POST" })
       hotel_id: data.hotelId,
       flight_id: data.flightId,
     });
-
-    console.log(error);
 
     if (error) {
       throw new Error(error.message);
@@ -129,6 +132,7 @@ export const toggleUserFavourites = createServerFn({ method: "POST" })
 
     if (existing) {
       await deleteFromUserFavourites({ data: { id: existing.id } });
+      return { isFavourite: false };
     } else {
       await addToUserFavourites({
         data: {
@@ -141,6 +145,7 @@ export const toggleUserFavourites = createServerFn({ method: "POST" })
   });
 
 export const isUserFavourites = createServerFn({ method: "GET" })
+  .middleware([authFnMiddleware])
   .inputValidator(
     z
       .object({
@@ -151,10 +156,9 @@ export const isUserFavourites = createServerFn({ method: "GET" })
         message: "Either hotelId or flightId is required",
       }),
   )
-  .handler(async ({ data }) => {
+  .handler(async ({ data, context: { userId } }) => {
     const column = data.hotelId ? "hotel_id" : "flight_id";
     const value = data.hotelId ?? data.flightId;
-    const { userId } = await auth();
 
     if (!userId) {
       throw new Error("User ID is required");

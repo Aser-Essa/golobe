@@ -1,23 +1,22 @@
-import { getRatingLabel } from "#/lib/utils";
-import { Separator } from "../../ui/separator";
+import { Separator } from "#/components/ui/separator";
 import type { HotelType } from "#/lib/types";
-import ReviewCard from "./ReviewCard";
-import { Fragment } from "react/jsx-runtime";
+import { getRatingLabel } from "#/lib/utils";
+import { Fragment } from "react";
 import NoReviews from "./NoReviews";
+import ReviewCard from "./ReviewCard";
 
-type ReviewsProps = {
+type ReviewsListProps = {
   avg_rating: HotelType["avg_rating"];
   reviews: HotelType["reviews"];
 };
 
-export default function Reviews({ avg_rating, reviews }: ReviewsProps) {
+export default function ReviewsList({ reviews, avg_rating }: ReviewsListProps) {
+  if (reviews.length === 0) return <NoReviews />;
+
   const verifiedReviews = reviews.filter((review) => review.is_verified);
 
-  if (verifiedReviews.length === 0) return <NoReviews />;
-
   return (
-    <div className="space-y-6">
-      <p className="text-xl font-bold">Reviews</p>
+    <>
       <div>
         <div className="flex items-center gap-4">
           <p className="text-[50px] font-bold">{avg_rating || 0}</p>
@@ -32,12 +31,12 @@ export default function Reviews({ avg_rating, reviews }: ReviewsProps) {
         </div>
       </div>
       <Separator />
-      {verifiedReviews.map((review) => (
+      {reviews.map((review) => (
         <Fragment key={review.id}>
           <ReviewCard review={review} />
           <Separator />
         </Fragment>
       ))}
-    </div>
+    </>
   );
 }

@@ -176,6 +176,7 @@ export const getHotel = createServerFn({ method: "GET" })
         ),
         hotel_images(*),
         hotel_tags(*),
+        bookings(*),
         reviews(
           *,
           user:user_profiles(

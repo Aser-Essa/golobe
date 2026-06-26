@@ -1,5 +1,5 @@
 import { deletePaymentMethod } from "#/server/stripe";
-import { useNavigate } from "@tanstack/react-router";
+import { useRouter } from "@tanstack/react-router";
 import { toast } from "sonner";
 
 export default function DeletePaymentMethod({
@@ -7,7 +7,7 @@ export default function DeletePaymentMethod({
 }: {
   paymentMethodId: string;
 }) {
-  const navigate = useNavigate();
+  const router = useRouter();
 
   async function handleDelete() {
     const { success, error } = await deletePaymentMethod({
@@ -17,7 +17,7 @@ export default function DeletePaymentMethod({
     if (success) {
       toast.success("Payment method deleted successfully");
       await new Promise((resolve) => setTimeout(resolve, 500));
-      navigate({ reloadDocument: true, resetScroll: false });
+      router.invalidate();
     } else {
       toast.error(error || "Failed to delete payment method");
     }

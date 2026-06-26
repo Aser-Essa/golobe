@@ -27,8 +27,8 @@ export function SocialAuthButton({
     try {
       await action.sso({
         strategy,
-        redirectUrl: "/",
-        redirectCallbackUrl: "/",
+        redirectUrl: "/sso-callback",
+        redirectCallbackUrl: "/sso-callback",
       });
     } catch (err) {
       console.error(err);

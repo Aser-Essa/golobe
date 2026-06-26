@@ -17,7 +17,7 @@ const config = defineConfig({
     viteReact(),
   ],
   server: {
-    allowedHosts: ["9e03-197-42-15-23.ngrok-free.app"],
+    allowedHosts: ["inherently-intense-wolf.ngrok-free.app"],
   },
 });
 

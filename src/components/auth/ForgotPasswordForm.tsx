@@ -5,11 +5,12 @@ import type {
   ForgotPasswordFormType,
 } from "#/lib/types";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Loader2 } from "lucide-react";
+import { ChevronLeft, Loader2 } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import InputField from "../common/InputField";
 import SocialAuthButtons from "./SocialAuthButtons";
+import { Link } from "@tanstack/react-router";
 
 export default function ForgotPasswordForm({
   fetchStatus,
@@ -38,7 +39,11 @@ export default function ForgotPasswordForm({
   return (
     <div>
       <div className="mb-12 space-y-4">
-        <h3 className="text-[40px] leading-none font-bold">
+        <Link to="/sign-in" className="flex items-center gap-1">
+          <ChevronLeft />
+          <p>Back to login</p>
+        </Link>
+        <h3 className="font-trade-gothic text-[40px] leading-none font-bold">
           Forgot your password?
         </h3>
         <span className="text-[#546869]">

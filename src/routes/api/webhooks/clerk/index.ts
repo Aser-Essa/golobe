@@ -1,10 +1,10 @@
-import { formatUserName } from "#/lib/utils/user";
+import { formatUserName, getFormattedUserJson } from "#/lib/utils/user";
 import { getOrCreateStripeCustomerCore } from "#/server/stripe-core";
-import { createUserDB, deleteUserDB } from "#/server/user";
+import { createUserDB, deleteUserDB, updateUserDB } from "#/server/user";
 import { verifyWebhook } from "@clerk/tanstack-react-start/webhooks";
 import { createFileRoute } from "@tanstack/react-router";
 
-export const Route = createFileRoute("/api/webhooks/clerk/$")({
+export const Route = createFileRoute("/api/webhooks/clerk/")({
   server: {
     handlers: {
       POST: async ({ request }) => {
@@ -14,16 +14,19 @@ export const Route = createFileRoute("/api/webhooks/clerk/$")({
           const eventType = evt.type;
 
           if (eventType === "user.created") {
+            const { fullName, email, avatar } = getFormattedUserJson(evt.data);
+
             const supabaseUser = {
               id: evt.data.id,
-              full_name: evt.data.first_name + " " + evt.data.last_name,
-              email: evt.data.email_addresses.at(0)?.email_address || null,
+              full_name: fullName,
+              email: email,
               phone: evt.data.phone_numbers.at(0)?.phone_number || null,
-              avatar_url: evt.data.image_url || null,
+              avatar_url: avatar,
               is_active: !evt.data.locked,
             };
 
             await createUserDB({ user: supabaseUser });
+            console.log(supabaseUser);
 
             const userName = formatUserName({
               firstName: evt.data.first_name,
@@ -32,8 +35,26 @@ export const Route = createFileRoute("/api/webhooks/clerk/$")({
 
             await getOrCreateStripeCustomerCore({
               name: userName,
-              email: evt.data.email_addresses.at(0)?.email_address || "",
+              email: email,
               userId: evt.data.id,
+            });
+          }
+
+          if (eventType === "user.updated") {
+            const { fullName, email, avatar } = getFormattedUserJson(evt.data);
+
+            const supabaseUser = {
+              id: evt.data.id,
+              full_name: fullName,
+              email: email,
+              phone: evt.data.phone_numbers.at(0)?.phone_number || null,
+              avatar_url: avatar,
+              is_active: !evt.data.locked,
+            };
+
+            await updateUserDB({
+              userId: evt.data.id,
+              user: supabaseUser,
             });
           }
 

@@ -21,6 +21,7 @@ import type {
 } from "../schemas/search";
 import type { createUserSchema } from "../schemas/user";
 import type { Tables } from "./supabase";
+import type { reviewFormSchema } from "../schemas/review";
 
 export type SignupFormType = z.infer<typeof signUpSchema>;
 
@@ -74,6 +75,7 @@ export interface HotelType extends Tables<"hotels"> {
   hotel_images: Array<Tables<"hotel_images">>;
   hotel_tags: Array<Tables<"hotel_tags">>;
   reviews: Array<Tables<"reviews"> & { user: UserPublicProfile }>;
+  bookings: Array<Tables<"bookings">>;
 }
 
 export type PageButtonItem = number | "...";
@@ -142,3 +144,5 @@ export type Booking = Tables<"bookings"> & {
 export type PaymentCardType = {
   cards: Stripe.PaymentMethod[];
 };
+
+export type reviewFormValues = z.infer<typeof reviewFormSchema>;

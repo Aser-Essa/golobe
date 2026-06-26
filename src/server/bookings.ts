@@ -81,3 +81,28 @@ export const getBooking = createServerFn({ method: "GET" })
 
     return data;
   });
+
+// export const checkHotelBookedBefore = createServerFn({ method: "GET" })
+//   .inputValidator(
+//     z.object({
+//       hotelId: z.string(),
+//     }),
+//   )
+//   .handler(async ({ data: { hotelId } }) => {
+//     const { userId } = await auth();
+
+//     if (!userId) return;
+
+//     const { data, error } = await supabase
+//       .from("bookings")
+//       .select("id")
+//       .eq("hotel_id", hotelId)
+//       .eq("user_id", userId)
+//       .order("created_at", { ascending: false })
+//       .limit(1)
+//       .maybeSingle();
+
+//     if (error) throw new Error(error.message);
+
+//     return { isBooked: !!data?.id, bookingId: data?.id };
+//   });

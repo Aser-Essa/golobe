@@ -9,11 +9,11 @@ import { useUser } from "@clerk/tanstack-react-start";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
+import { Button } from "#/components/ui/button";
+import { Loader2 } from "lucide-react";
 import { useAvatarEditor } from "react-avatar-editor";
 import AvatarEditorSection from "./AvatarEditorSection";
 import PreviewAvatar from "./PreviewAvatar";
-import { Button } from "#/components/ui/button";
-import { Loader2 } from "lucide-react";
 
 type UpdateAvatarProps = {
   setIsChange: (value: boolean) => void;

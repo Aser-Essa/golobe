@@ -4,9 +4,9 @@ import { useForm } from "react-hook-form";
 
 import type { ResetPasswordFormType } from "#/lib/types";
 import { useSignIn } from "@clerk/tanstack-react-start";
-import { Loader2 } from "lucide-react";
+import { ChevronLeft, Loader2 } from "lucide-react";
 import { toast } from "sonner";
-import { useRouter } from "@tanstack/react-router";
+import { Link, useRouter } from "@tanstack/react-router";
 import { resetPasswordSchema } from "#/lib/schemas";
 import InputField from "../common/InputField";
 
@@ -41,9 +41,13 @@ export default function ResetPasswordForm() {
   return (
     <div>
       <div className="mb-12 space-y-4">
+        <Link to="/sign-in" className="flex items-center gap-1">
+          <ChevronLeft />
+          <p>Back to login</p>
+        </Link>
         <h3 className="text-[40px] leading-none font-bold">Set a password</h3>
         <span className="text-[#546869]">
-          Your previous password has been reseted. Please set a new password for
+          Your previous password has been reset. Please set a new password for
           your account.
         </span>
       </div>

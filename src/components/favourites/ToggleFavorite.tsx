@@ -5,7 +5,7 @@ import { Heart } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Button } from "../ui/button";
 import { useUser } from "@clerk/tanstack-react-start";
-import { useNavigate } from "@tanstack/react-router";
+import { useNavigate, useRouter } from "@tanstack/react-router";
 
 type ToggleFavoriteProps = {
   hotelId?: string;
@@ -44,6 +44,8 @@ export default function ToggleFavorite({
       setIsFavouriteState(isFavourite),
     );
   }, [hotelId, flightId]);
+
+  if (!isSignedIn) return;
 
   return (
     <Button

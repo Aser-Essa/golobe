@@ -1,0 +1,67 @@
+import { Button } from "#/components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "#/components/ui/dialog";
+import type { HotelType } from "#/lib/types";
+import { useState } from "react";
+import { Separator } from "../../ui/separator";
+import EditReviewForm from "./EditReviewForm";
+
+type AddReviewProps = {
+  hotelId: HotelType["id"];
+  bookingId: HotelType["bookings"][number]["id"];
+  reviewAdded: HotelType["reviews"][0];
+};
+
+export default function EditReview({
+  hotelId,
+  bookingId,
+  reviewAdded,
+}: AddReviewProps) {
+  const [_, setIsChange] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+  const [sessionKey, setSessionKey] = useState(0);
+
+  function handleOpenChange(open: boolean) {
+    setIsOpen(open);
+    setIsChange(false);
+    if (open) {
+      setSessionKey((prev) => prev + 1);
+    }
+  }
+
+  return (
+    <Dialog open={isOpen} onOpenChange={handleOpenChange} key={sessionKey}>
+      <DialogTrigger asChild>
+        <Button className="md:h-12 h-10 px-4 font-semibold hover:bg-[#a4dbc9]">
+          Edit your review
+        </Button>
+      </DialogTrigger>
+
+      <DialogContent className="sm:max-w-xl">
+        <DialogHeader>
+          <DialogTitle className="text-[17px] font-medium tracking-tight">
+            Add your review
+          </DialogTitle>
+          <DialogDescription className="text-muted-foreground text-[13px] leading-relaxed">
+            Your feedback helps other travelers make better decisions.
+          </DialogDescription>
+        </DialogHeader>
+
+        <Separator />
+
+        <EditReviewForm
+          bookingId={bookingId}
+          hotelId={hotelId}
+          reviewAdded={reviewAdded}
+          setIsOpen={setIsOpen}
+        />
+      </DialogContent>
+    </Dialog>
+  );
+}

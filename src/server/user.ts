@@ -19,7 +19,33 @@ export const getUser = createServerFn({ method: "GET" })
   });
 
 export const createUserDB = async ({ user }: { user: CreateUserType }) => {
-  const { error } = await supabase.from("users").insert(user);
+  const { data, error } = await supabase.from("users").insert(user);
+
+  if (error) {
+    throw new Error(error.message);
+  }
+
+  return data;
+};
+
+export const createUserServerFn = createServerFn({ method: "POST" })
+  .inputValidator(createUserSchema)
+  .handler(async ({ data: user }) => {
+    return await createUserDB({ user });
+  });
+
+export const updateUserDB = async ({
+  userId,
+  user,
+}: {
+  userId: string;
+  user: CreateUserType;
+}) => {
+  if (!user.id) {
+    throw new Error("User ID is required");
+  }
+
+  const { error } = await supabase.from("users").update(user).eq("id", userId);
 
   if (error) {
     console.error(error);
@@ -28,12 +54,6 @@ export const createUserDB = async ({ user }: { user: CreateUserType }) => {
 
   return user;
 };
-
-export const createUserServerFn = createServerFn({ method: "POST" })
-  .inputValidator(createUserSchema)
-  .handler(async ({ data: user }) => {
-    return await createUserDB({ user });
-  });
 
 export const deleteUserDB = async (id: string) => {
   const { error } = await supabase.from("users").delete().eq("id", id);

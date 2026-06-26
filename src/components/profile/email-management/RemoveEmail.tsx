@@ -19,8 +19,6 @@ export default function RemoveEmail({
     (acc) => acc.emailAddress === email.emailAddress,
   )?.id;
 
-  console.log(userId, externalAccountId, emailId);
-
   async function handleClick() {
     if (!userId || !emailId) return;
 

@@ -7,7 +7,8 @@ import UpdateAvatar from "./UpdateAvatar";
 
 export default function ManageAvatar() {
   const { user } = useUser();
-  const hasImage = user?.publicMetadata.originalAvatarUrl as string;
+  const hasImage =
+    (user?.publicMetadata.originalAvatarUrl as string) || user?.hasImage;
 
   const [isChange, setIsChange] = useState(false);
   const [isOpen, setIsOpen] = useState(false);

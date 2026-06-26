@@ -2,6 +2,7 @@ import { Button } from "#/components/ui/button";
 import { Field, FieldError, FieldLabel } from "#/components/ui/field";
 import { Input } from "#/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Link } from "@tanstack/react-router";
 import { ChevronLeft, Loader2 } from "lucide-react";
 import { useForm } from "react-hook-form";
 import z from "zod";
@@ -28,14 +29,11 @@ export default function VerifyForm({
 
   return (
     <div>
-      <Button
-        variant={"link"}
-        className="mb-4 flex items-center gap-1 px-0 text-sm text-black"
-      >
-        <ChevronLeft className="size-5" />
-        <p className="text-sm font-medium">Back to Home</p>
-      </Button>
       <div className="mb-12 space-y-4">
+        <Link to="/sign-in" className="flex items-center gap-1">
+          <ChevronLeft />
+          <p>Back to login</p>
+        </Link>
         <h3 className="text-[32px] leading-none font-bold">Verify code</h3>
         <p className="text-sm text-[#546869]">
           An authentication code has been sent to your email.

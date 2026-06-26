@@ -157,3 +157,12 @@ export const footerLinks = [
     ],
   },
 ];
+
+export const ratingTexts = [
+  "Poor",
+  "Fair",
+  "Good",
+  "Very Good",
+  "Excellent",
+  "Exceptional",
+];

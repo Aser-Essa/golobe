@@ -7,7 +7,7 @@ type ReviewCardProps = {
 
 export default function ReviewCard({ review }: ReviewCardProps) {
   return (
-     
+    <div className="flex justify-between gap-4">
       <div className="flex items-start gap-4">
         <div className="bg-primary flex aspect-square size-11.25 items-center justify-center overflow-hidden rounded-full">
           <p className="font-bold">
@@ -26,6 +26,9 @@ export default function ReviewCard({ review }: ReviewCardProps) {
           <p>{review.body}</p>
         </div>
       </div>
-     
+      <div className=" size-4 min-w-4">
+        <img src="/verified-review.svg" className=" w-full h-full" />
+      </div>
+    </div>
   );
 }
