@@ -13,6 +13,7 @@ export async function getOrCreateStripeCustomerCore({
   name: string;
 }) {
   const { privateMetadata } = await clerkClient().users.getUser(userId);
+
   const customerId = privateMetadata.stripeCustomerId as string;
 
   if (customerId) return customerId;

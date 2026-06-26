@@ -25,19 +25,22 @@ export const Route = createFileRoute("/api/webhooks/clerk/")({
               is_active: !evt.data.locked,
             };
 
-            await createUserDB({ user: supabaseUser });
-            console.log(supabaseUser);
+             await createUserDB({ user: supabaseUser });
+
+            console.log( evt.data, "XXXXXXXXXXXX");
 
             const userName = formatUserName({
               firstName: evt.data.first_name,
               lastName: evt.data.last_name,
             });
 
-            await getOrCreateStripeCustomerCore({
-              name: userName,
-              email: email,
-              userId: evt.data.id,
-            });
+            console.log(evt.data.id, "evt.data.id");
+
+            // await getOrCreateStripeCustomerCore({
+            //   userId: evt.data.id,
+            //   name: userName,
+            //   email: email,
+            // });
           }
 
           if (eventType === "user.updated") {
@@ -64,8 +67,19 @@ export const Route = createFileRoute("/api/webhooks/clerk/")({
 
           return new Response("Webhook received", { status: 200 });
         } catch (err) {
-          console.error("Error verifying webhook:", err);
-          return new Response("Error verifying webhook", { status: 400 });
+          console.error(err);
+
+          if (err instanceof Error) {
+            console.error(err.message);
+            console.error(err.stack);
+          }
+
+          return new Response(
+            err instanceof Error ? err.message : "Unknown error",
+            {
+              status: 400,
+            },
+          );
         }
       },
     },

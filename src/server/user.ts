@@ -19,7 +19,7 @@ export const getUser = createServerFn({ method: "GET" })
   });
 
 export const createUserDB = async ({ user }: { user: CreateUserType }) => {
-  const { data, error } = await supabase.from("users").insert(user);
+  const { data, error } = await supabase.from("users").upsert([user]).single();
 
   if (error) {
     throw new Error(error.message);

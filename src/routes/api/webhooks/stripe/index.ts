@@ -1,4 +1,3 @@
-"use server";
 import { stripe } from "#/lib/stripe/stripe-server";
 import type { stripeBookingMetadata } from "#/lib/types";
 import { formatBookingData } from "#/lib/utils";
@@ -6,7 +5,7 @@ import { insertBookingIntoDB } from "#/server/bookings";
 import { createFileRoute } from "@tanstack/react-router";
 import type Stripe from "stripe";
 
-export const Route = createFileRoute("/api/webhooks/stripe/$")({
+export const Route = createFileRoute("/api/webhooks/stripe/")({
   server: {
     handlers: {
       POST: async ({ request }) => {
@@ -42,6 +41,8 @@ export const Route = createFileRoute("/api/webhooks/stripe/$")({
             },
           });
         }
+
+        return Response.json({ received: true }, { status: 200 });
       },
     },
   },

@@ -22,6 +22,7 @@ import { Route as MainBookingsIndexRouteImport } from './routes/_main/bookings/i
 import { Route as AuthSignUpIndexRouteImport } from './routes/_auth/sign-up/index'
 import { Route as AuthSignInIndexRouteImport } from './routes/_auth/sign-in/index'
 import { Route as AuthForgotPasswordIndexRouteImport } from './routes/_auth/forgot-password/index'
+import { Route as ApiWebhooksStripeIndexRouteImport } from './routes/api/webhooks/stripe/index'
 import { Route as ApiWebhooksClerkIndexRouteImport } from './routes/api/webhooks/clerk/index'
 import { Route as MainProfileTicketsBookingsIndexRouteImport } from './routes/_main/profile/tickets-bookings/index'
 import { Route as MainProfilePaymentMethodsIndexRouteImport } from './routes/_main/profile/payment-methods/index'
@@ -29,7 +30,6 @@ import { Route as MainProfileAccountIndexRouteImport } from './routes/_main/prof
 import { Route as MainPaymentPendingIndexRouteImport } from './routes/_main/payment/pending/index'
 import { Route as MainHotelsHotelIdIndexRouteImport } from './routes/_main/hotels/$hotelId/index'
 import { Route as MainBookingsBookingIdIndexRouteImport } from './routes/_main/bookings/$bookingId/index'
-import { Route as ApiWebhooksStripeSplatRouteImport } from './routes/api/webhooks/stripe/$'
 import { Route as MainHotelsHotelIdCheckoutIndexRouteImport } from './routes/_main/hotels/$hotelId/checkout/index'
 import { Route as MainHotelsHotelIdCheckoutRoomIdIndexRouteImport } from './routes/_main/hotels/$hotelId/checkout/$roomId/index'
 
@@ -96,6 +96,11 @@ const AuthForgotPasswordIndexRoute = AuthForgotPasswordIndexRouteImport.update({
   path: '/forgot-password/',
   getParentRoute: () => AuthRouteRoute,
 } as any)
+const ApiWebhooksStripeIndexRoute = ApiWebhooksStripeIndexRouteImport.update({
+  id: '/api/webhooks/stripe/',
+  path: '/api/webhooks/stripe/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiWebhooksClerkIndexRoute = ApiWebhooksClerkIndexRouteImport.update({
   id: '/api/webhooks/clerk/',
   path: '/api/webhooks/clerk/',
@@ -134,11 +139,6 @@ const MainBookingsBookingIdIndexRoute =
     path: '/bookings/$bookingId/',
     getParentRoute: () => MainRouteRoute,
   } as any)
-const ApiWebhooksStripeSplatRoute = ApiWebhooksStripeSplatRouteImport.update({
-  id: '/api/webhooks/stripe/$',
-  path: '/api/webhooks/stripe/$',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const MainHotelsHotelIdCheckoutIndexRoute =
   MainHotelsHotelIdCheckoutIndexRouteImport.update({
     id: '/hotels/$hotelId/checkout/',
@@ -164,7 +164,6 @@ export interface FileRoutesByFullPath {
   '/hotels/': typeof MainHotelsIndexRoute
   '/payment/': typeof MainPaymentIndexRoute
   '/profile/': typeof MainProfileIndexRoute
-  '/api/webhooks/stripe/$': typeof ApiWebhooksStripeSplatRoute
   '/bookings/$bookingId/': typeof MainBookingsBookingIdIndexRoute
   '/hotels/$hotelId/': typeof MainHotelsHotelIdIndexRoute
   '/payment/pending/': typeof MainPaymentPendingIndexRoute
@@ -172,6 +171,7 @@ export interface FileRoutesByFullPath {
   '/profile/payment-methods/': typeof MainProfilePaymentMethodsIndexRoute
   '/profile/tickets-bookings/': typeof MainProfileTicketsBookingsIndexRoute
   '/api/webhooks/clerk/': typeof ApiWebhooksClerkIndexRoute
+  '/api/webhooks/stripe/': typeof ApiWebhooksStripeIndexRoute
   '/hotels/$hotelId/checkout/': typeof MainHotelsHotelIdCheckoutIndexRoute
   '/hotels/$hotelId/checkout/$roomId/': typeof MainHotelsHotelIdCheckoutRoomIdIndexRoute
 }
@@ -186,7 +186,6 @@ export interface FileRoutesByTo {
   '/hotels': typeof MainHotelsIndexRoute
   '/payment': typeof MainPaymentIndexRoute
   '/profile': typeof MainProfileIndexRoute
-  '/api/webhooks/stripe/$': typeof ApiWebhooksStripeSplatRoute
   '/bookings/$bookingId': typeof MainBookingsBookingIdIndexRoute
   '/hotels/$hotelId': typeof MainHotelsHotelIdIndexRoute
   '/payment/pending': typeof MainPaymentPendingIndexRoute
@@ -194,6 +193,7 @@ export interface FileRoutesByTo {
   '/profile/payment-methods': typeof MainProfilePaymentMethodsIndexRoute
   '/profile/tickets-bookings': typeof MainProfileTicketsBookingsIndexRoute
   '/api/webhooks/clerk': typeof ApiWebhooksClerkIndexRoute
+  '/api/webhooks/stripe': typeof ApiWebhooksStripeIndexRoute
   '/hotels/$hotelId/checkout': typeof MainHotelsHotelIdCheckoutIndexRoute
   '/hotels/$hotelId/checkout/$roomId': typeof MainHotelsHotelIdCheckoutRoomIdIndexRoute
 }
@@ -212,7 +212,6 @@ export interface FileRoutesById {
   '/_main/hotels/': typeof MainHotelsIndexRoute
   '/_main/payment/': typeof MainPaymentIndexRoute
   '/_main/profile/': typeof MainProfileIndexRoute
-  '/api/webhooks/stripe/$': typeof ApiWebhooksStripeSplatRoute
   '/_main/bookings/$bookingId/': typeof MainBookingsBookingIdIndexRoute
   '/_main/hotels/$hotelId/': typeof MainHotelsHotelIdIndexRoute
   '/_main/payment/pending/': typeof MainPaymentPendingIndexRoute
@@ -220,6 +219,7 @@ export interface FileRoutesById {
   '/_main/profile/payment-methods/': typeof MainProfilePaymentMethodsIndexRoute
   '/_main/profile/tickets-bookings/': typeof MainProfileTicketsBookingsIndexRoute
   '/api/webhooks/clerk/': typeof ApiWebhooksClerkIndexRoute
+  '/api/webhooks/stripe/': typeof ApiWebhooksStripeIndexRoute
   '/_main/hotels/$hotelId/checkout/': typeof MainHotelsHotelIdCheckoutIndexRoute
   '/_main/hotels/$hotelId/checkout/$roomId/': typeof MainHotelsHotelIdCheckoutRoomIdIndexRoute
 }
@@ -237,7 +237,6 @@ export interface FileRouteTypes {
     | '/hotels/'
     | '/payment/'
     | '/profile/'
-    | '/api/webhooks/stripe/$'
     | '/bookings/$bookingId/'
     | '/hotels/$hotelId/'
     | '/payment/pending/'
@@ -245,6 +244,7 @@ export interface FileRouteTypes {
     | '/profile/payment-methods/'
     | '/profile/tickets-bookings/'
     | '/api/webhooks/clerk/'
+    | '/api/webhooks/stripe/'
     | '/hotels/$hotelId/checkout/'
     | '/hotels/$hotelId/checkout/$roomId/'
   fileRoutesByTo: FileRoutesByTo
@@ -259,7 +259,6 @@ export interface FileRouteTypes {
     | '/hotels'
     | '/payment'
     | '/profile'
-    | '/api/webhooks/stripe/$'
     | '/bookings/$bookingId'
     | '/hotels/$hotelId'
     | '/payment/pending'
@@ -267,6 +266,7 @@ export interface FileRouteTypes {
     | '/profile/payment-methods'
     | '/profile/tickets-bookings'
     | '/api/webhooks/clerk'
+    | '/api/webhooks/stripe'
     | '/hotels/$hotelId/checkout'
     | '/hotels/$hotelId/checkout/$roomId'
   id:
@@ -284,7 +284,6 @@ export interface FileRouteTypes {
     | '/_main/hotels/'
     | '/_main/payment/'
     | '/_main/profile/'
-    | '/api/webhooks/stripe/$'
     | '/_main/bookings/$bookingId/'
     | '/_main/hotels/$hotelId/'
     | '/_main/payment/pending/'
@@ -292,6 +291,7 @@ export interface FileRouteTypes {
     | '/_main/profile/payment-methods/'
     | '/_main/profile/tickets-bookings/'
     | '/api/webhooks/clerk/'
+    | '/api/webhooks/stripe/'
     | '/_main/hotels/$hotelId/checkout/'
     | '/_main/hotels/$hotelId/checkout/$roomId/'
   fileRoutesById: FileRoutesById
@@ -300,8 +300,8 @@ export interface RootRouteChildren {
   AuthRouteRoute: typeof AuthRouteRouteWithChildren
   MainRouteRoute: typeof MainRouteRouteWithChildren
   SsoCallbackIndexRoute: typeof SsoCallbackIndexRoute
-  ApiWebhooksStripeSplatRoute: typeof ApiWebhooksStripeSplatRoute
   ApiWebhooksClerkIndexRoute: typeof ApiWebhooksClerkIndexRoute
+  ApiWebhooksStripeIndexRoute: typeof ApiWebhooksStripeIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -397,6 +397,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthForgotPasswordIndexRouteImport
       parentRoute: typeof AuthRouteRoute
     }
+    '/api/webhooks/stripe/': {
+      id: '/api/webhooks/stripe/'
+      path: '/api/webhooks/stripe'
+      fullPath: '/api/webhooks/stripe/'
+      preLoaderRoute: typeof ApiWebhooksStripeIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/webhooks/clerk/': {
       id: '/api/webhooks/clerk/'
       path: '/api/webhooks/clerk'
@@ -445,13 +452,6 @@ declare module '@tanstack/react-router' {
       fullPath: '/bookings/$bookingId/'
       preLoaderRoute: typeof MainBookingsBookingIdIndexRouteImport
       parentRoute: typeof MainRouteRoute
-    }
-    '/api/webhooks/stripe/$': {
-      id: '/api/webhooks/stripe/$'
-      path: '/api/webhooks/stripe/$'
-      fullPath: '/api/webhooks/stripe/$'
-      preLoaderRoute: typeof ApiWebhooksStripeSplatRouteImport
-      parentRoute: typeof rootRouteImport
     }
     '/_main/hotels/$hotelId/checkout/': {
       id: '/_main/hotels/$hotelId/checkout/'
@@ -540,8 +540,8 @@ const rootRouteChildren: RootRouteChildren = {
   AuthRouteRoute: AuthRouteRouteWithChildren,
   MainRouteRoute: MainRouteRouteWithChildren,
   SsoCallbackIndexRoute: SsoCallbackIndexRoute,
-  ApiWebhooksStripeSplatRoute: ApiWebhooksStripeSplatRoute,
   ApiWebhooksClerkIndexRoute: ApiWebhooksClerkIndexRoute,
+  ApiWebhooksStripeIndexRoute: ApiWebhooksStripeIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

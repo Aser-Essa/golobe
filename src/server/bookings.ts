@@ -10,10 +10,14 @@ export async function insertBookingIntoDB({
 }: {
   bookingData: BookingToInsert;
 }) {
+  console.log(bookingData);
+
   const { data, error } = await supabase
     .from("bookings")
     .insert([bookingData])
     .select();
+
+  console.log(error);
 
   if (error) throw new Error(error.message);
 
