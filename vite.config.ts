@@ -16,6 +16,7 @@ const config = defineConfig({
     tanstackStart(),
     viteReact(),
   ],
+  nitro: {},
   server: {
     allowedHosts: ["inherently-intense-wolf.ngrok-free.app"],
   },
