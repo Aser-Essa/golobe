@@ -3,7 +3,8 @@ import { checkBookingExist } from "#/server/bookings";
 import { auth } from "@clerk/tanstack-react-start/server";
 import { createFileRoute, redirect, useNavigate } from "@tanstack/react-router";
 import { Loader2, ShieldCheck } from "lucide-react";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
+import { toast } from "sonner";
 import { z } from "zod";
 
 export const Route = createFileRoute("/_main/payment/pending/")({
@@ -28,8 +29,20 @@ function RouteComponent() {
 
   const navigate = useNavigate({ from: "/payment/pending/" });
 
+  const countRef = useRef(0);
+
   useEffect(() => {
     const intervalId = setInterval(async () => {
+      if (countRef.current >= 15) {
+        toast.error(
+          "Your booking is not confirmed yet. Please try again later or contact support.",
+        );
+        navigate({
+          to: "/",
+          replace: true,
+        });
+      }
+      countRef.current++;
       const { exist, bookingId } = await checkBookingExist({
         data: { payment_intent_id: payment_intent! },
       });
@@ -38,6 +51,7 @@ function RouteComponent() {
         navigate({
           to: "/bookings/$bookingId",
           params: { bookingId: bookingId },
+          replace: true,
         });
         clearInterval(intervalId);
       }

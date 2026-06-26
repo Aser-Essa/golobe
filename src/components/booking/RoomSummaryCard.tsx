@@ -1,11 +1,11 @@
 import { useBookingDates } from "#/hooks/useBookingDates";
+import { useSyncDatesToURL } from "#/hooks/useSyncDatesToURL";
 import { FALLBACK_IMAGE } from "#/lib/constants";
 import type { FilterSearchParams, HotelType } from "#/lib/types";
 import { cn, isBookedDay, mapSearchParamsToHotelWidget } from "#/lib/utils";
-import { useNavigate, useSearch } from "@tanstack/react-router";
+import { useSearch } from "@tanstack/react-router";
 import { startOfToday } from "date-fns";
 import { MapPin } from "lucide-react";
-import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import DateField from "../common/DateField";
 
@@ -22,8 +22,8 @@ export default function RoomSummaryCard({ room, hotel }: RoomSummaryCardProps) {
   const normalizedSearchParams = mapSearchParamsToHotelWidget(searchParams);
 
   const defaultValues = {
-    checkIn: new Date(normalizedSearchParams.checkIn),
-    checkOut: new Date(normalizedSearchParams.checkOut),
+    checkIn: normalizedSearchParams.checkIn,
+    checkOut: normalizedSearchParams.checkOut,
     rooms: normalizedSearchParams.rooms || 1,
     guests: normalizedSearchParams.guests || 1,
   };
@@ -33,20 +33,9 @@ export default function RoomSummaryCard({ room, hotel }: RoomSummaryCardProps) {
   });
 
   const { checkInDate, checkOutDate } = useBookingDates({ watch, setValue });
+  useSyncDatesToURL(checkInDate, checkOutDate);
 
   const today = startOfToday();
-  const navigate = useNavigate({ from: "/hotels/$hotelId/checkout/$roomId/" });
-
-  useEffect(() => {
-    navigate({
-      search: (prev) => ({
-        ...prev,
-        checkIn: checkInDate,
-        checkOut: checkOutDate,
-      }),
-      resetScroll: false,
-    });
-  }, [checkInDate, checkOutDate]);
 
   return (
     <div className="box-shadow-sm rounded-[12px] bg-white p-4 sm:px-6 sm:py-8">

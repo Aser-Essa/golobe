@@ -40,9 +40,19 @@ export default function FilterAvailableRoomsWidget({
 
   const navigate = useNavigate({ from: "/hotels/$hotelId/" });
 
+  const checkInIso =
+    checkInDate instanceof Date ? checkInDate.toISOString() : checkInDate;
+  const checkOutIso =
+    checkOutDate instanceof Date ? checkOutDate.toISOString() : checkOutDate;
+
   function onSubmit(data: FilterAvailableRoomsWidgetType) {
     navigate({
-      search: (prev) => ({ ...prev, ...data }),
+      search: (prev) => ({
+        ...prev,
+        ...data,
+        checkIn: checkInIso,
+        checkOut: checkOutIso,
+      }),
       resetScroll: false,
     });
   }

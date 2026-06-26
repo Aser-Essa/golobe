@@ -89,6 +89,7 @@ export default function CheckoutSummarySidebar({
         selectedMethod={selectedMethod}
         paymentMode={paymentMode}
         bookingPrice={bookingPrice}
+        room={room}
       />
     </div>
   );

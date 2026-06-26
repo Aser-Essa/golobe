@@ -8,7 +8,7 @@ export const Route = createFileRoute("/_main")({
 
 function RouteComponent() {
   return (
-    <div className="overflow-x-hidden">
+    <div>
       <Header />
       <Outlet />
       <Footer />

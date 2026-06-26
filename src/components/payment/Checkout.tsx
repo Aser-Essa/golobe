@@ -1,23 +1,27 @@
-import { createPaymentIntent } from "#/server/stripe";
-import { useTransition } from "react";
-import { Button } from "../ui/button";
-import { useCheckoutConfirm } from "./context/CheckoutConfirmContext";
-import { toast } from "sonner";
 import type {
   BookingPriceBreakdown,
   FilterSearchParams,
+  HotelType,
   paymentMode,
 } from "#/lib/types";
+import { hasBookedDayInRange } from "#/lib/utils";
+import { createPaymentIntent } from "#/server/stripe";
 import { useParams, useSearch } from "@tanstack/react-router";
+import { useTransition } from "react";
+import { toast } from "sonner";
+import { Button } from "../ui/button";
+import { useCheckoutConfirm } from "./context/CheckoutConfirmContext";
 
 export default function Checkout({
   selectedMethod,
   bookingPrice,
   paymentMode,
+  room,
 }: {
   selectedMethod: string;
   bookingPrice: BookingPriceBreakdown;
   paymentMode: paymentMode;
+  room: HotelType["rooms"][number];
 }) {
   const { confirmPaymentRef } = useCheckoutConfirm();
   const [isPending, startTransition] = useTransition();
@@ -25,6 +29,8 @@ export default function Checkout({
   const { guests, checkIn, checkOut }: FilterSearchParams = useSearch({
     from: "/_main/hotels/$hotelId/checkout/$roomId/",
   });
+  const checkInDate = new Date(checkIn);
+  const checkOutDate = new Date(checkOut);
 
   const { hotelId, roomId } = useParams({
     from: "/_main/hotels/$hotelId/checkout/$roomId/",
@@ -33,6 +39,11 @@ export default function Checkout({
   function handleCheckout() {
     if (!selectedMethod) {
       toast.error("Please select a payment method");
+      return;
+    }
+
+    if (hasBookedDayInRange(checkInDate, checkOutDate, room.bookings)) {
+      toast.error("These dates are no longer available.");
       return;
     }
 

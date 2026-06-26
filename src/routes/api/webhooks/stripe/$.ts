@@ -1,6 +1,6 @@
 "use server";
 import { stripe } from "#/lib/stripe/stripe-server";
-import type { BookingToInsert, stripeBookingMetadata } from "#/lib/types";
+import type { stripeBookingMetadata } from "#/lib/types";
 import { formatBookingData } from "#/lib/utils";
 import { insertBookingIntoDB } from "#/server/bookings";
 import { createFileRoute } from "@tanstack/react-router";

@@ -3,6 +3,7 @@ import { clsx } from "clsx";
 import {
   addDays,
   differenceInCalendarDays,
+  isValid,
   isWithinInterval,
   parseISO,
   startOfDay,
@@ -20,6 +21,7 @@ import type {
   PageButtonItem,
   paymentMode,
   GetPaginationRangeParams,
+  HotelType,
 } from "../types";
 import type { Tables } from "../types/supabase";
 
@@ -98,21 +100,23 @@ export function sanitizeString(value: string) {
   return value.trim().replace(/[.,\/#!$%\^&*;:{}=\-_`~()]/g, "");
 }
 
-function toValidDate(value: string, fallback = new Date()): Date {
-  const d = new Date(value);
-  return isNaN(d.getTime()) ? fallback : d;
-}
+const parseDate = (val: unknown, fallback?: Date): Date => {
+  if (!val) return fallback ?? new Date();
+  const str = String(val);
+  const parsed = parseISO(str.slice(0, 10));
+  return isValid(parsed) ? parsed : (fallback ?? new Date());
+};
 
 export function mapSearchParamsToHotelWidget(
   searchParams: FilterSearchParams,
 ): HotelSearchWidgetType {
+  const checkIn = parseDate(searchParams.checkIn);
+
   return {
     destination: searchParams.destination,
-    checkIn: toValidDate(searchParams.checkIn),
-    checkOut: toValidDate(
-      searchParams.checkOut,
-      addDays(toValidDate(searchParams.checkIn), 1),
-    ),
+    checkIn,
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+    checkOut: parseDate(searchParams.checkOut) ?? addDays(checkIn, 1),
     rooms: searchParams.rooms ?? 1,
     guests: searchParams.guests ?? 1,
   };
@@ -236,4 +240,21 @@ export function formatFileName(file: File, prefix?: string) {
     .replace(/^-|-$/g, ""); // trim dashes
 
   return `${prefix ? prefix + "-" : ""}${baseName}.${ext}`;
+}
+
+export function hasBookedDayInRange(
+  checkIn: Date,
+  checkOut: Date,
+  bookings: HotelType["bookings"],
+): boolean {
+  const current = new Date(checkIn);
+
+  while (current <= checkOut) {
+    if (isBookedDay({ day: new Date(current), bookings })) {
+      return true;
+    }
+    current.setDate(current.getDate() + 1);
+  }
+
+  return false;
 }
