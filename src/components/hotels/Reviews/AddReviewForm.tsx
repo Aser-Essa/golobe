@@ -65,7 +65,7 @@ export default function AddReviewForm({
               autoFocus={true}
               maxLength={500}
               placeholder="What did you enjoy most about your experience?"
-              className="min-h-32 resize-none rounded-lg text-[14px] leading-relaxed focus-visible:ring-1"
+              className="min-h-32 w-full resize-none rounded-lg text-[14px] leading-relaxed focus-visible:ring-1"
             />
             <div className="flex items-center justify-between">
               {fieldState.error ? (

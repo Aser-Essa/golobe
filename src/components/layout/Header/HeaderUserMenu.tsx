@@ -22,7 +22,7 @@ export default function HeaderUserMenu() {
         <Popover>
           <PopoverTrigger asChild>
             <Button
-              className="relative flex items-center gap-1 text-black no-underline!"
+              className="relative flex items-center gap-1 text-black no-underline! px-0"
               variant={"link"}
             >
               <div className="aspect-square size-9 overflow-hidden rounded-full sm:size-11">

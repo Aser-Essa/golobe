@@ -11,14 +11,14 @@ import {
 } from "#/components/ui/pagination";
 import { useSearch } from "@tanstack/react-router";
 
-export function HotelPagination({ totalPages }: { totalPages: number }) {
-  const { hotel_page }: FilterSearchParams = useSearch({
-    from: "/_main/hotels/",
+export function ReviewsPagination({ totalPages = 1 }: { totalPages: number }) {
+  const { reviews_page }: { reviews_page: number } = useSearch({
+    from: "/_main/hotels/$hotelId/",
   });
   const windowSize = Math.min(4, totalPages);
 
   const pages = generatePageButtons({
-    page: hotel_page,
+    page: reviews_page,
     totalPages,
     windowSize,
   });
@@ -26,7 +26,7 @@ export function HotelPagination({ totalPages }: { totalPages: number }) {
   const toPage = (n: number) => (prev: FilterSearchParams) =>
     ({
       ...prev,
-      hotel_page: n,
+      reviews_page: n,
     }) as never;
 
   if (pages.length <= 1) return;
@@ -36,8 +36,9 @@ export function HotelPagination({ totalPages }: { totalPages: number }) {
       <PaginationContent>
         <PaginationItem>
           <PaginationPrevious
-            disabled={hotel_page <= 1}
-            search={toPage(hotel_page - 1)}
+            disabled={reviews_page <= 1}
+            search={toPage(reviews_page - 1)}
+            resetScroll={false}
           />
         </PaginationItem>
 
@@ -46,7 +47,11 @@ export function HotelPagination({ totalPages }: { totalPages: number }) {
             {pg === "..." ? (
               <PaginationEllipsis />
             ) : (
-              <PaginationLink isActive={pg === hotel_page} search={toPage(pg)}>
+              <PaginationLink
+                isActive={pg === reviews_page}
+                search={toPage(pg)}
+                resetScroll={false}
+              >
                 {pg}
               </PaginationLink>
             )}
@@ -55,8 +60,9 @@ export function HotelPagination({ totalPages }: { totalPages: number }) {
 
         <PaginationItem>
           <PaginationNext
-            disabled={hotel_page >= totalPages}
-            search={toPage(hotel_page + 1)}
+            disabled={reviews_page >= totalPages}
+            search={toPage(reviews_page + 1)}
+            resetScroll={false}
           />
         </PaginationItem>
       </PaginationContent>

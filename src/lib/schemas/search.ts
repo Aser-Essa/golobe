@@ -37,7 +37,7 @@ export const filterSearchParamsSchema = z.object({
   hotelType: z.enum(["hotel", "motel", "resort"]).default("hotel"),
   favType: z.enum(["hotel", "flight"]).default("hotel"),
   sortBy: z.string().trim().default("avg_rating-desc"),
-  page: z.coerce.number().int().min(1).catch(1).default(1),
+  hotel_page: z.coerce.number().int().min(1).catch(1).default(1),
 });
 
 export const filterAvailableRoomsWidgetSchema = z.object({

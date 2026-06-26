@@ -18,6 +18,8 @@ export default function MapAndLocation({
   longitude,
   address,
 }: MapAndLocationProps) {
+
+  
   return (
     <div className="space-y-8">
       <div className="flex items-center justify-between flex-wrap gap-3">

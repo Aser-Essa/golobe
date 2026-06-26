@@ -28,13 +28,6 @@ export default function Header() {
             className="m-auto h-4.5 w-px bg-black"
           />
           <HeaderUserMenu />
-          <Separator
-            orientation="vertical"
-            className="m-auto block h-4.5 w-px bg-black md:hidden"
-          />
-          <div className="block md:hidden">
-            <HeaderMobileMenu />
-          </div>
         </div>
       </Show>
     </header>

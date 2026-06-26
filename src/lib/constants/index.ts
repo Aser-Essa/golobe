@@ -158,6 +158,8 @@ export const footerLinks = [
   },
 ];
 
+export const REVIEWS_PER_PAGE = 10;
+
 export const ratingTexts = [
   "Poor",
   "Fair",

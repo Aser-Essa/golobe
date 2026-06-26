@@ -29,7 +29,7 @@ export const getHotels = createServerFn({ method: "GET" })
       rooms,
       guests,
       sortBy,
-      page,
+      hotel_page,
     } = data;
 
     let query = supabase
@@ -139,7 +139,7 @@ export const getHotels = createServerFn({ method: "GET" })
 
     const totalPages = Math.ceil(filteredData.length / HOTELS_PER_PAGE);
 
-    const safePage = Math.max(1, Math.min(page, totalPages));
+    const safePage = Math.max(1, Math.min(hotel_page, totalPages));
 
     const from = (safePage - 1) * HOTELS_PER_PAGE;
     const to = safePage * HOTELS_PER_PAGE;
@@ -176,18 +176,11 @@ export const getHotel = createServerFn({ method: "GET" })
         ),
         hotel_images(*),
         hotel_tags(*),
-        bookings(*),
-        reviews(
-          *,
-          user:user_profiles(
-            id,
-            full_name,
-            avatar_url
-          )
-        )
+        bookings(*)
       `,
       )
-      .eq("id", data.id);
+      .eq("id", data.id)
+      .single();
 
     if (error) {
       throw new Error(error.message);

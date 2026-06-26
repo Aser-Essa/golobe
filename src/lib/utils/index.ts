@@ -19,6 +19,7 @@ import type {
   HotelSearchWidgetType,
   PageButtonItem,
   paymentMode,
+  GetPaginationRangeParams,
 } from "../types";
 import type { Tables } from "../types/supabase";
 
@@ -34,6 +35,18 @@ export function getRatingLabel(avg: number) {
   if (avg >= 2.0) return "Fair";
   if (avg > 0) return "Poor";
   return "No Rating";
+}
+
+export function getPaginationRange({
+  page,
+  totalItems,
+  perPage,
+}: GetPaginationRangeParams) {
+  const totalPages = Math.ceil(totalItems / perPage);
+  const safePage = Math.max(1, Math.min(page, totalPages));
+  const from = (safePage - 1) * perPage;
+  const to = Math.min(safePage * perPage, totalItems);
+  return { from, to, totalPages };
 }
 
 export function generatePageButtons({

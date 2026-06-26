@@ -38,7 +38,7 @@ export default function AddReview({ hotelId, bookingId }: AddReviewProps) {
         </Button>
       </DialogTrigger>
 
-      <DialogContent className="sm:max-w-xl">
+      <DialogContent className="flex max-h-[90vh] flex-col overflow-hidden overflow-y-auto sm:max-w-xl">
         <DialogHeader>
           <DialogTitle className="text-[17px] font-medium tracking-tight">
             Add your review

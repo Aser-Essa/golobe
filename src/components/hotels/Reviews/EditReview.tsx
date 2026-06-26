@@ -38,12 +38,12 @@ export default function EditReview({
   return (
     <Dialog open={isOpen} onOpenChange={handleOpenChange} key={sessionKey}>
       <DialogTrigger asChild>
-        <Button className="md:h-12 h-10 px-4 font-semibold hover:bg-[#a4dbc9]">
+        <Button className="h-10 px-4 font-semibold hover:bg-[#a4dbc9] md:h-12">
           Edit your review
         </Button>
       </DialogTrigger>
 
-      <DialogContent className="sm:max-w-xl">
+      <DialogContent className="flex max-h-[90vh] flex-col overflow-hidden overflow-y-auto sm:max-w-xl">
         <DialogHeader>
           <DialogTitle className="text-[17px] font-medium tracking-tight">
             Add your review

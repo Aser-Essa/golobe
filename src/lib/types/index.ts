@@ -146,3 +146,9 @@ export type PaymentCardType = {
 };
 
 export type reviewFormValues = z.infer<typeof reviewFormSchema>;
+
+export type GetPaginationRangeParams = {
+  page: number;
+  totalItems: number;
+  perPage: number;
+};

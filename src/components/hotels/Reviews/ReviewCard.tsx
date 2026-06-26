@@ -8,14 +8,18 @@ type ReviewCardProps = {
 export default function ReviewCard({ review }: ReviewCardProps) {
   return (
     <div className="flex justify-between gap-4">
-      <div className="flex items-start gap-4">
+      <div className="flex min-w-0 flex-1 items-start gap-4">
         <div className="bg-primary flex aspect-square size-11.25 items-center justify-center overflow-hidden rounded-full">
-          <p className="font-bold">
-            {review.user.full_name.slice(0, 2).toUpperCase()}
-          </p>
+          {review.user.avatar_url ? (
+            <img src={review.user.avatar_url} className="h-full w-full" />
+          ) : (
+            <p className="font-bold">
+              {review.user.full_name.slice(0, 2).toUpperCase()}
+            </p>
+          )}
         </div>
 
-        <div className="flex-1 space-y-2 text-sm">
+        <div className="min-w-0 flex-1 space-y-2 text-sm">
           <div className="flex items-center gap-2">
             <p className="font-semibold">
               {review.rating.toFixed(1)} {getRatingLabel(review.rating)}
@@ -23,12 +27,14 @@ export default function ReviewCard({ review }: ReviewCardProps) {
             <span>|</span>
             <p>{review.user.full_name}</p>
           </div>
-          <p>{review.body}</p>
+          <p className="min-w-0 wrap-break-word">{review.body}</p>
         </div>
       </div>
-      <div className=" size-4 min-w-4">
-        <img src="/verified-review.svg" className=" w-full h-full" />
-      </div>
+      {review.is_verified && (
+        <div className="size-4 min-w-4">
+          <img src="/verified-review.svg" className="h-full w-full" />
+        </div>
+      )}
     </div>
   );
 }
