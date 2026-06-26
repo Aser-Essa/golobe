@@ -1,12 +1,11 @@
+import ReviewsListSkeleton from "#/components/skeleton/ReviewsListSkeleton";
+import { Separator } from "#/components/ui/separator";
 import type { HotelType } from "#/lib/types";
+import { getRatingLabel } from "#/lib/utils";
 import { Await } from "@tanstack/react-router";
 import ManageReviews from "./ManageReviews";
 import ReviewsList from "./ReviewsList";
 import { ReviewsPagination } from "./ReviewsPagination";
-import { getRatingLabel } from "#/lib/utils";
-import { Separator } from "#/components/ui/separator";
-import { useUser } from "@clerk/tanstack-react-start";
-import ReviewsListSkeleton from "#/components/skeleton/ReviewsListSkeleton";
 
 type ReviewsProps = {
   avg_rating: HotelType["avg_rating"];
@@ -29,26 +28,15 @@ export default function ReviewsSection({
   totalPages,
   countVerified,
 }: ReviewsProps) {
-  const { user, isSignedIn } = useUser();
-  const userId = user?.id || null;
-
-  const bookingId =
-    bookings.find((booking) => booking.user_id === userId)?.id ?? null;
-
-  const isBooked = bookings.length > 0 && bookingId;
-
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <p className="text-xl font-bold">Reviews</p>
-
-        {isBooked && isSignedIn && (
-          <ManageReviews
-            hotelId={hotelId}
-            bookingId={bookingId}
-            myAddedReview={myAddedReview}
-          />
-        )}
+        <ManageReviews
+          hotelId={hotelId}
+          myAddedReview={myAddedReview}
+          bookings={bookings}
+        />
       </div>
 
       <div>
