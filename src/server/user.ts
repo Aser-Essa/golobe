@@ -19,7 +19,43 @@ export const getUser = createServerFn({ method: "GET" })
   });
 
 export const createUserDB = async ({ user }: { user: CreateUserType }) => {
-  const { data, error } = await supabase.from("users").upsert([user]).single();
+  const { data: existingUser, error: selectError } = await supabase
+    .from("users")
+    .select("id, is_active")
+    .eq("email", user.email)
+    .maybeSingle();
+
+  if (selectError) {
+    throw new Error(selectError.message);
+  }
+
+  if (existingUser) {
+    if (existingUser.is_active) {
+      throw new Error("User already exists");
+    }
+
+    const { data, error } = await supabase
+      .from("users")
+      .update({
+        ...user,
+        is_active: true,
+      })
+      .eq("email", user.email)
+      .select()
+      .single();
+
+    if (error) {
+      throw new Error(error.message);
+    }
+
+    return data;
+  }
+
+  const { data, error } = await supabase
+    .from("users")
+    .insert(user)
+    .select()
+    .single();
 
   if (error) {
     throw new Error(error.message);
