@@ -1,8 +1,8 @@
+import { createFileRoute } from "@tanstack/react-router";
+import { verifyWebhook } from "@clerk/backend/webhooks";
 import { formatUserName, getFormattedUserJson } from "#/lib/utils/user";
 import { getOrCreateStripeCustomerCore } from "#/server/stripe-core";
 import { createUserDB, deleteUserDB, updateUserDB } from "#/server/user";
-import { verifyWebhook } from "@clerk/tanstack-react-start/webhooks";
-import { createFileRoute } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/api/webhooks/clerk/")({
   server: {
@@ -20,27 +20,23 @@ export const Route = createFileRoute("/api/webhooks/clerk/")({
               id: evt.data.id,
               full_name: fullName,
               email: email,
-              phone: evt.data.phone_numbers.at(0)?.phone_number || null,
+              phone: (evt.data.unsafe_metadata.phoneNumber as string) || "",
               avatar_url: avatar,
               is_active: !evt.data.locked,
             };
 
-             await createUserDB({ user: supabaseUser });
-
-            console.log( evt.data, "XXXXXXXXXXXX");
+            await createUserDB({ user: supabaseUser });
 
             const userName = formatUserName({
               firstName: evt.data.first_name,
               lastName: evt.data.last_name,
             });
 
-            console.log(evt.data.id, "evt.data.id");
-
-            // await getOrCreateStripeCustomerCore({
-            //   userId: evt.data.id,
-            //   name: userName,
-            //   email: email,
-            // });
+            await getOrCreateStripeCustomerCore({
+              name: userName,
+              email: email,
+              userId: evt.data.id,
+            });
           }
 
           if (eventType === "user.updated") {

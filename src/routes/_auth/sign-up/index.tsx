@@ -10,7 +10,6 @@ export const Route = createFileRoute("/_auth/sign-up/")({
 
 function RouteComponent() {
   const { signUp, fetchStatus } = useSignUp();
-  console.log(signUp.status);
 
   useEffect(() => {
     signUp.reset();
