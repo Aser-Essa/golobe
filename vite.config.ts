@@ -18,7 +18,7 @@ const config = defineConfig({
   ],
   nitro: {},
   server: {
-    allowedHosts: ["inherently-intense-wolf.ngrok-free.app"],
+    allowedHosts: ["golobee.vercel.app"],
   },
 });
 

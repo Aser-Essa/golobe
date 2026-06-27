@@ -14,13 +14,14 @@ export const Route = createFileRoute("/api/webhooks/clerk/")({
           const eventType = evt.type;
 
           if (eventType === "user.created") {
-            const { fullName, email, avatar } = getFormattedUserJson(evt.data);
+            const { fullName, email, avatar, phoneNumber } =
+              getFormattedUserJson(evt.data);
 
             const supabaseUser = {
               id: evt.data.id,
               full_name: fullName,
               email: email,
-              phone: (evt.data.unsafe_metadata.phoneNumber as string) || "",
+              phone: phoneNumber,
               avatar_url: avatar,
               is_active: !evt.data.locked,
             };
@@ -40,13 +41,14 @@ export const Route = createFileRoute("/api/webhooks/clerk/")({
           }
 
           if (eventType === "user.updated") {
-            const { fullName, email, avatar } = getFormattedUserJson(evt.data);
+            const { fullName, email, avatar, phoneNumber } =
+              getFormattedUserJson(evt.data);
 
             const supabaseUser = {
               id: evt.data.id,
               full_name: fullName,
               email: email,
-              phone: evt.data.phone_numbers.at(0)?.phone_number || null,
+              phone: phoneNumber,
               avatar_url: avatar,
               is_active: !evt.data.locked,
             };

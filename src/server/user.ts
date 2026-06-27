@@ -56,7 +56,10 @@ export const updateUserDB = async ({
 };
 
 export const deleteUserDB = async (id: string) => {
-  const { error } = await supabase.from("users").delete().eq("id", id);
+  const { error } = await supabase
+    .from("users")
+    .update({ is_active: false })
+    .eq("id", id);
   if (error) {
     console.error(error);
     throw new Error(error.message);
