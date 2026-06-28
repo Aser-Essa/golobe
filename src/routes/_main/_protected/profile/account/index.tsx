@@ -15,7 +15,7 @@ export const Route = createFileRoute("/_main/_protected/profile/account/")({
 function RouteComponent() {
   const { user, isLoaded } = useUser();
 
-  const { fullName, phoneNumber, address, birthDate } = getFormattedUser(user);
+  const { fullName, phoneNumber, address, birthDate } = getFormattedUser(user, isLoaded);
 
   return (
     <div>

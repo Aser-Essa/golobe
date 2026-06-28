@@ -3,6 +3,7 @@ import type { useAvatarEditor } from "react-avatar-editor";
 import AvatarEditor from "react-avatar-editor";
 import { Slider } from "../../ui/slider";
 import DeleteAvatar from "./DeleteAvatar";
+import { useRef } from "react";
 
 interface AvatarEditorSectionProps {
   userAvatar: string;
@@ -31,11 +32,20 @@ export default function AvatarEditorSection({
     setRotate(value[0]);
   }
 
-  function handlePositonChange() {
-    const canvas = editor.ref.current?.getImage();
-    const dataUrl = canvas?.toDataURL("image/png");
-    if (!dataUrl) return;
-    setImage(dataUrl);
+  const timeout = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  function handlePositionChange() {
+    if (!timeout.current) return;
+    clearTimeout(timeout.current);
+
+    timeout.current = setTimeout(() => {
+      const canvas = editor.ref.current?.getImage();
+      const dataUrl = canvas?.toDataURL("image/png");
+
+      if (dataUrl) {
+        setImage(dataUrl);
+      }
+    }, 200);
   }
 
   return (
@@ -52,8 +62,7 @@ export default function AvatarEditorSection({
         borderRadius={300}
         style={{ borderRadius: "50%" }}
         crossOrigin="anonymous"
-        onMouseUp={handlePositonChange}
-      
+        onMouseUp={handlePositionChange}
       />
       <div className="avatar-scale flex w-full flex-1 items-center gap-3">
         <ZoomOut />

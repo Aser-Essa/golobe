@@ -1,5 +1,5 @@
 import Container from "#/components/layout/Container";
-import ProfileBanner from "#/components/profile/ProfileBanner";
+import ProfileBanner from "#/components/profile/banner-management/ProfileBanner";
 import ProfileHeader from "#/components/profile/ProfileHeader";
 import ProfileNavigation from "#/components/profile/profileNavigation";
 import { createFileRoute, Outlet } from "@tanstack/react-router";

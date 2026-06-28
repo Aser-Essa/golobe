@@ -6,7 +6,7 @@ import { ProfileHeaderSkeleton } from "./ProfileHeaderSkeleton";
 export default function ProfileHeader() {
   const { user, isLoaded } = useUser();
 
-  const { avatar, fullName } = getFormattedUser(user);
+  const { avatar, fullName } = getFormattedUser(user , isLoaded);
 
   if (!isLoaded) return <ProfileHeaderSkeleton />;
 

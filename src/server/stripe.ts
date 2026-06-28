@@ -30,7 +30,7 @@ export const createSetupIntent = createServerFn({ method: "POST" })
       let stripeCustomerId = await (user.privateMetadata as any)
         .stripeCustomerId;
 
-      const { fullName, email } = getFormattedUser(user);
+      const { fullName, email } = getFormattedUser(user, !!user.id);
 
       if (!stripeCustomerId) {
         stripeCustomerId = await getOrCreateStripeCustomer({
@@ -81,7 +81,7 @@ export const createPaymentIntent = createServerFn({ method: "POST" })
       },
     }) => {
       const user: User = await getUser();
-      const { email, fullName } = getFormattedUser(user);
+      const { email, fullName } = getFormattedUser(user, !!user.id);
 
       let stripeCustomerId = (user.privateMetadata as any).stripeCustomerId;
 

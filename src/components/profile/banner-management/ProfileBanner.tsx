@@ -1,16 +1,17 @@
 import { useUser } from "@clerk/tanstack-react-start";
-import ManageBanner from "./banner-management/ManageBanner";
-import { Skeleton } from "../ui/skeleton";
+
 import { useState } from "react";
 import { cn } from "#/lib/utils";
 import { getFormattedUser } from "#/lib/utils/user";
+import { Skeleton } from "#/components/ui/skeleton";
+import ManageBanner from "./ManageBanner";
 
 export default function ProfileBanner() {
   const { user, isLoaded } = useUser();
 
   const [imgLoaded, setImgLoaded] = useState(false);
 
-  const { banner } = getFormattedUser(user);
+  const { banner } = getFormattedUser(user, isLoaded && imgLoaded);
 
   return (
     <div className="bg-foreground/30! relative h-87.5 w-full overflow-hidden rounded-[12px]">

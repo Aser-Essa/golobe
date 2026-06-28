@@ -14,7 +14,7 @@ import { ChevronRight, CreditCard, Info, LogOut, User } from "lucide-react";
 export default function HeaderUserMenu() {
   const { user, isLoaded } = useUser();
 
-  const { avatar, userName, fullName } = getFormattedUser(user);
+  const { avatar, userName, fullName } = getFormattedUser(user, isLoaded);
 
   return (
     <>
@@ -22,7 +22,7 @@ export default function HeaderUserMenu() {
         <Popover>
           <PopoverTrigger asChild>
             <Button
-              className="relative flex items-center gap-1 text-black no-underline! px-0"
+              className="relative flex items-center gap-1 px-0 text-black no-underline!"
               variant={"link"}
             >
               <div className="aspect-square size-9 overflow-hidden rounded-full sm:size-11">

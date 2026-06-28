@@ -12,7 +12,7 @@ export default function Header({
   forPdf: boolean;
 }) {
   const { user, isLoaded } = useUser();
-  const { avatar, fullName } = getFormattedUser(user);
+  const { avatar, fullName } = getFormattedUser(user, isLoaded);
 
   return (
     <div

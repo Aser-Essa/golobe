@@ -43,7 +43,10 @@ export const formatUserName = ({
   return userName;
 };
 
-export function getFormattedUser(user: ClerkUser | null | undefined | User) {
+export function getFormattedUser(
+  user: ClerkUser | null | undefined | User,
+  isLoaded: boolean,
+) {
   if (!user) {
     return {
       fullName: "",
@@ -67,7 +70,8 @@ export function getFormattedUser(user: ClerkUser | null | undefined | User) {
   const avatar =
     (user.publicMetadata.avatarUrl as string) ||
     (user.publicMetadata.originalAvatarUrl as string) ||
-    user.imageUrl;
+    user.imageUrl ||
+    (isLoaded ? "/profile.png" : "");
 
   const email =
     user.primaryEmailAddress?.emailAddress ||
@@ -75,7 +79,8 @@ export function getFormattedUser(user: ClerkUser | null | undefined | User) {
 
   const banner =
     (user.publicMetadata.bannerUrl as string) ||
-    (user.publicMetadata.originalBannerUrl as string);
+    (user.publicMetadata.originalBannerUrl as string) ||
+    (isLoaded ? "/user-banner.png" : "");
 
   const phoneNumber = user.unsafeMetadata.phoneNumber
     ? String(user.unsafeMetadata.phoneNumber)
