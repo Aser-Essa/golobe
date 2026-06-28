@@ -3,7 +3,7 @@ import { UserPaymentMethodsListSkeleton } from "#/components/skeleton/UserPaymen
 import { getCards } from "#/server/stripe";
 import { Await, createFileRoute } from "@tanstack/react-router";
 
-export const Route = createFileRoute("/_main/profile/payment-methods/")({
+export const Route = createFileRoute("/_main/_protected/profile/payment-methods/")({
   component: RouteComponent,
 
   loader: async () => {

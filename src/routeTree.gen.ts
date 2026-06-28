@@ -13,24 +13,25 @@ import { Route as MainRouteRouteImport } from './routes/_main/route'
 import { Route as AuthRouteRouteImport } from './routes/_auth/route'
 import { Route as SsoCallbackIndexRouteImport } from './routes/sso-callback/index'
 import { Route as MainIndexRouteImport } from './routes/_main/index'
-import { Route as MainProfileRouteRouteImport } from './routes/_main/profile/route'
-import { Route as MainProfileIndexRouteImport } from './routes/_main/profile/index'
-import { Route as MainPaymentIndexRouteImport } from './routes/_main/payment/index'
+import { Route as MainProtectedRouteRouteImport } from './routes/_main/_protected/route'
 import { Route as MainHotelsIndexRouteImport } from './routes/_main/hotels/index'
-import { Route as MainFavouritesIndexRouteImport } from './routes/_main/favourites/index'
-import { Route as MainBookingsIndexRouteImport } from './routes/_main/bookings/index'
 import { Route as AuthSignUpIndexRouteImport } from './routes/_auth/sign-up/index'
 import { Route as AuthSignInIndexRouteImport } from './routes/_auth/sign-in/index'
 import { Route as AuthForgotPasswordIndexRouteImport } from './routes/_auth/forgot-password/index'
+import { Route as MainProtectedProfileRouteRouteImport } from './routes/_main/_protected/profile/route'
 import { Route as ApiWebhooksStripeIndexRouteImport } from './routes/api/webhooks/stripe/index'
 import { Route as ApiWebhooksClerkIndexRouteImport } from './routes/api/webhooks/clerk/index'
-import { Route as MainProfileTicketsBookingsIndexRouteImport } from './routes/_main/profile/tickets-bookings/index'
-import { Route as MainProfilePaymentMethodsIndexRouteImport } from './routes/_main/profile/payment-methods/index'
-import { Route as MainProfileAccountIndexRouteImport } from './routes/_main/profile/account/index'
-import { Route as MainPaymentPendingIndexRouteImport } from './routes/_main/payment/pending/index'
 import { Route as MainHotelsHotelIdIndexRouteImport } from './routes/_main/hotels/$hotelId/index'
-import { Route as MainBookingsBookingIdIndexRouteImport } from './routes/_main/bookings/$bookingId/index'
+import { Route as MainProtectedProfileIndexRouteImport } from './routes/_main/_protected/profile/index'
+import { Route as MainProtectedPaymentIndexRouteImport } from './routes/_main/_protected/payment/index'
+import { Route as MainProtectedFavouritesIndexRouteImport } from './routes/_main/_protected/favourites/index'
+import { Route as MainProtectedBookingsIndexRouteImport } from './routes/_main/_protected/bookings/index'
 import { Route as MainHotelsHotelIdCheckoutIndexRouteImport } from './routes/_main/hotels/$hotelId/checkout/index'
+import { Route as MainProtectedProfileTicketsBookingsIndexRouteImport } from './routes/_main/_protected/profile/tickets-bookings/index'
+import { Route as MainProtectedProfilePaymentMethodsIndexRouteImport } from './routes/_main/_protected/profile/payment-methods/index'
+import { Route as MainProtectedProfileAccountIndexRouteImport } from './routes/_main/_protected/profile/account/index'
+import { Route as MainProtectedPaymentPendingIndexRouteImport } from './routes/_main/_protected/payment/pending/index'
+import { Route as MainProtectedBookingsBookingIdIndexRouteImport } from './routes/_main/_protected/bookings/$bookingId/index'
 import { Route as MainHotelsHotelIdCheckoutRoomIdIndexRouteImport } from './routes/_main/hotels/$hotelId/checkout/$roomId/index'
 
 const MainRouteRoute = MainRouteRouteImport.update({
@@ -51,34 +52,13 @@ const MainIndexRoute = MainIndexRouteImport.update({
   path: '/',
   getParentRoute: () => MainRouteRoute,
 } as any)
-const MainProfileRouteRoute = MainProfileRouteRouteImport.update({
-  id: '/profile',
-  path: '/profile',
-  getParentRoute: () => MainRouteRoute,
-} as any)
-const MainProfileIndexRoute = MainProfileIndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => MainProfileRouteRoute,
-} as any)
-const MainPaymentIndexRoute = MainPaymentIndexRouteImport.update({
-  id: '/payment/',
-  path: '/payment/',
+const MainProtectedRouteRoute = MainProtectedRouteRouteImport.update({
+  id: '/_protected',
   getParentRoute: () => MainRouteRoute,
 } as any)
 const MainHotelsIndexRoute = MainHotelsIndexRouteImport.update({
   id: '/hotels/',
   path: '/hotels/',
-  getParentRoute: () => MainRouteRoute,
-} as any)
-const MainFavouritesIndexRoute = MainFavouritesIndexRouteImport.update({
-  id: '/favourites/',
-  path: '/favourites/',
-  getParentRoute: () => MainRouteRoute,
-} as any)
-const MainBookingsIndexRoute = MainBookingsIndexRouteImport.update({
-  id: '/bookings/',
-  path: '/bookings/',
   getParentRoute: () => MainRouteRoute,
 } as any)
 const AuthSignUpIndexRoute = AuthSignUpIndexRouteImport.update({
@@ -96,6 +76,12 @@ const AuthForgotPasswordIndexRoute = AuthForgotPasswordIndexRouteImport.update({
   path: '/forgot-password/',
   getParentRoute: () => AuthRouteRoute,
 } as any)
+const MainProtectedProfileRouteRoute =
+  MainProtectedProfileRouteRouteImport.update({
+    id: '/profile',
+    path: '/profile',
+    getParentRoute: () => MainProtectedRouteRoute,
+  } as any)
 const ApiWebhooksStripeIndexRoute = ApiWebhooksStripeIndexRouteImport.update({
   id: '/api/webhooks/stripe/',
   path: '/api/webhooks/stripe/',
@@ -106,44 +92,70 @@ const ApiWebhooksClerkIndexRoute = ApiWebhooksClerkIndexRouteImport.update({
   path: '/api/webhooks/clerk/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const MainProfileTicketsBookingsIndexRoute =
-  MainProfileTicketsBookingsIndexRouteImport.update({
-    id: '/tickets-bookings/',
-    path: '/tickets-bookings/',
-    getParentRoute: () => MainProfileRouteRoute,
-  } as any)
-const MainProfilePaymentMethodsIndexRoute =
-  MainProfilePaymentMethodsIndexRouteImport.update({
-    id: '/payment-methods/',
-    path: '/payment-methods/',
-    getParentRoute: () => MainProfileRouteRoute,
-  } as any)
-const MainProfileAccountIndexRoute = MainProfileAccountIndexRouteImport.update({
-  id: '/account/',
-  path: '/account/',
-  getParentRoute: () => MainProfileRouteRoute,
-} as any)
-const MainPaymentPendingIndexRoute = MainPaymentPendingIndexRouteImport.update({
-  id: '/payment/pending/',
-  path: '/payment/pending/',
-  getParentRoute: () => MainRouteRoute,
-} as any)
 const MainHotelsHotelIdIndexRoute = MainHotelsHotelIdIndexRouteImport.update({
   id: '/hotels/$hotelId/',
   path: '/hotels/$hotelId/',
   getParentRoute: () => MainRouteRoute,
 } as any)
-const MainBookingsBookingIdIndexRoute =
-  MainBookingsBookingIdIndexRouteImport.update({
-    id: '/bookings/$bookingId/',
-    path: '/bookings/$bookingId/',
-    getParentRoute: () => MainRouteRoute,
+const MainProtectedProfileIndexRoute =
+  MainProtectedProfileIndexRouteImport.update({
+    id: '/',
+    path: '/',
+    getParentRoute: () => MainProtectedProfileRouteRoute,
+  } as any)
+const MainProtectedPaymentIndexRoute =
+  MainProtectedPaymentIndexRouteImport.update({
+    id: '/payment/',
+    path: '/payment/',
+    getParentRoute: () => MainProtectedRouteRoute,
+  } as any)
+const MainProtectedFavouritesIndexRoute =
+  MainProtectedFavouritesIndexRouteImport.update({
+    id: '/favourites/',
+    path: '/favourites/',
+    getParentRoute: () => MainProtectedRouteRoute,
+  } as any)
+const MainProtectedBookingsIndexRoute =
+  MainProtectedBookingsIndexRouteImport.update({
+    id: '/bookings/',
+    path: '/bookings/',
+    getParentRoute: () => MainProtectedRouteRoute,
   } as any)
 const MainHotelsHotelIdCheckoutIndexRoute =
   MainHotelsHotelIdCheckoutIndexRouteImport.update({
     id: '/hotels/$hotelId/checkout/',
     path: '/hotels/$hotelId/checkout/',
     getParentRoute: () => MainRouteRoute,
+  } as any)
+const MainProtectedProfileTicketsBookingsIndexRoute =
+  MainProtectedProfileTicketsBookingsIndexRouteImport.update({
+    id: '/tickets-bookings/',
+    path: '/tickets-bookings/',
+    getParentRoute: () => MainProtectedProfileRouteRoute,
+  } as any)
+const MainProtectedProfilePaymentMethodsIndexRoute =
+  MainProtectedProfilePaymentMethodsIndexRouteImport.update({
+    id: '/payment-methods/',
+    path: '/payment-methods/',
+    getParentRoute: () => MainProtectedProfileRouteRoute,
+  } as any)
+const MainProtectedProfileAccountIndexRoute =
+  MainProtectedProfileAccountIndexRouteImport.update({
+    id: '/account/',
+    path: '/account/',
+    getParentRoute: () => MainProtectedProfileRouteRoute,
+  } as any)
+const MainProtectedPaymentPendingIndexRoute =
+  MainProtectedPaymentPendingIndexRouteImport.update({
+    id: '/payment/pending/',
+    path: '/payment/pending/',
+    getParentRoute: () => MainProtectedRouteRoute,
+  } as any)
+const MainProtectedBookingsBookingIdIndexRoute =
+  MainProtectedBookingsBookingIdIndexRouteImport.update({
+    id: '/bookings/$bookingId/',
+    path: '/bookings/$bookingId/',
+    getParentRoute: () => MainProtectedRouteRoute,
   } as any)
 const MainHotelsHotelIdCheckoutRoomIdIndexRoute =
   MainHotelsHotelIdCheckoutRoomIdIndexRouteImport.update({
@@ -154,24 +166,24 @@ const MainHotelsHotelIdCheckoutRoomIdIndexRoute =
 
 export interface FileRoutesByFullPath {
   '/': typeof MainIndexRoute
-  '/profile': typeof MainProfileRouteRouteWithChildren
   '/sso-callback/': typeof SsoCallbackIndexRoute
+  '/profile': typeof MainProtectedProfileRouteRouteWithChildren
   '/forgot-password/': typeof AuthForgotPasswordIndexRoute
   '/sign-in/': typeof AuthSignInIndexRoute
   '/sign-up/': typeof AuthSignUpIndexRoute
-  '/bookings/': typeof MainBookingsIndexRoute
-  '/favourites/': typeof MainFavouritesIndexRoute
   '/hotels/': typeof MainHotelsIndexRoute
-  '/payment/': typeof MainPaymentIndexRoute
-  '/profile/': typeof MainProfileIndexRoute
-  '/bookings/$bookingId/': typeof MainBookingsBookingIdIndexRoute
+  '/bookings/': typeof MainProtectedBookingsIndexRoute
+  '/favourites/': typeof MainProtectedFavouritesIndexRoute
+  '/payment/': typeof MainProtectedPaymentIndexRoute
+  '/profile/': typeof MainProtectedProfileIndexRoute
   '/hotels/$hotelId/': typeof MainHotelsHotelIdIndexRoute
-  '/payment/pending/': typeof MainPaymentPendingIndexRoute
-  '/profile/account/': typeof MainProfileAccountIndexRoute
-  '/profile/payment-methods/': typeof MainProfilePaymentMethodsIndexRoute
-  '/profile/tickets-bookings/': typeof MainProfileTicketsBookingsIndexRoute
   '/api/webhooks/clerk/': typeof ApiWebhooksClerkIndexRoute
   '/api/webhooks/stripe/': typeof ApiWebhooksStripeIndexRoute
+  '/bookings/$bookingId/': typeof MainProtectedBookingsBookingIdIndexRoute
+  '/payment/pending/': typeof MainProtectedPaymentPendingIndexRoute
+  '/profile/account/': typeof MainProtectedProfileAccountIndexRoute
+  '/profile/payment-methods/': typeof MainProtectedProfilePaymentMethodsIndexRoute
+  '/profile/tickets-bookings/': typeof MainProtectedProfileTicketsBookingsIndexRoute
   '/hotels/$hotelId/checkout/': typeof MainHotelsHotelIdCheckoutIndexRoute
   '/hotels/$hotelId/checkout/$roomId/': typeof MainHotelsHotelIdCheckoutRoomIdIndexRoute
 }
@@ -181,19 +193,19 @@ export interface FileRoutesByTo {
   '/forgot-password': typeof AuthForgotPasswordIndexRoute
   '/sign-in': typeof AuthSignInIndexRoute
   '/sign-up': typeof AuthSignUpIndexRoute
-  '/bookings': typeof MainBookingsIndexRoute
-  '/favourites': typeof MainFavouritesIndexRoute
   '/hotels': typeof MainHotelsIndexRoute
-  '/payment': typeof MainPaymentIndexRoute
-  '/profile': typeof MainProfileIndexRoute
-  '/bookings/$bookingId': typeof MainBookingsBookingIdIndexRoute
+  '/bookings': typeof MainProtectedBookingsIndexRoute
+  '/favourites': typeof MainProtectedFavouritesIndexRoute
+  '/payment': typeof MainProtectedPaymentIndexRoute
+  '/profile': typeof MainProtectedProfileIndexRoute
   '/hotels/$hotelId': typeof MainHotelsHotelIdIndexRoute
-  '/payment/pending': typeof MainPaymentPendingIndexRoute
-  '/profile/account': typeof MainProfileAccountIndexRoute
-  '/profile/payment-methods': typeof MainProfilePaymentMethodsIndexRoute
-  '/profile/tickets-bookings': typeof MainProfileTicketsBookingsIndexRoute
   '/api/webhooks/clerk': typeof ApiWebhooksClerkIndexRoute
   '/api/webhooks/stripe': typeof ApiWebhooksStripeIndexRoute
+  '/bookings/$bookingId': typeof MainProtectedBookingsBookingIdIndexRoute
+  '/payment/pending': typeof MainProtectedPaymentPendingIndexRoute
+  '/profile/account': typeof MainProtectedProfileAccountIndexRoute
+  '/profile/payment-methods': typeof MainProtectedProfilePaymentMethodsIndexRoute
+  '/profile/tickets-bookings': typeof MainProtectedProfileTicketsBookingsIndexRoute
   '/hotels/$hotelId/checkout': typeof MainHotelsHotelIdCheckoutIndexRoute
   '/hotels/$hotelId/checkout/$roomId': typeof MainHotelsHotelIdCheckoutRoomIdIndexRoute
 }
@@ -201,25 +213,26 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/_auth': typeof AuthRouteRouteWithChildren
   '/_main': typeof MainRouteRouteWithChildren
-  '/_main/profile': typeof MainProfileRouteRouteWithChildren
+  '/_main/_protected': typeof MainProtectedRouteRouteWithChildren
   '/_main/': typeof MainIndexRoute
   '/sso-callback/': typeof SsoCallbackIndexRoute
+  '/_main/_protected/profile': typeof MainProtectedProfileRouteRouteWithChildren
   '/_auth/forgot-password/': typeof AuthForgotPasswordIndexRoute
   '/_auth/sign-in/': typeof AuthSignInIndexRoute
   '/_auth/sign-up/': typeof AuthSignUpIndexRoute
-  '/_main/bookings/': typeof MainBookingsIndexRoute
-  '/_main/favourites/': typeof MainFavouritesIndexRoute
   '/_main/hotels/': typeof MainHotelsIndexRoute
-  '/_main/payment/': typeof MainPaymentIndexRoute
-  '/_main/profile/': typeof MainProfileIndexRoute
-  '/_main/bookings/$bookingId/': typeof MainBookingsBookingIdIndexRoute
+  '/_main/_protected/bookings/': typeof MainProtectedBookingsIndexRoute
+  '/_main/_protected/favourites/': typeof MainProtectedFavouritesIndexRoute
+  '/_main/_protected/payment/': typeof MainProtectedPaymentIndexRoute
+  '/_main/_protected/profile/': typeof MainProtectedProfileIndexRoute
   '/_main/hotels/$hotelId/': typeof MainHotelsHotelIdIndexRoute
-  '/_main/payment/pending/': typeof MainPaymentPendingIndexRoute
-  '/_main/profile/account/': typeof MainProfileAccountIndexRoute
-  '/_main/profile/payment-methods/': typeof MainProfilePaymentMethodsIndexRoute
-  '/_main/profile/tickets-bookings/': typeof MainProfileTicketsBookingsIndexRoute
   '/api/webhooks/clerk/': typeof ApiWebhooksClerkIndexRoute
   '/api/webhooks/stripe/': typeof ApiWebhooksStripeIndexRoute
+  '/_main/_protected/bookings/$bookingId/': typeof MainProtectedBookingsBookingIdIndexRoute
+  '/_main/_protected/payment/pending/': typeof MainProtectedPaymentPendingIndexRoute
+  '/_main/_protected/profile/account/': typeof MainProtectedProfileAccountIndexRoute
+  '/_main/_protected/profile/payment-methods/': typeof MainProtectedProfilePaymentMethodsIndexRoute
+  '/_main/_protected/profile/tickets-bookings/': typeof MainProtectedProfileTicketsBookingsIndexRoute
   '/_main/hotels/$hotelId/checkout/': typeof MainHotelsHotelIdCheckoutIndexRoute
   '/_main/hotels/$hotelId/checkout/$roomId/': typeof MainHotelsHotelIdCheckoutRoomIdIndexRoute
 }
@@ -227,24 +240,24 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
-    | '/profile'
     | '/sso-callback/'
+    | '/profile'
     | '/forgot-password/'
     | '/sign-in/'
     | '/sign-up/'
+    | '/hotels/'
     | '/bookings/'
     | '/favourites/'
-    | '/hotels/'
     | '/payment/'
     | '/profile/'
-    | '/bookings/$bookingId/'
     | '/hotels/$hotelId/'
+    | '/api/webhooks/clerk/'
+    | '/api/webhooks/stripe/'
+    | '/bookings/$bookingId/'
     | '/payment/pending/'
     | '/profile/account/'
     | '/profile/payment-methods/'
     | '/profile/tickets-bookings/'
-    | '/api/webhooks/clerk/'
-    | '/api/webhooks/stripe/'
     | '/hotels/$hotelId/checkout/'
     | '/hotels/$hotelId/checkout/$roomId/'
   fileRoutesByTo: FileRoutesByTo
@@ -254,44 +267,45 @@ export interface FileRouteTypes {
     | '/forgot-password'
     | '/sign-in'
     | '/sign-up'
+    | '/hotels'
     | '/bookings'
     | '/favourites'
-    | '/hotels'
     | '/payment'
     | '/profile'
-    | '/bookings/$bookingId'
     | '/hotels/$hotelId'
+    | '/api/webhooks/clerk'
+    | '/api/webhooks/stripe'
+    | '/bookings/$bookingId'
     | '/payment/pending'
     | '/profile/account'
     | '/profile/payment-methods'
     | '/profile/tickets-bookings'
-    | '/api/webhooks/clerk'
-    | '/api/webhooks/stripe'
     | '/hotels/$hotelId/checkout'
     | '/hotels/$hotelId/checkout/$roomId'
   id:
     | '__root__'
     | '/_auth'
     | '/_main'
-    | '/_main/profile'
+    | '/_main/_protected'
     | '/_main/'
     | '/sso-callback/'
+    | '/_main/_protected/profile'
     | '/_auth/forgot-password/'
     | '/_auth/sign-in/'
     | '/_auth/sign-up/'
-    | '/_main/bookings/'
-    | '/_main/favourites/'
     | '/_main/hotels/'
-    | '/_main/payment/'
-    | '/_main/profile/'
-    | '/_main/bookings/$bookingId/'
+    | '/_main/_protected/bookings/'
+    | '/_main/_protected/favourites/'
+    | '/_main/_protected/payment/'
+    | '/_main/_protected/profile/'
     | '/_main/hotels/$hotelId/'
-    | '/_main/payment/pending/'
-    | '/_main/profile/account/'
-    | '/_main/profile/payment-methods/'
-    | '/_main/profile/tickets-bookings/'
     | '/api/webhooks/clerk/'
     | '/api/webhooks/stripe/'
+    | '/_main/_protected/bookings/$bookingId/'
+    | '/_main/_protected/payment/pending/'
+    | '/_main/_protected/profile/account/'
+    | '/_main/_protected/profile/payment-methods/'
+    | '/_main/_protected/profile/tickets-bookings/'
     | '/_main/hotels/$hotelId/checkout/'
     | '/_main/hotels/$hotelId/checkout/$roomId/'
   fileRoutesById: FileRoutesById
@@ -334,25 +348,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MainIndexRouteImport
       parentRoute: typeof MainRouteRoute
     }
-    '/_main/profile': {
-      id: '/_main/profile'
-      path: '/profile'
-      fullPath: '/profile'
-      preLoaderRoute: typeof MainProfileRouteRouteImport
-      parentRoute: typeof MainRouteRoute
-    }
-    '/_main/profile/': {
-      id: '/_main/profile/'
-      path: '/'
-      fullPath: '/profile/'
-      preLoaderRoute: typeof MainProfileIndexRouteImport
-      parentRoute: typeof MainProfileRouteRoute
-    }
-    '/_main/payment/': {
-      id: '/_main/payment/'
-      path: '/payment'
-      fullPath: '/payment/'
-      preLoaderRoute: typeof MainPaymentIndexRouteImport
+    '/_main/_protected': {
+      id: '/_main/_protected'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof MainProtectedRouteRouteImport
       parentRoute: typeof MainRouteRoute
     }
     '/_main/hotels/': {
@@ -360,20 +360,6 @@ declare module '@tanstack/react-router' {
       path: '/hotels'
       fullPath: '/hotels/'
       preLoaderRoute: typeof MainHotelsIndexRouteImport
-      parentRoute: typeof MainRouteRoute
-    }
-    '/_main/favourites/': {
-      id: '/_main/favourites/'
-      path: '/favourites'
-      fullPath: '/favourites/'
-      preLoaderRoute: typeof MainFavouritesIndexRouteImport
-      parentRoute: typeof MainRouteRoute
-    }
-    '/_main/bookings/': {
-      id: '/_main/bookings/'
-      path: '/bookings'
-      fullPath: '/bookings/'
-      preLoaderRoute: typeof MainBookingsIndexRouteImport
       parentRoute: typeof MainRouteRoute
     }
     '/_auth/sign-up/': {
@@ -397,6 +383,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthForgotPasswordIndexRouteImport
       parentRoute: typeof AuthRouteRoute
     }
+    '/_main/_protected/profile': {
+      id: '/_main/_protected/profile'
+      path: '/profile'
+      fullPath: '/profile'
+      preLoaderRoute: typeof MainProtectedProfileRouteRouteImport
+      parentRoute: typeof MainProtectedRouteRoute
+    }
     '/api/webhooks/stripe/': {
       id: '/api/webhooks/stripe/'
       path: '/api/webhooks/stripe'
@@ -411,34 +404,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiWebhooksClerkIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/_main/profile/tickets-bookings/': {
-      id: '/_main/profile/tickets-bookings/'
-      path: '/tickets-bookings'
-      fullPath: '/profile/tickets-bookings/'
-      preLoaderRoute: typeof MainProfileTicketsBookingsIndexRouteImport
-      parentRoute: typeof MainProfileRouteRoute
-    }
-    '/_main/profile/payment-methods/': {
-      id: '/_main/profile/payment-methods/'
-      path: '/payment-methods'
-      fullPath: '/profile/payment-methods/'
-      preLoaderRoute: typeof MainProfilePaymentMethodsIndexRouteImport
-      parentRoute: typeof MainProfileRouteRoute
-    }
-    '/_main/profile/account/': {
-      id: '/_main/profile/account/'
-      path: '/account'
-      fullPath: '/profile/account/'
-      preLoaderRoute: typeof MainProfileAccountIndexRouteImport
-      parentRoute: typeof MainProfileRouteRoute
-    }
-    '/_main/payment/pending/': {
-      id: '/_main/payment/pending/'
-      path: '/payment/pending'
-      fullPath: '/payment/pending/'
-      preLoaderRoute: typeof MainPaymentPendingIndexRouteImport
-      parentRoute: typeof MainRouteRoute
-    }
     '/_main/hotels/$hotelId/': {
       id: '/_main/hotels/$hotelId/'
       path: '/hotels/$hotelId'
@@ -446,12 +411,33 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MainHotelsHotelIdIndexRouteImport
       parentRoute: typeof MainRouteRoute
     }
-    '/_main/bookings/$bookingId/': {
-      id: '/_main/bookings/$bookingId/'
-      path: '/bookings/$bookingId'
-      fullPath: '/bookings/$bookingId/'
-      preLoaderRoute: typeof MainBookingsBookingIdIndexRouteImport
-      parentRoute: typeof MainRouteRoute
+    '/_main/_protected/profile/': {
+      id: '/_main/_protected/profile/'
+      path: '/'
+      fullPath: '/profile/'
+      preLoaderRoute: typeof MainProtectedProfileIndexRouteImport
+      parentRoute: typeof MainProtectedProfileRouteRoute
+    }
+    '/_main/_protected/payment/': {
+      id: '/_main/_protected/payment/'
+      path: '/payment'
+      fullPath: '/payment/'
+      preLoaderRoute: typeof MainProtectedPaymentIndexRouteImport
+      parentRoute: typeof MainProtectedRouteRoute
+    }
+    '/_main/_protected/favourites/': {
+      id: '/_main/_protected/favourites/'
+      path: '/favourites'
+      fullPath: '/favourites/'
+      preLoaderRoute: typeof MainProtectedFavouritesIndexRouteImport
+      parentRoute: typeof MainProtectedRouteRoute
+    }
+    '/_main/_protected/bookings/': {
+      id: '/_main/_protected/bookings/'
+      path: '/bookings'
+      fullPath: '/bookings/'
+      preLoaderRoute: typeof MainProtectedBookingsIndexRouteImport
+      parentRoute: typeof MainProtectedRouteRoute
     }
     '/_main/hotels/$hotelId/checkout/': {
       id: '/_main/hotels/$hotelId/checkout/'
@@ -459,6 +445,41 @@ declare module '@tanstack/react-router' {
       fullPath: '/hotels/$hotelId/checkout/'
       preLoaderRoute: typeof MainHotelsHotelIdCheckoutIndexRouteImport
       parentRoute: typeof MainRouteRoute
+    }
+    '/_main/_protected/profile/tickets-bookings/': {
+      id: '/_main/_protected/profile/tickets-bookings/'
+      path: '/tickets-bookings'
+      fullPath: '/profile/tickets-bookings/'
+      preLoaderRoute: typeof MainProtectedProfileTicketsBookingsIndexRouteImport
+      parentRoute: typeof MainProtectedProfileRouteRoute
+    }
+    '/_main/_protected/profile/payment-methods/': {
+      id: '/_main/_protected/profile/payment-methods/'
+      path: '/payment-methods'
+      fullPath: '/profile/payment-methods/'
+      preLoaderRoute: typeof MainProtectedProfilePaymentMethodsIndexRouteImport
+      parentRoute: typeof MainProtectedProfileRouteRoute
+    }
+    '/_main/_protected/profile/account/': {
+      id: '/_main/_protected/profile/account/'
+      path: '/account'
+      fullPath: '/profile/account/'
+      preLoaderRoute: typeof MainProtectedProfileAccountIndexRouteImport
+      parentRoute: typeof MainProtectedProfileRouteRoute
+    }
+    '/_main/_protected/payment/pending/': {
+      id: '/_main/_protected/payment/pending/'
+      path: '/payment/pending'
+      fullPath: '/payment/pending/'
+      preLoaderRoute: typeof MainProtectedPaymentPendingIndexRouteImport
+      parentRoute: typeof MainProtectedRouteRoute
+    }
+    '/_main/_protected/bookings/$bookingId/': {
+      id: '/_main/_protected/bookings/$bookingId/'
+      path: '/bookings/$bookingId'
+      fullPath: '/bookings/$bookingId/'
+      preLoaderRoute: typeof MainProtectedBookingsBookingIdIndexRouteImport
+      parentRoute: typeof MainProtectedRouteRoute
     }
     '/_main/hotels/$hotelId/checkout/$roomId/': {
       id: '/_main/hotels/$hotelId/checkout/$roomId/'
@@ -486,47 +507,65 @@ const AuthRouteRouteWithChildren = AuthRouteRoute._addFileChildren(
   AuthRouteRouteChildren,
 )
 
-interface MainProfileRouteRouteChildren {
-  MainProfileIndexRoute: typeof MainProfileIndexRoute
-  MainProfileAccountIndexRoute: typeof MainProfileAccountIndexRoute
-  MainProfilePaymentMethodsIndexRoute: typeof MainProfilePaymentMethodsIndexRoute
-  MainProfileTicketsBookingsIndexRoute: typeof MainProfileTicketsBookingsIndexRoute
+interface MainProtectedProfileRouteRouteChildren {
+  MainProtectedProfileIndexRoute: typeof MainProtectedProfileIndexRoute
+  MainProtectedProfileAccountIndexRoute: typeof MainProtectedProfileAccountIndexRoute
+  MainProtectedProfilePaymentMethodsIndexRoute: typeof MainProtectedProfilePaymentMethodsIndexRoute
+  MainProtectedProfileTicketsBookingsIndexRoute: typeof MainProtectedProfileTicketsBookingsIndexRoute
 }
 
-const MainProfileRouteRouteChildren: MainProfileRouteRouteChildren = {
-  MainProfileIndexRoute: MainProfileIndexRoute,
-  MainProfileAccountIndexRoute: MainProfileAccountIndexRoute,
-  MainProfilePaymentMethodsIndexRoute: MainProfilePaymentMethodsIndexRoute,
-  MainProfileTicketsBookingsIndexRoute: MainProfileTicketsBookingsIndexRoute,
+const MainProtectedProfileRouteRouteChildren: MainProtectedProfileRouteRouteChildren =
+  {
+    MainProtectedProfileIndexRoute: MainProtectedProfileIndexRoute,
+    MainProtectedProfileAccountIndexRoute:
+      MainProtectedProfileAccountIndexRoute,
+    MainProtectedProfilePaymentMethodsIndexRoute:
+      MainProtectedProfilePaymentMethodsIndexRoute,
+    MainProtectedProfileTicketsBookingsIndexRoute:
+      MainProtectedProfileTicketsBookingsIndexRoute,
+  }
+
+const MainProtectedProfileRouteRouteWithChildren =
+  MainProtectedProfileRouteRoute._addFileChildren(
+    MainProtectedProfileRouteRouteChildren,
+  )
+
+interface MainProtectedRouteRouteChildren {
+  MainProtectedProfileRouteRoute: typeof MainProtectedProfileRouteRouteWithChildren
+  MainProtectedBookingsIndexRoute: typeof MainProtectedBookingsIndexRoute
+  MainProtectedFavouritesIndexRoute: typeof MainProtectedFavouritesIndexRoute
+  MainProtectedPaymentIndexRoute: typeof MainProtectedPaymentIndexRoute
+  MainProtectedBookingsBookingIdIndexRoute: typeof MainProtectedBookingsBookingIdIndexRoute
+  MainProtectedPaymentPendingIndexRoute: typeof MainProtectedPaymentPendingIndexRoute
 }
 
-const MainProfileRouteRouteWithChildren =
-  MainProfileRouteRoute._addFileChildren(MainProfileRouteRouteChildren)
+const MainProtectedRouteRouteChildren: MainProtectedRouteRouteChildren = {
+  MainProtectedProfileRouteRoute: MainProtectedProfileRouteRouteWithChildren,
+  MainProtectedBookingsIndexRoute: MainProtectedBookingsIndexRoute,
+  MainProtectedFavouritesIndexRoute: MainProtectedFavouritesIndexRoute,
+  MainProtectedPaymentIndexRoute: MainProtectedPaymentIndexRoute,
+  MainProtectedBookingsBookingIdIndexRoute:
+    MainProtectedBookingsBookingIdIndexRoute,
+  MainProtectedPaymentPendingIndexRoute: MainProtectedPaymentPendingIndexRoute,
+}
+
+const MainProtectedRouteRouteWithChildren =
+  MainProtectedRouteRoute._addFileChildren(MainProtectedRouteRouteChildren)
 
 interface MainRouteRouteChildren {
-  MainProfileRouteRoute: typeof MainProfileRouteRouteWithChildren
+  MainProtectedRouteRoute: typeof MainProtectedRouteRouteWithChildren
   MainIndexRoute: typeof MainIndexRoute
-  MainBookingsIndexRoute: typeof MainBookingsIndexRoute
-  MainFavouritesIndexRoute: typeof MainFavouritesIndexRoute
   MainHotelsIndexRoute: typeof MainHotelsIndexRoute
-  MainPaymentIndexRoute: typeof MainPaymentIndexRoute
-  MainBookingsBookingIdIndexRoute: typeof MainBookingsBookingIdIndexRoute
   MainHotelsHotelIdIndexRoute: typeof MainHotelsHotelIdIndexRoute
-  MainPaymentPendingIndexRoute: typeof MainPaymentPendingIndexRoute
   MainHotelsHotelIdCheckoutIndexRoute: typeof MainHotelsHotelIdCheckoutIndexRoute
   MainHotelsHotelIdCheckoutRoomIdIndexRoute: typeof MainHotelsHotelIdCheckoutRoomIdIndexRoute
 }
 
 const MainRouteRouteChildren: MainRouteRouteChildren = {
-  MainProfileRouteRoute: MainProfileRouteRouteWithChildren,
+  MainProtectedRouteRoute: MainProtectedRouteRouteWithChildren,
   MainIndexRoute: MainIndexRoute,
-  MainBookingsIndexRoute: MainBookingsIndexRoute,
-  MainFavouritesIndexRoute: MainFavouritesIndexRoute,
   MainHotelsIndexRoute: MainHotelsIndexRoute,
-  MainPaymentIndexRoute: MainPaymentIndexRoute,
-  MainBookingsBookingIdIndexRoute: MainBookingsBookingIdIndexRoute,
   MainHotelsHotelIdIndexRoute: MainHotelsHotelIdIndexRoute,
-  MainPaymentPendingIndexRoute: MainPaymentPendingIndexRoute,
   MainHotelsHotelIdCheckoutIndexRoute: MainHotelsHotelIdCheckoutIndexRoute,
   MainHotelsHotelIdCheckoutRoomIdIndexRoute:
     MainHotelsHotelIdCheckoutRoomIdIndexRoute,

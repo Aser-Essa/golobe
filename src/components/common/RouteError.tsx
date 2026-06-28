@@ -24,17 +24,12 @@ export default function RouteError({ error, reset }: RouteErrorProps) {
   function handleRetry() {
     setRetrying(true);
     setTimeout(() => {
-      if (reset) {
-        reset();
-      } else {
-        navigate({
-          to: ".",
-          search: (prev) => prev,
-          replace: true,
-          reloadDocument: true,
-        });
-        window.location.reload();
-      }
+      navigate({
+        to: ".",
+        search: (prev) => prev,
+        replace: true,
+        reloadDocument: true,
+      });
       setRetrying(false);
     }, 400);
   }

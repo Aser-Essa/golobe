@@ -9,7 +9,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Suspense } from "react";
 import z from "zod";
 
-export const Route = createFileRoute("/_main/favourites/")({
+export const Route = createFileRoute("/_main/_protected/favourites/")({
   component: RouteComponent,
   validateSearch: z.object({
     favType: z.enum(["hotel", "flight"]).default("hotel"),

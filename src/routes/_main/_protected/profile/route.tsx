@@ -4,7 +4,7 @@ import ProfileHeader from "#/components/profile/ProfileHeader";
 import ProfileNavigation from "#/components/profile/profileNavigation";
 import { createFileRoute, Outlet } from "@tanstack/react-router";
 
-export const Route = createFileRoute("/_main/profile")({
+export const Route = createFileRoute("/_main/_protected/profile")({
   component: RouteComponent,
 });
 

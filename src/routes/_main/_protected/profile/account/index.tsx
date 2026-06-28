@@ -8,7 +8,7 @@ import { getFormattedUser } from "#/lib/utils/user";
 import { useUser } from "@clerk/tanstack-react-start";
 import { createFileRoute } from "@tanstack/react-router";
 
-export const Route = createFileRoute("/_main/profile/account/")({
+export const Route = createFileRoute("/_main/_protected/profile/account/")({
   component: RouteComponent,
 });
 

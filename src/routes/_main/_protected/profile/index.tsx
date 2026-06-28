@@ -1,6 +1,6 @@
 import { createFileRoute, redirect } from "@tanstack/react-router";
 
-export const Route = createFileRoute("/_main/profile/")({
+export const Route = createFileRoute("/_main/_protected/profile/")({
   beforeLoad: () => {
     throw redirect({ to: "/profile/account" });
   },

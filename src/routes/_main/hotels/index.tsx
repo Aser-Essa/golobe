@@ -24,7 +24,7 @@ export const Route = createFileRoute("/_main/hotels/")({
   loaderDeps: ({ search }) => search,
   beforeLoad: ({ search }) => {
     if (!search.destination || search.destination.trim().length === 0) {
-      throw redirect({ to: "/" });
+      // throw redirect({ to: "/" });
     }
   },
   loader: async ({ deps }) => {

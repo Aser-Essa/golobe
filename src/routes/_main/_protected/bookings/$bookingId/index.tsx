@@ -7,7 +7,7 @@ import { getBooking } from "#/server/bookings";
 import { createFileRoute } from "@tanstack/react-router";
 import TermsAndConditions from "#/components/booking/TermsAndConditions";
 
-export const Route = createFileRoute("/_main/bookings/$bookingId/")({
+export const Route = createFileRoute("/_main/_protected/bookings/$bookingId/")({
   component: RouteComponent,
   loader: async ({ params }) => {
     return await getBooking({ data: { bookingId: params.bookingId } });

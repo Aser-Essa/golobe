@@ -10,7 +10,9 @@ import {
 } from "@tanstack/react-router";
 import z from "zod";
 
-export const Route = createFileRoute("/_main/profile/tickets-bookings/")({
+export const Route = createFileRoute(
+  "/_main/_protected/profile/tickets-bookings/",
+)({
   component: RouteComponent,
   validateSearch: z.object({
     bookingType: z.enum(["stays", "flights"]).default("stays"),
@@ -27,7 +29,7 @@ function RouteComponent() {
   const navigate = useNavigate({ from: "/profile/tickets-bookings/" });
 
   const { bookingType } = useSearch({
-    from: "/_main/profile/tickets-bookings/",
+    from: "/_main/_protected/profile/tickets-bookings/",
   });
 
   return (

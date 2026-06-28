@@ -7,7 +7,7 @@ import { useEffect, useRef } from "react";
 import { toast } from "sonner";
 import { z } from "zod";
 
-export const Route = createFileRoute("/_main/payment/pending/")({
+export const Route = createFileRoute("/_main/_protected/payment/pending/")({
   component: RouteComponent,
   validateSearch: z.object({
     payment_intent: z.string().optional(),
@@ -16,11 +16,11 @@ export const Route = createFileRoute("/_main/payment/pending/")({
     const { userId } = await auth();
 
     if (!userId) {
-      throw redirect({ to: "/" });
+      // throw redirect({ to: "/" });
     }
 
     if (!search.payment_intent) {
-      throw redirect({ to: "/" });
+      // throw redirect({ to: "/" });
     }
   },
 });

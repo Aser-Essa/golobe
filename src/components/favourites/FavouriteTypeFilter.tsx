@@ -7,7 +7,7 @@ import { getUserFavourites } from "#/server/favourites";
 export default function FavouriteTypeFilter() {
   const navigate = useNavigate({ from: "/favourites/" });
   const { favType }: FilterSearchParams = useSearch({
-    from: "/_main/favourites/",
+    from: "/_main/_protected/favourites/",
   });
 
   const { data } = useSuspenseQuery({
