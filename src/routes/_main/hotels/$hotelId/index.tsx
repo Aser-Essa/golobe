@@ -25,6 +25,7 @@ import z from "zod";
 export const Route = createFileRoute("/_main/hotels/$hotelId/")({
   component: RouteComponent,
   validateSearch: filterSearchParamsSchema.extend({
+    destination: z.string().optional().default(""),
     reviews_page: z.coerce.number().int().min(1).catch(1).default(1),
   }),
   loaderDeps: ({ search }) => search,

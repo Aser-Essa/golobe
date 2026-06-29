@@ -14,6 +14,15 @@ import {
   Ban,
   Monitor,
   AirVent,
+  Building2,
+  House,
+  Building,
+  Trees,
+  BedSingle,
+  BadgeDollarSign,
+  ShieldCheck,
+  CircleHelp,
+  CalendarX2,
 } from "lucide-react";
 import type { FilterSearchParams } from "../types";
 import {
@@ -167,4 +176,27 @@ export const ratingTexts = [
   "Very Good",
   "Excellent",
   "Exceptional",
+];
+
+export const WHY_CHOOSE_US = [
+  {
+    title: "Best Price Guarantee",
+    description: "We guarantee the best prices for your stay.",
+    icon: BadgeDollarSign,
+  },
+  {
+    title: "Free Cancellation",
+    description: "Most stays offer free cancellation up to 24 hours.",
+    icon: CalendarX2,
+  },
+  {
+    title: "Safe & Secure",
+    description: "Your personal data and payments are 100% secure.",
+    icon: ShieldCheck,
+  },
+  {
+    title: "24/7 Support",
+    description: "Our support team is always here to help you.",
+    icon: CircleHelp,
+  },
 ];

@@ -1,3 +1,4 @@
+import { favouriteSchema } from "#/lib/schemas/favourite";
 import { supabase } from "#/lib/supabase";
 import { authFnMiddleware } from "#/middlewares/auth";
 import { createServerFn } from "@tanstack/react-start";
@@ -65,115 +66,63 @@ export const getUserFavourites = createServerFn({ method: "GET" })
       : getFlightFavourites(userId);
   });
 
-export const addToUserFavourites = createServerFn({ method: "POST" })
-  .middleware([authFnMiddleware])
-  .inputValidator(
-    z
-      .object({
-        hotelId: z.string().optional(),
-        flightId: z.string().optional(),
-      })
-      .refine((data) => data.hotelId || data.flightId, {
-        message: "Either hotelId or flightId is required",
-      }),
-  )
-  .handler(async ({ data, context: { userId } }) => {
-    const { error } = await supabase.from("favourites").insert({
-      user_id: userId,
-      hotel_id: data.hotelId,
-      flight_id: data.flightId,
-    });
+async function addFavourite({
+  hotelId,
+  flightId,
+  userId,
+}: {
+  hotelId?: string;
+  flightId?: string;
+  userId: string;
+}) {
+  if (!hotelId && !flightId) {
+    throw new Error("Hotel ID or Flight ID is required");
+  }
 
-    if (error) {
-      throw new Error(error.message);
-    }
+  const { error } = await supabase.from("favourites").insert({
+    user_id: userId,
+    hotel_id: hotelId,
+    flight_id: flightId,
   });
 
-export const deleteFromUserFavourites = createServerFn({ method: "POST" })
-  .middleware([authFnMiddleware])
-  .inputValidator(
-    z.object({
-      id: z.string(),
-    }),
-  )
-  .handler(async ({ data }) => {
-    const { error } = await supabase
-      .from("favourites")
-      .delete()
-      .eq("id", data.id);
+  if (error) {
+    throw new Error(error.message);
+  }
+}
 
-    if (error) {
-      throw new Error(error.message);
-    }
-  });
+async function deleteFavourite(id: string) {
+  const { error } = await supabase.from("favourites").delete().eq("id", id);
+
+  if (error) throw new Error(error.message);
+}
 
 export const toggleUserFavourites = createServerFn({ method: "POST" })
   .middleware([authFnMiddleware])
-  .inputValidator(
-    z
-      .object({
-        hotelId: z.string().optional(),
-        flightId: z.string().optional(),
-      })
-      .refine((data) => data.hotelId || data.flightId, {
-        message: "Either hotelId or flightId is required",
-      }),
-  )
+  .inputValidator(favouriteSchema)
   .handler(async ({ data, context: { userId } }) => {
     const column = data.hotelId ? "hotel_id" : "flight_id";
     const value = data.hotelId ?? data.flightId;
 
-    const { data: existing } = await supabase
+    const { data: existing, error } = await supabase
       .from("favourites")
       .select("id")
       .eq("user_id", userId)
       .eq(column, value!)
       .maybeSingle();
 
-    if (existing) {
-      await deleteFromUserFavourites({ data: { id: existing.id } });
-      return { isFavourite: false };
-    } else {
-      await addToUserFavourites({
-        data: {
-          hotelId: data.hotelId,
-          flightId: data.flightId,
-        },
-      });
-      return { isFavourite: true };
-    }
-  });
-
-export const isUserFavourites = createServerFn({ method: "GET" })
-  .middleware([authFnMiddleware])
-  .inputValidator(
-    z
-      .object({
-        hotelId: z.string().optional(),
-        flightId: z.string().optional(),
-      })
-      .refine((data) => data.hotelId || data.flightId, {
-        message: "Either hotelId or flightId is required",
-      }),
-  )
-  .handler(async ({ data, context: { userId } }) => {
-    const column = data.hotelId ? "hotel_id" : "flight_id";
-    const value = data.hotelId ?? data.flightId;
-
-    if (!userId) {
-      throw new Error("User ID is required");
-    }
-
-    const { data: existing, error } = await supabase
-      .from("favourites")
-      .select("id")
-      .eq("user_id", userId)
-      .eq(column, value)
-      .maybeSingle();
-
     if (error) {
       throw new Error(error.message);
     }
 
-    return { isFavourite: !!existing?.id };
+    if (existing) {
+      await deleteFavourite(existing.id);
+      return { isFavourite: false };
+    } else {
+      await addFavourite({
+        hotelId: data.hotelId,
+        flightId: data.flightId,
+        userId: userId,
+      });
+      return { isFavourite: true };
+    }
   });

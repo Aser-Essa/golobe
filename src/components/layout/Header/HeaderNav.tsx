@@ -3,7 +3,7 @@ import { BedDouble } from "lucide-react";
 
 export default function HeaderNav() {
   return (
-    <nav className="hidden gap-2 md:flex">
+    <nav className="hidden flex-1 gap-2 md:flex">
       <Link to="/" className="relative flex items-center gap-1">
         <BedDouble />
         <p className="text-sm font-semibold">Find Stays</p>

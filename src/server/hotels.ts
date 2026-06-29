@@ -233,3 +233,50 @@ export const getSearchDestinations = createServerFn({ method: "GET" })
       return searchDestinations;
     },
   );
+
+export const getPopularDestinations = createServerFn({
+  method: "GET",
+})
+  .inputValidator(
+    z.object({
+      limit: z.number().default(6),
+    }),
+  )
+  .handler(async ({ data }) => {
+    const { data: destinations, error } = await supabase
+      .from("popular_destinations")
+      .select("*")
+      .limit(data.limit);
+
+    if (error) {
+      throw new Error(error.message);
+    }
+
+    return destinations;
+  });
+
+export const getFeaturedHotels = createServerFn({ method: "GET" })
+  .inputValidator(
+    z.object({
+      limit: z.number().default(8),
+    }),
+  )
+  .handler(async ({ data: { limit } }) => {
+    const { data: hotels } = await supabase
+      .from("hotels")
+      .select(
+        `*,  
+        rooms!inner(*,bookings(*)),
+        amenities:hotel_amenity_map!inner(
+          amenities!inner(*)
+        ),
+        hotel_images:hotel_images(*)
+        `,
+      )
+      .eq("is_active", true)
+      .order("avg_rating", { ascending: false })
+      .order("review_count ", { ascending: false })
+      .limit(limit);
+
+    return hotels;
+  });

@@ -12,10 +12,10 @@ export default function HotelCoverImage({
 
   return (
     <div className="relative min-w-60 flex-1">
-      <div className="h-full w-full overflow-hidden max-h-74 md:max-h-none">
+      <div className="h-full max-h-74 w-full overflow-hidden md:max-h-none">
         <img
           src={coverImageUrl}
-          className="h-full w-full md:object-cover object-contain transition-transform duration-300 hover:scale-110"
+          className="h-full w-full object-cover transition-transform duration-300 hover:scale-110"
         />
       </div>
       <div className="absolute top-2 right-2 flex h-8 items-center justify-center rounded-[8px] bg-white/50 px-2 py-1 text-xs font-medium backdrop-blur-xs">

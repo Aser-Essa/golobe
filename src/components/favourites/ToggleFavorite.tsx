@@ -1,60 +1,78 @@
 import { cn } from "#/lib/utils";
-import { isUserFavourites, toggleUserFavourites } from "#/server/favourites";
+import { toggleUserFavourites } from "#/server/favourites";
+import { useUser } from "@clerk/tanstack-react-start";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useNavigate } from "@tanstack/react-router";
 import { Heart } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Button } from "../ui/button";
-import { useUser } from "@clerk/tanstack-react-start";
-import { useNavigate, useRouter } from "@tanstack/react-router";
 
 type ToggleFavoriteProps = {
   hotelId?: string;
   flightId?: string;
+  initialFavourite?: boolean;
 };
 
 export default function ToggleFavorite({
   hotelId,
+  initialFavourite,
   flightId,
 }: ToggleFavoriteProps) {
   const queryClient = useQueryClient();
-  const [isFavouriteState, setIsFavouriteState] = useState(false);
-  const { isSignedIn } = useUser();
   const navigate = useNavigate();
+  const { isSignedIn } = useUser();
+  const [isFavourite, setIsFavourite] = useState(initialFavourite ?? false);
 
-  const { isPending, mutate } = useMutation(
-    {
-      mutationFn: toggleUserFavourites,
-      onSuccess: () => {},
+  const { mutate, isPending } = useMutation({
+    mutationFn: toggleUserFavourites,
+
+    onMutate: async () => {
+      setIsFavourite((prev) => !prev);
     },
-    queryClient,
-  );
+
+    onError: () => {
+      setIsFavourite((prev) => !prev);
+    },
+
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({
+        queryKey: ["favourites"],
+      });
+    },
+  });
 
   function handleClick() {
     if (!isSignedIn) {
       navigate({ to: "/sign-in" });
+      return;
     }
+
     if (!hotelId && !flightId) return;
-    const newValue = !isFavouriteState;
-    setIsFavouriteState(newValue);
-    mutate({ data: { hotelId, flightId } });
+
+    mutate({
+      data: {
+        hotelId,
+        flightId,
+      },
+    });
   }
 
   useEffect(() => {
-    isUserFavourites({ data: { hotelId, flightId } }).then(({ isFavourite }) =>
-      setIsFavouriteState(isFavourite),
-    );
-  }, [hotelId, flightId]);
+    setIsFavourite(initialFavourite ?? false);
+  }, [initialFavourite]);
 
-  if (!isSignedIn) return;
+  if (!isSignedIn) return null;
 
   return (
     <Button
-      className="aspect-square size-12 h-full bg-transparent"
       variant="outline"
+      className="aspect-square size-12 bg-transparent"
       onClick={handleClick}
       disabled={isPending}
     >
-      <Heart className={cn("size-5", isFavouriteState && "fill-black")} />
+      <Heart
+        className={cn("size-5 transition-colors", isFavourite && "fill-black")}
+      />
     </Button>
   );
 }

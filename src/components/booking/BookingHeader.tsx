@@ -5,7 +5,7 @@ import DownloadTicket from "./BookingTicket/DownloadTicket";
 
 export default function BookingHeader({ booking }: { booking: Booking }) {
   return (
-    <div className="my-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
+    <div className="md:my-8 my-6 flex flex-col items-center justify-center gap-4 sm:flex-row">
       <div className="w-full space-y-4">
         <h3 className="text-2xl leading-8 font-bold">{booking.hotel.name}</h3>
         <div className="flex items-center gap-0.5">

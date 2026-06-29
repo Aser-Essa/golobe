@@ -691,6 +691,16 @@ export type Database = {
         }
         Relationships: []
       }
+      popular_destinations: {
+        Row: {
+          avg_rating: number | null
+          city: string | null
+          country: string | null
+          image: string | null
+          stays: number | null
+        }
+        Relationships: []
+      }
       user_profiles: {
         Row: {
           avatar_url: string | null

@@ -33,7 +33,7 @@ export const Route = createRootRoute({
 const queryClient = new QueryClient();
 function RootDocument({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en" >
       <head>
         <HeadContent />
       </head>

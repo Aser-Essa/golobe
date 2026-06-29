@@ -258,5 +258,3 @@ export function hasBookedDayInRange(
 
   return false;
 }
-
-

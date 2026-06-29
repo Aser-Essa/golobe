@@ -1,37 +1,67 @@
 import type { HotelType } from "#/lib/types";
+import { cn } from "#/lib/utils";
 import { Coffee, MapPin, Star } from "lucide-react";
 import RatingSummary from "../detail/RatingSummary";
 
-export default function HotelCardDetails({ hotel }: { hotel: HotelType }) {
+export default function HotelCardDetails({
+  hotel,
+  orientation,
+}: {
+  hotel: HotelType;
+  orientation?: "vertical" | "horizontal";
+}) {
   return (
     <div className="space-y-4">
-      <p className="text-lg font-bold md:text-xl">{hotel.name}</p>
+      <p
+        className={cn(
+          "font-trade-gothic line-clamp-2 text-lg font-bold text-ellipsis md:text-xl",
+          orientation === "vertical" && "text-lg!",
+        )}
+      >
+        {hotel.name}
+      </p>
+
       <div className="space-y-3">
-        <div className="flex items-center gap-0.5">
+        <div
+          className={cn(
+            "flex items-start gap-0.5 md:items-center",
+            orientation === "vertical" && "items-start!",
+          )}
+        >
           <MapPin className="text-foreground size-5" />
-          <p className="text-foreground/75 text-xs font-medium">
+          <p className="text-foreground/75 line-clamp-1 text-xs font-medium text-ellipsis">
             {hotel.address}
           </p>
         </div>
-        <div className="flex w-fit flex-wrap items-center justify-between gap-x-8 gap-y-3">
-          <div className="flex items-center gap-1">
-            <div className="flex items-center">
-              {Array.from({ length: hotel.star_rating || 0 }).map((_, idx) => (
-                <Star key={idx} className="fill-salmon text-salmon size-4" />
-              ))}
-            </div>
-            <p className="text-foreground text-xs font-medium">
-              {hotel.star_rating} Star Hotel
-            </p>
-          </div>
 
-          <div className="flex items-center gap-1">
-            <Coffee className="text-foreground size-4" />
-            <p className="text-xs font-medium">
-              <span className="font-bold">{hotel.amenity_count}</span> Amenities
-            </p>
+        {orientation === "horizontal" && (
+          <div className="flex w-fit flex-wrap items-center justify-between gap-x-8 gap-y-3">
+            <div className="flex items-center gap-1">
+              <div className="flex items-center">
+                {Array.from({ length: hotel.star_rating || 0 }).map(
+                  (_, idx) => (
+                    <Star
+                      key={idx}
+                      className="fill-salmon text-salmon size-4"
+                    />
+                  ),
+                )}
+              </div>
+              <p className="text-foreground text-xs font-medium">
+                {hotel.star_rating} Star Hotel
+              </p>
+            </div>
+
+            <div className="flex items-center gap-1">
+              <Coffee className="text-foreground size-4" />
+              <p className="text-xs font-medium">
+                <span className="font-bold">{hotel.amenity_count}</span>{" "}
+                Amenities
+              </p>
+            </div>
           </div>
-        </div>
+        )}
+
         <RatingSummary
           avg_rating={hotel.avg_rating}
           review_count={hotel.review_count}
