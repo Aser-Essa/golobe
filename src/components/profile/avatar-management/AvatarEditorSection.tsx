@@ -35,8 +35,7 @@ export default function AvatarEditorSection({
   const timeout = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   function handlePositionChange() {
-    if (!timeout.current) return;
-    clearTimeout(timeout.current);
+    clearTimeout(timeout.current!);
 
     timeout.current = setTimeout(() => {
       const canvas = editor.ref.current?.getImage();
