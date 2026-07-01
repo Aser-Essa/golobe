@@ -14,7 +14,7 @@ import {
   DropzoneEmptyState,
 } from "#/components/common/DropZone";
 import { Button } from "#/components/ui/button";
-import { setUserBannerMetadata } from "#/server/user/user";
+import { setUserBannerMetadata } from "#/server/user";
 
 export default function UploadBanner({
   setIsChange,

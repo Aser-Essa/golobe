@@ -1,5 +1,5 @@
 import { Button } from "#/components/ui/button";
-import { removeClerkEmail } from "#/server/user/user";
+import { removeClerkEmail } from "#/server/user";
 import { useUser } from "@clerk/tanstack-react-start";
 import type { EmailAddressResource } from "@clerk/types";
 import { CircleX } from "lucide-react";

@@ -4,7 +4,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "#/components/ui/dialog";
-import { updateUserAvatar } from "#/server/user/user";
+import { updateUserAvatar } from "#/server/user";
 import { useUser } from "@clerk/tanstack-react-start";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";

@@ -2,7 +2,7 @@
 import { useUser } from "@clerk/tanstack-react-start";
 import { Loader2, Trash } from "lucide-react";
 import { Button } from "../../ui/button";
-import { deleteUserBanner } from "#/server/user/user";
+import { deleteUserBanner } from "#/server/user";
 import { useState } from "react";
 
 export default function DeleteBanner() {

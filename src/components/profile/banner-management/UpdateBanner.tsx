@@ -5,7 +5,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "#/components/ui/dialog";
-import { updateUserBanner } from "#/server/user/user";
+import { updateUserBanner } from "#/server/user";
 import { useUser } from "@clerk/tanstack-react-start";
 import { useEffect, useState } from "react";
 import { useAvatarEditor } from "react-avatar-editor";

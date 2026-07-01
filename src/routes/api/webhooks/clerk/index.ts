@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { verifyWebhook } from "@clerk/backend/webhooks";
 import { formatUserName, getFormattedUserJson } from "#/lib/utils/user";
 import { getOrCreateStripeCustomerCore } from "#/server/stripe-core";
-import { createUserDB, deleteUserDB, updateUserDB } from "#/server/user/user";
+import { createUserDB, deleteUserDB, updateUserDB } from "#/server/user";
 
 export const Route = createFileRoute("/api/webhooks/clerk/")({
   server: {

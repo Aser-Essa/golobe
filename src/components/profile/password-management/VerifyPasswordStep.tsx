@@ -10,7 +10,7 @@ import {
 } from "#/components/ui/dialog";
 import { Separator } from "#/components/ui/separator";
 import { passwordSchema } from "#/lib/schemas/user";
-import { verifyPassword } from "#/server/user/user";
+import { verifyPassword } from "#/server/user";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";

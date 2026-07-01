@@ -6,7 +6,7 @@ import type { User } from "@clerk/tanstack-react-start/server";
 import { createServerFn } from "@tanstack/react-start";
 import z from "zod";
 import { getOrCreateStripeCustomerCore } from "./stripe-core";
-import { getUser } from "./user/user";
+import { getUser } from "./user";
 
 export const getOrCreateStripeCustomer = createServerFn({ method: "POST" })
   .middleware([authFnMiddleware])

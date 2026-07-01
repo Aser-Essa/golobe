@@ -14,7 +14,7 @@ import {
   DropzoneEmptyState,
 } from "#/components/common/DropZone";
 import { Button } from "#/components/ui/button";
-import { setUserAvatarMetadata } from "#/server/user/user";
+import { setUserAvatarMetadata } from "#/server/user";
 
 export default function UploadAvatar({
   setIsChange,
