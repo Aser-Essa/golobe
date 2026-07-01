@@ -52,7 +52,7 @@ export default function UpdateAvatar({
     const dataUrl = canvas?.toDataURL("image/png");
     if (!dataUrl) return;
     setImage(dataUrl);
-  }, [userAvatar, scale, rotate]);
+  }, [userAvatar, scale, rotate, image]);
 
   return (
     <DialogContent className="w-[90vw] gap-10 sm:max-w-187.5 lg:w-187.5">
