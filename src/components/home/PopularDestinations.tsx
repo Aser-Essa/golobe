@@ -1,6 +1,5 @@
 import type { Tables } from "#/lib/types/supabase";
 import { Await } from "@tanstack/react-router";
-import PopularDestinationCard from "./popularDestinationCard";
 import {
   Carousel,
   CarouselContent,
@@ -8,6 +7,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "#/components/ui/carousel";
+import PopularDestinationCard from "./PopularDestinationCard";
 
 type popularDestinationType = Tables<"popular_destinations">;
 

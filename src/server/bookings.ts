@@ -5,6 +5,12 @@ import { authFnMiddleware } from "#/middlewares/auth";
 import { createServerFn } from "@tanstack/react-start";
 import z from "zod";
 
+const BOOKING_SELECT_WITH_ROOM = `
+        *,
+        hotel:hotels(name,address,logo_url,country,hotel_images:hotel_images(url,is_cover)),
+        room:rooms(*)
+      `;
+
 export async function insertBookingIntoDB({
   bookingData,
 }: {
@@ -55,9 +61,7 @@ export const getUserBookings = createServerFn({ method: "GET" })
   .handler(async ({ context: { userId } }) => {
     const { data, error } = await supabase
       .from("bookings")
-      .select(
-        "*,hotel:hotels(name,address,logo_url,country,hotel_images:hotel_images(url,is_cover)),room:rooms(*)",
-      )
+      .select(BOOKING_SELECT_WITH_ROOM)
       .eq("user_id", userId);
 
     if (error) throw new Error(error.message);
@@ -75,9 +79,7 @@ export const getBooking = createServerFn({ method: "GET" })
   .handler(async ({ data: { bookingId } }) => {
     const { data, error } = await supabase
       .from("bookings")
-      .select(
-        "*,hotel:hotels(name,address,logo_url,country,hotel_images:hotel_images(url,is_cover)),room:rooms(*)",
-      )
+      .select(BOOKING_SELECT_WITH_ROOM)
       .eq("id", bookingId)
       .single();
 
@@ -85,28 +87,3 @@ export const getBooking = createServerFn({ method: "GET" })
 
     return data;
   });
-
-// export const checkHotelBookedBefore = createServerFn({ method: "GET" })
-//   .inputValidator(
-//     z.object({
-//       hotelId: z.string(),
-//     }),
-//   )
-//   .handler(async ({ data: { hotelId } }) => {
-//     const { userId } = await auth();
-
-//     if (!userId) return;
-
-//     const { data, error } = await supabase
-//       .from("bookings")
-//       .select("id")
-//       .eq("hotel_id", hotelId)
-//       .eq("user_id", userId)
-//       .order("created_at", { ascending: false })
-//       .limit(1)
-//       .maybeSingle();
-
-//     if (error) throw new Error(error.message);
-
-//     return { isBooked: !!data?.id, bookingId: data?.id };
-//   });

@@ -1,9 +1,9 @@
 import { Button } from "#/components/ui/button";
 import { DialogClose, DialogFooter } from "#/components/ui/dialog";
 import { Textarea } from "#/components/ui/textarea";
-import { reviewFormSchema } from "#/lib/schemas/review";
+import { reviewFormSchema } from "#/lib/schemas";
 import type { HotelType, reviewFormValues } from "#/lib/types";
-import { createReview } from "#/server/reviews";
+import { createReview } from "#/server/reviews/post";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "@tanstack/react-router";
 import { Controller, useForm } from "react-hook-form";

@@ -1,11 +1,7 @@
-import {
-  insertReviewDBSchema,
-  updateReviewDBSchema,
-} from "#/lib/schemas/review";
+import { insertReviewDBSchema, updateReviewDBSchema } from "#/lib/schemas";
 import { supabase } from "#/lib/supabase";
 import { authFnMiddleware } from "#/middlewares/auth";
 import { createServerFn } from "@tanstack/react-start";
-
 
 export const createReview = createServerFn({ method: "POST" })
   .middleware([authFnMiddleware])

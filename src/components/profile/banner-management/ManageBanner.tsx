@@ -9,6 +9,8 @@ export default function ManageBanner() {
   const [isChange, setIsChange] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
 
+  
+
   return (
     <>
       <Dialog open={isOpen} onOpenChange={setIsOpen}>

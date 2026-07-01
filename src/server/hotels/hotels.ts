@@ -1,76 +1,23 @@
-import { HOTELS_PER_PAGE } from "#/lib/constants";
 import { filterSearchParamsSchema } from "#/lib/schemas/search";
 import { supabase } from "#/lib/supabase";
 import type { searchDestinationsType } from "#/lib/types";
-import { getTypePlacesCount, sanitizeString } from "#/lib/utils";
-import {
-  filterByAmenities,
-  filterByAvailableRooms,
-  filterByFreebies,
-  filterByRoomsGuests,
-} from "#/lib/utils/filters";
-import { sortByPrice } from "#/lib/utils/sortHotels";
+import { sanitizeString, sortByPrice } from "#/lib/utils";
 import { createServerFn } from "@tanstack/react-start";
 import z from "zod";
+import {
+  applyHotelsFilters,
+  buildHotelsQuery,
+  getTypePlaceCounts,
+  HOTEL_DETAILS_SELECT,
+  paginateHotels,
+} from "./hotels.helpers";
 
 export const getHotels = createServerFn({ method: "GET" })
   .inputValidator(filterSearchParamsSchema)
   .handler(async ({ data }) => {
-    const {
-      destination,
-      rating,
-      hotelType,
-      minPrice,
-      maxPrice,
-      amenities,
-      freebies,
-      checkIn,
-      checkOut,
-      rooms,
-      guests,
-      sortBy,
-      hotel_page,
-    } = data;
+    const { hotelType, sortBy, hotel_page } = data;
 
-    let query = supabase
-      .from("hotels")
-      .select(
-        `*,  
-        rooms!inner(*,bookings(*)),
-        amenities:hotel_amenity_map!inner(
-          amenities!inner(*)
-        ),
-        hotel_images:hotel_images(*)
-        `,
-      )
-      .eq("is_active", true);
-
-    const d = sanitizeString(destination);
-    if (d.length) {
-      const terms = d.split(" ").filter(Boolean);
-
-      for (const term of terms) {
-        query = query.or(
-          `city.ilike.%${term}%,country.ilike.%${term}%,address.ilike.%${term}%,name.ilike.%${term}%`,
-        );
-      }
-    }
-
-    if (rating) {
-      query = query.gte("star_rating", rating);
-    }
-
-    if (minPrice || maxPrice) {
-      query = query.gte("rooms.price_per_night", minPrice);
-      query = query.lte("rooms.price_per_night", maxPrice);
-    }
-
-    if (sortBy && !sortBy.includes("price")) {
-      const [column, order] = sortBy.split("-");
-      if (column && order) {
-        query = query.order(column, { ascending: order === "asc" });
-      }
-    }
+    const query = buildHotelsQuery(data);
 
     const { data: hotelsData, error } = await query;
 
@@ -78,51 +25,10 @@ export const getHotels = createServerFn({ method: "GET" })
       throw new Error(error.message);
     }
 
-    let filteredData = hotelsData;
+    let filteredData = applyHotelsFilters(hotelsData, data);
 
-    if (amenities?.length) {
-      filteredData = filterByAmenities({
-        data: filteredData,
-        amenities,
-      });
-    }
-
-    if (freebies?.length) {
-      filteredData = filterByFreebies({
-        data: filteredData,
-        freebies,
-      });
-    }
-
-    if (checkIn && checkOut) {
-      filteredData = filterByAvailableRooms({
-        data: filteredData,
-        checkIn,
-        checkOut,
-      });
-    }
-
-    if (rooms && guests) {
-      filteredData = filterByRoomsGuests({
-        data: filteredData,
-        rooms,
-        guests,
-      });
-    }
-
-    const hotelsCount = getTypePlacesCount({
-      hotels: filteredData,
-      type: "hotel",
-    });
-
-    const motelsCount = getTypePlacesCount({
-      hotels: filteredData,
-      type: "motel",
-    });
-
-    const resortsCount = getTypePlacesCount({
-      hotels: filteredData,
-      type: "resort",
+    const typePlaceCounts = getTypePlaceCounts({
+      filteredData,
     });
 
     filteredData = filteredData.filter(
@@ -137,28 +43,23 @@ export const getHotels = createServerFn({ method: "GET" })
       });
     }
 
-    const totalPages = Math.ceil(filteredData.length / HOTELS_PER_PAGE);
-
-    const safePage = Math.max(1, Math.min(hotel_page, totalPages));
-
-    const from = (safePage - 1) * HOTELS_PER_PAGE;
-    const to = safePage * HOTELS_PER_PAGE;
-
-    const safeTo = Math.min(to, filteredData.length);
-
-    const paginatedData = filteredData.slice(from, safeTo);
+    const {
+      data: paginatedData,
+      from,
+      to,
+      totalPages,
+    } = paginateHotels({
+      filteredData,
+      hotel_page,
+    });
 
     return {
       hotels: paginatedData,
       totalLength: filteredData.length,
       totalPages,
       from: from + 1,
-      to: safeTo,
-      typePlaceCounts: {
-        hotel: hotelsCount,
-        motel: motelsCount,
-        resort: resortsCount,
-      },
+      to,
+      typePlaceCounts,
     };
   });
 
@@ -264,15 +165,7 @@ export const getFeaturedHotels = createServerFn({ method: "GET" })
   .handler(async ({ data: { limit } }) => {
     const { data: hotels } = await supabase
       .from("hotels")
-      .select(
-        `*,  
-        rooms!inner(*,bookings(*)),
-        amenities:hotel_amenity_map!inner(
-          amenities!inner(*)
-        ),
-        hotel_images:hotel_images(*)
-        `,
-      )
+      .select(HOTEL_DETAILS_SELECT)
       .eq("is_active", true)
       .order("avg_rating", { ascending: false })
       .order("review_count ", { ascending: false })

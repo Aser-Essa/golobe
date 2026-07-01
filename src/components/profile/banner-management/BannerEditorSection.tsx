@@ -66,6 +66,7 @@ export default function BannerEditorSection({
             width: "100%",
             borderRadius: "12px",
             opacity: isBannerLoading ? 0 : 1,
+            objectFit: "cover",
           }}
           onLoadSuccess={() => setBannerLoading(false)}
         />

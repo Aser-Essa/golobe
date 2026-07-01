@@ -12,13 +12,13 @@ import { Separator } from "#/components/ui/separator";
 import { filterSearchParamsSchema } from "#/lib/schemas";
 import type { FilterSearchParams } from "#/lib/types";
 import { mapSearchParamsToHotelWidget } from "#/lib/utils";
-import { getHotel } from "#/server/hotels";
+import { getHotel } from "#/server/hotels/hotels";
 import {
   getMyAddedReviewsServer,
   getReviews,
   getReviewStats,
   getReviewsTotalPages,
-} from "#/server/reviews/Get";
+} from "#/server/reviews/get";
 import { createFileRoute, redirect } from "@tanstack/react-router";
 import z from "zod";
 

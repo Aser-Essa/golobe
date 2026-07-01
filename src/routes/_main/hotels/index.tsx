@@ -14,7 +14,7 @@ import { Button } from "#/components/ui/button";
 import { Separator } from "#/components/ui/separator";
 import { filterSearchParamsSchema } from "#/lib/schemas/search";
 import { mapSearchParamsToHotelWidget } from "#/lib/utils";
-import { getFilterOptions, getHotels } from "#/server/hotels";
+import { getFilterOptions, getHotels } from "#/server/hotels/hotels";
 import { Await, createFileRoute, redirect } from "@tanstack/react-router";
 import { Search } from "lucide-react";
 

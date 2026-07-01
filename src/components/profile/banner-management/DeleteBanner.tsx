@@ -2,7 +2,7 @@
 import { useUser } from "@clerk/tanstack-react-start";
 import { Loader2, Trash } from "lucide-react";
 import { Button } from "../../ui/button";
-import { deleteUserBanner } from "#/server/user";
+import { deleteUserBanner } from "#/server/user/user";
 import { useState } from "react";
 
 export default function DeleteBanner() {
@@ -30,7 +30,7 @@ export default function DeleteBanner() {
       ) : (
         <>
           <Trash />
-          <span>Delete Banner</span>
+          <span className="hidden md:inline-block">Delete Banner</span>
         </>
       )}
     </Button>

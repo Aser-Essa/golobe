@@ -5,7 +5,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "#/components/ui/dialog";
-import { updateUserBanner } from "#/server/user";
+import { updateUserBanner } from "#/server/user/user";
 import { useUser } from "@clerk/tanstack-react-start";
 import { useEffect, useState } from "react";
 import { useAvatarEditor } from "react-avatar-editor";
@@ -40,7 +40,10 @@ export default function UpdateAvatar({
   async function handleSave() {
     if (!userId || !image) return;
     setIsLoading(true);
+    console.log("first");
     await updateUserBanner({ data: { dataUrl: image } });
+    console.log("first");
+
     await user.reload();
     setIsLoading(false);
     toast.success("Banner updated successfully");

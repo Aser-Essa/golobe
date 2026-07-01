@@ -6,7 +6,10 @@ import Container from "#/components/layout/Container";
 import Herosection from "#/components/layout/Herosection";
 import type { FilterSearchParams } from "#/lib/types";
 import { mapSearchParamsToHotelWidget } from "#/lib/utils";
-import { getFeaturedHotels, getPopularDestinations } from "#/server/hotels";
+import {
+  getFeaturedHotels,
+  getPopularDestinations,
+} from "#/server/hotels/hotels";
 import { createFileRoute } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/_main/")({
@@ -34,7 +37,7 @@ function Home() {
   return (
     <div className="mt-22">
       <Herosection />
-      <Container className="mt-0 md:space-y-14 space-y-10">
+      <Container className="mt-0 space-y-10 md:space-y-14">
         <HotelSearchWidget searchParams={normalizedSearchParams} />
         <PopularDestinations
           popularDestinationsPromise={popularDestinationsPromise}

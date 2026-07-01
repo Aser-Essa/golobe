@@ -3,7 +3,7 @@ import { Separator } from "#/components/ui/separator";
 import { MAX_DESTINATION_OPTIONS } from "#/lib/constants";
 import type { searchDestinationsType } from "#/lib/types";
 import { sanitizeString } from "#/lib/utils";
-import { getSearchDestinations } from "#/server/hotels";
+import { getSearchDestinations } from "#/server/hotels/hotels";
 import { Link } from "@tanstack/react-router";
 import { BedDoubleIcon } from "lucide-react";
 import { Fragment, useEffect, useRef, useState } from "react";

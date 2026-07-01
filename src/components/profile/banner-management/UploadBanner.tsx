@@ -14,7 +14,7 @@ import {
   DropzoneEmptyState,
 } from "#/components/common/DropZone";
 import { Button } from "#/components/ui/button";
-import { setUserBannerMetadata } from "#/server/user";
+import { setUserBannerMetadata } from "#/server/user/user";
 
 export default function UploadBanner({
   setIsChange,
@@ -23,6 +23,8 @@ export default function UploadBanner({
 }) {
   const { user } = useUser();
   const userId = user?.id;
+
+  const isBannerExist = user?.publicMetadata.originalBannerUrl;
 
   const props = useSupabaseUpload({
     bucketName: "banners",
@@ -60,15 +62,20 @@ export default function UploadBanner({
           <DropzoneContent />
         </Dropzone>
       </div>
-      <DialogClose asChild>
-        <Button
-          onClick={() => setIsChange(false)}
-          variant={"outline"}
-          className="bg-primary/25"
-        >
-          Cancel
-        </Button>
-      </DialogClose>
+
+      {isBannerExist ? (
+        <Button onClick={() => setIsChange(false)}>Cancel</Button>
+      ) : (
+        <DialogClose asChild>
+          <Button
+            onClick={() => setIsChange(false)}
+            variant={"outline"}
+            className="bg-primary/25"
+          >
+            Cancel
+          </Button>
+        </DialogClose>
+      )}
     </DialogContent>
   );
 }

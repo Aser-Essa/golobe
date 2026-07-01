@@ -11,7 +11,7 @@ import InputField from "#/components/common/InputField";
 import { Button } from "#/components/ui/button";
 import { Separator } from "#/components/ui/separator";
 import { confirmNewPasswordSchema } from "#/lib/schemas/user";
-import { updatePassword } from "#/server/user";
+import { updatePassword } from "#/server/user/user";
 import { useUser } from "@clerk/tanstack-react-start";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";

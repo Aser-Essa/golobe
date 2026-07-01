@@ -1,4 +1,4 @@
-import { deleteUserAvatar } from "#/server/user";
+import { deleteUserAvatar } from "#/server/user/user";
 import { useUser } from "@clerk/tanstack-react-start";
 import { Trash } from "lucide-react";
 import { Button } from "../../ui/button";
