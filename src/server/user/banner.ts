@@ -11,8 +11,8 @@ export const setUserBannerMetadata = createServerFn({ method: "POST" })
     try {
       await clerkClient().users.updateUserMetadata(userId, {
         publicMetadata: {
-          originalBannerUrl: `${SupabaseStorageBannerPath}/${userId}/banner.png?t=${Date.now()}`,
-          bannerUrl: `${SupabaseStorageBannerPath}/${userId}/banner.png?t=${Date.now()}`,
+          originalBannerUrl: `${SupabaseStorageBannerPath}/${userId}/banner.jpeg?t=${Date.now()}`,
+          bannerUrl: `${SupabaseStorageBannerPath}/${userId}/banner.jpeg?t=${Date.now()}`,
         },
       });
     } catch (error: any) {
@@ -30,10 +30,12 @@ export const updateUserBanner = createServerFn({ method: "POST" })
   )
   .handler(async ({ data: { dataUrl }, context: { userId } }) => {
     try {
-      const [, base64] = dataUrl.split(",");
+      const [header, base64] = dataUrl.split(",");
+      const mimeType = header.match(/data:(.*?);base64/)?.[1] ?? "image/jpeg";
+      const ext = mimeType.split("/")[1] ?? "jpeg";
       const buffer = Buffer.from(base64, "base64");
-      const file = new File([buffer], `cropped-banner.png`, {
-        type: "image/png",
+      const file = new File([buffer], `cropped-banner.${ext}`, {
+        type: mimeType,
       });
 
       const { error } = await supabase.storage
@@ -63,8 +65,8 @@ export const deleteUserBanner = createServerFn({ method: "POST" })
   .handler(async ({ context: { userId } }) => {
     try {
       const imagePaths = [
-        `${userId}/banner.png`,
-        `${userId}/cropped-banner.png`,
+        `${userId}/banner.jpeg`,
+        `${userId}/cropped-banner.jpeg`,
       ];
 
       const { error } = await supabase.storage

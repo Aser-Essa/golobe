@@ -52,8 +52,8 @@ export default function UpdateAvatar({
 
   useEffect(() => {
     if (!userBanner) return;
-    const canvas = editor.ref.current?.getImage();
-    const dataUrl = canvas?.toDataURL("image/png", 0.7);
+    const canvas = editor.ref.current?.getImageScaledToCanvas();
+    const dataUrl = canvas?.toDataURL("image/jpeg ", 0.7);
     if (!dataUrl) return;
     setImage(dataUrl);
   }, [userBanner, scale, rotate]);
