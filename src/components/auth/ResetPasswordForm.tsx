@@ -45,7 +45,7 @@ export default function ResetPasswordForm() {
           <ChevronLeft />
           <p>Back to login</p>
         </Link>
-        <h3 className="text-[40px] leading-none font-bold">Set a password</h3>
+        <h3 className="text-[40px] leading-none font-bold font-trade-gothic">Set a password</h3>
         <span className="text-[#546869]">
           Your previous password has been reset. Please set a new password for
           your account.

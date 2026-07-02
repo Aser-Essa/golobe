@@ -48,7 +48,7 @@ export default function SignInForm({ signIn, fetchStatus }: UseSignInProps) {
   return (
     <div>
       <div className="mb-12 space-y-4">
-        <h3 className="text-[40px] leading-none font-bold">Login</h3>
+        <h3 className="text-[40px] leading-none font-bold font-trade-gothic">Login</h3>
         <span className="text-[#546869]">
           Login to access your Golobe account
         </span>

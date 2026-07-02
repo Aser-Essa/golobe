@@ -17,7 +17,7 @@ function RouteComponent() {
 
   return (
     <div className="space-y-4">
-      <h3 className="text-[28px] font-bold sm:text-[32px]">Payment methods</h3>
+      <h3 className="text-[28px] font-bold sm:text-[32px] font-trade-gothic">Payment methods</h3>
       <div className="box-shadow-sm flex flex-wrap items-center gap-6 rounded-[16px] bg-white p-4 md:px-6 md:py-8">
         <Await
           promise={cardsPromise}

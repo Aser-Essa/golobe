@@ -40,7 +40,7 @@ export default function RoomSummaryCard({ room, hotel }: RoomSummaryCardProps) {
   return (
     <div className="box-shadow-sm rounded-[12px] bg-white p-4 sm:px-6 sm:py-8">
       <div className="flex flex-col justify-between gap-3 sm:flex-row sm:items-center">
-        <h3 className="text-xl font-bold sm:text-2xl">
+        <h3 className="text-xl font-bold sm:text-2xl font-trade-gothic">
           {room.name} - {room.bed_type}
         </h3>
         <p className="text-salmon text-[24px] font-bold sm:text-[32px]">

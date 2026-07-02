@@ -45,7 +45,7 @@ export default function OtherPaymentMethods({
       >
         <Field orientation="horizontal">
           <FieldContent>
-            <FieldTitle className="text-base font-bold">
+            <FieldTitle className="text-base font-bold font-trade-gothic">
               Pay with other method
             </FieldTitle>
           </FieldContent>

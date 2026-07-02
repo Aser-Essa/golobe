@@ -34,7 +34,7 @@ export default function VerifyForm({
           <ChevronLeft />
           <p>Back to login</p>
         </Link>
-        <h3 className="text-[32px] leading-none font-bold">Verify code</h3>
+        <h3 className="text-[32px] leading-none font-bold font-trade-gothic">Verify code</h3>
         <p className="text-sm text-[#546869]">
           An authentication code has been sent to your email.
         </p>

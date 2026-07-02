@@ -23,7 +23,7 @@ export default function MapAndLocation({
   return (
     <div className="space-y-8">
       <div className="flex items-center justify-between flex-wrap gap-3">
-        <p className="text-xl font-bold">Location/Map</p>
+        <p className="text-xl font-bold font-trade-gothic">Location/Map</p>
         <a
           href={`https://www.google.com/maps?q=${latitude},${longitude}`}
           target="_blank"

@@ -17,7 +17,7 @@ export default function HotelHeader({ hotel }: HotelHeaderProps) {
     <div className="md:my-8 my-6 flex flex-col items-start justify-between gap-4 sm:flex-row">
       <div className="w-full space-y-4">
         <div className="flex flex-wrap items-center gap-4">
-          <h3 className="text-2xl font-bold">{hotel.name}</h3>
+          <h3 className="text-2xl font-bold font-trade-gothic">{hotel.name}</h3>
           <div className="flex items-center gap-1">
             <div className="flex items-center">
               {Array.from({ length: hotel.star_rating || 0 }).map((_, key) => (

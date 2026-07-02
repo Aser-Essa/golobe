@@ -43,7 +43,7 @@ export default function ForgotPasswordForm({
           <ChevronLeft />
           <p>Back to login</p>
         </Link>
-        <h3 className="font-trade-gothic text-[40px] leading-none font-bold">
+        <h3 className="font-trade-gothic text-[40px] leading-none font-bold ">
           Forgot your password?
         </h3>
         <span className="text-[#546869]">

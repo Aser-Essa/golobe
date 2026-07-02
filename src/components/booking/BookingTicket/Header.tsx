@@ -31,7 +31,10 @@ export default function Header({
         </div>
         {isLoaded ? (
           <p
-            className={cn("text-lg font-bold sm:text-xl", forPdf && "text-xl!")}
+            className={cn(
+              "font-trade-gothic text-lg font-bold sm:text-xl",
+              forPdf && "text-xl!",
+            )}
           >
             {fullName}
           </p>
@@ -39,7 +42,7 @@ export default function Header({
           <Skeleton className="h-6 w-30" />
         )}
       </div>
-      <p className="max-w-60 text-right text-sm font-bold">
+      <p className="max-w-60 text-right text-sm font-bold font-trade-gothic">
         <span>{room.name}</span>
         <span>
           {room.view_type ? `- ${room.view_type}` : ""} - {room.bed_type}

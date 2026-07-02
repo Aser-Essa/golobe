@@ -32,8 +32,8 @@ export default function SelectPaymentCard() {
                   className="[&>path]:fill-black"
                 />
                 <div className="flex items-center gap-2">
-                  <p className="text-base">**** {card.card.last4}</p>
-                  <p className="text-sm font-normal">
+                  <p className="text-base font-trade-gothic">**** {card.card.last4}</p>
+                  <p className="text-sm font-normal ">
                     {card.card.exp_month}/{String(card.card.exp_year).slice(2)}
                   </p>
                 </div>

@@ -46,7 +46,7 @@ export default function AvailableRooms({ rooms }: AvailableRoomsProps) {
 
   return (
     <div className="space-y-8">
-      <p className="text-xl font-bold">Available Rooms</p>
+      <p className="text-xl font-bold font-trade-gothic">Available Rooms</p>
       <div className="space-y-4">
         {avaliableRoomsCapacity.map(
           (

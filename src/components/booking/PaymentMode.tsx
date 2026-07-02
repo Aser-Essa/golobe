@@ -53,7 +53,7 @@ export default function PaymentMode({ bookingPrice }: paymentModeProps) {
           >
             <Field orientation="horizontal">
               <FieldContent className="space-y-2">
-                <FieldTitle className="text-base font-bold">
+                <FieldTitle className="text-base font-bold font-trade-gothic">
                   Pay in full
                 </FieldTitle>
                 <FieldDescription className="text-sm">
@@ -69,7 +69,7 @@ export default function PaymentMode({ bookingPrice }: paymentModeProps) {
           >
             <Field orientation="horizontal">
               <FieldContent className="space-y-2">
-                <FieldTitle className="text-base font-bold">
+                <FieldTitle className="text-base font-bold font-trade-gothic">
                   Pay part now, part later
                 </FieldTitle>
                 <FieldDescription className="text-sm">

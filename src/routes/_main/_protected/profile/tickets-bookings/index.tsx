@@ -34,7 +34,9 @@ function RouteComponent() {
 
   return (
     <div className="space-y-4">
-      <h3 className="text-[28px] font-bold sm:text-[32px]">Tickets/Bookings</h3>
+      <h3 className="font-trade-gothic text-[28px] font-bold sm:text-[32px]">
+        Tickets/Bookings
+      </h3>
       <TabFilter
         defaultValue={bookingType}
         onValueChange={(value) =>

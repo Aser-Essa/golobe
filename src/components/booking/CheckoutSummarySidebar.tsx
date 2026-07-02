@@ -51,7 +51,7 @@ export default function CheckoutSummarySidebar({
       </p>
       <Separator />
       <div className="space-y-4">
-        <p className="text-base font-bold">Price Details</p>
+        <p className="text-base font-bold font-trade-gothic">Price Details</p>
         <ul className="space-y-3">
           <li className="flex items-center justify-between">
             <p className="text-base font-medium">Base Fare</p>

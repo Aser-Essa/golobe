@@ -31,7 +31,7 @@ export default function ReviewsSection({
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <p className="text-xl font-bold">Reviews</p>
+        <p className="text-xl font-bold font-trade-gothic">Reviews</p>
         <ManageReviews
           hotelId={hotelId}
           myAddedReview={myAddedReview}
@@ -41,9 +41,9 @@ export default function ReviewsSection({
 
       <div>
         <div className="flex items-center gap-4">
-          <p className="text-[50px] font-bold">{avg_rating || 0}</p>
+          <p className="text-[50px] font-bold font-trade-gothic">{avg_rating || 0}</p>
           <div>
-            <span className="text-xl font-semibold">
+            <span className="text-xl font-semibold ">
               {getRatingLabel(avg_rating || 0)}
             </span>
             <p className="text-sm">{countVerified || 0} verified reviews</p>

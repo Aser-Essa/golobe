@@ -15,11 +15,16 @@ export const Route = createFileRoute("/_main/_protected/profile/account/")({
 function RouteComponent() {
   const { user, isLoaded } = useUser();
 
-  const { fullName, phoneNumber, address, birthDate } = getFormattedUser(user, isLoaded);
+  const { fullName, phoneNumber, address, birthDate } = getFormattedUser(
+    user,
+    isLoaded,
+  );
 
   return (
     <div>
-      <h3 className="text-[28px] font-bold sm:text-[32px]">Account</h3>
+      <h3 className="font-trade-gothic text-[28px] font-bold sm:text-[32px]">
+        Account
+      </h3>
       <div className="box-shadow-sm mt-4 space-y-3 rounded-[16px] bg-white px-6 py-8">
         <EditableProfileField
           label="Name"

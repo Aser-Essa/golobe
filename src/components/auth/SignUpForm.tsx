@@ -54,7 +54,7 @@ export default function SignUpForm({ signUp, fetchStatus }: UseSignUpProps) {
   return (
     <div>
       <div className="mb-12 space-y-4">
-        <h3 className="text-[40px] leading-none font-bold">Sign up</h3>
+        <h3 className="text-[40px] leading-none font-bold font-trade-gothic">Sign up</h3>
         <span className="text-[#546869]">
           Let’s get you all set up so you can access your personal account.
         </span>
