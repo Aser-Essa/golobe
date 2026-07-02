@@ -40,10 +40,7 @@ export default function UpdateAvatar({
   async function handleSave() {
     if (!userId || !image) return;
     setIsLoading(true);
-    console.log("first");
     await updateUserBanner({ data: { dataUrl: image } });
-    console.log("first");
-
     await user.reload();
     setIsLoading(false);
     toast.success("Banner updated successfully");
@@ -52,8 +49,8 @@ export default function UpdateAvatar({
 
   useEffect(() => {
     if (!userBanner) return;
-    const canvas = editor.ref.current?.getImageScaledToCanvas();
-    const dataUrl = canvas?.toDataURL("image/jpeg ", 0.1);
+    const canvas = editor.ref.current?.getImage();
+    const dataUrl = canvas?.toDataURL("image/png");
     if (!dataUrl) return;
     setImage(dataUrl);
   }, [userBanner, scale, rotate]);
