@@ -112,7 +112,7 @@ export default function EditableProfileField({
             type="button"
             onClick={handleCancel}
             variant="outline"
-            className="h-12 flex-1 sm:w-12 bg-white"
+            className="h-12 flex-1 bg-white sm:w-12"
           >
             <X />
           </Button>
@@ -121,7 +121,7 @@ export default function EditableProfileField({
             onClick={handleSave}
             disabled={isSaving}
             variant="outline"
-            className="h-12 flex-1 sm:w-35 bg-white font-medium"
+            className="h-12 flex-1 bg-white font-medium sm:w-35"
           >
             <Check />
             <p>{isSaving ? "Saving..." : "Save"}</p>
@@ -132,7 +132,7 @@ export default function EditableProfileField({
           type="button"
           onClick={handleEdit}
           variant="outline"
-          className="h-12  sm:w-35 bg-white font-medium"
+          className="h-12 bg-white font-medium sm:w-35"
         >
           <FilePenLine />
           <p>Change</p>

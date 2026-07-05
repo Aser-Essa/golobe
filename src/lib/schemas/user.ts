@@ -34,7 +34,7 @@ export const emailSchema = z.email("Invalid email address");
 export const nameSchema = z
   .string()
   .min(2, "Name must be at least 2 characters")
-  .max(50, "Name must be less than 50 characters");
+  .max(20, "Name must be less than 20 characters");
 
 export const phoneSchema = z
   .string()
