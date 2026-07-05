@@ -78,7 +78,7 @@ export default function UpdateAvatar({
 
   useEffect(() => {
     if (!userBanner) return;
-    const canvas = editor.ref.current?.getImage();
+    const canvas = editor.ref.current?.getImageScaledToCanvas();
     const dataUrl = canvas?.toDataURL("image/png");
     if (!dataUrl) return;
     setImage(dataUrl);
