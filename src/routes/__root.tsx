@@ -5,6 +5,8 @@ import { HeadContent, Scripts, createRootRoute } from "@tanstack/react-router";
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
 import { Toaster } from "sonner";
 import appCss from "../styles.css?url";
+import RouteNotFound from "#/components/common/RouteNotFound";
+import RouteError from "#/components/common/RouteError";
 
 export const Route = createRootRoute({
   head: () => ({
@@ -28,12 +30,16 @@ export const Route = createRootRoute({
     ],
   }),
   shellComponent: RootDocument,
+  notFoundComponent: () => <RouteNotFound />,
+  errorComponent: ({ error, reset }) => (
+    <RouteError error={error} reset={reset} />
+  ),
 });
 
 const queryClient = new QueryClient();
 function RootDocument({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" >
+    <html lang="en">
       <head>
         <HeadContent />
       </head>

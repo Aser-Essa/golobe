@@ -5,7 +5,7 @@ import { MapPin, Star } from "lucide-react";
 import ShareButton from "../../common/ShareButton";
 import { buttonVariants } from "../../ui/button";
 import RatingSummary from "./RatingSummary";
-import { Link } from "@tanstack/react-router";
+import { Link } from "react-scroll";
 
 type HotelHeaderProps = {
   hotel: HotelType;
@@ -51,13 +51,13 @@ export default function HotelHeader({ hotel }: HotelHeaderProps) {
         </p>
         <div className="flex flex-row-reverse items-center gap-2 sm:gap-4">
           <Link
-            to="/hotels/$hotelId"
-            params={{ hotelId: hotel.id }}
-            hash="rooms"
+            to="rooms"
             className={cn(
               buttonVariants(),
               "h-12 w-auto px-4 py-2 font-semibold sm:w-37.5",
             )}
+            smooth={true}
+            duration={500}
           >
             Book now
           </Link>

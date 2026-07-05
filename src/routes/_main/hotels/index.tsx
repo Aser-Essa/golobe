@@ -1,5 +1,3 @@
-import Container from "#/components/layout/Container";
-import RouteError from "#/components/common/RouteError";
 import { FilterSidebarSheet } from "#/components/hotels/Filters/FilterSidebarSheet";
 import HotelFilterSidebar from "#/components/hotels/Filters/HotelFilterSidebar";
 import HotelSearchBar from "#/components/hotels/Filters/HotelSearchBar";
@@ -8,8 +6,9 @@ import { HotelPagination } from "#/components/hotels/HotelPagination";
 import HotelsEmptyState from "#/components/hotels/HotelsEmptyState";
 import HotelsList from "#/components/hotels/HotelsList";
 import HotelSortBy from "#/components/hotels/HotelSortBy";
-import HotelsPageSkeleton from "#/components/skeleton/HotelsPageSkeleton";
 import PaginationResultsSummary from "#/components/hotels/PaginationResultsSummary";
+import Container from "#/components/layout/Container";
+import HotelsPageSkeleton from "#/components/skeleton/HotelsPageSkeleton";
 import { Button } from "#/components/ui/button";
 import { Separator } from "#/components/ui/separator";
 import { filterSearchParamsSchema } from "#/lib/schemas/search";
@@ -24,7 +23,7 @@ export const Route = createFileRoute("/_main/hotels/")({
   loaderDeps: ({ search }) => search,
   beforeLoad: ({ search }) => {
     if (!search.destination || search.destination.trim().length === 0) {
-      // throw redirect({ to: "/" });
+      throw redirect({ to: "/" });
     }
   },
   loader: async ({ deps }) => {
@@ -32,9 +31,6 @@ export const Route = createFileRoute("/_main/hotels/")({
     const SidebarFilterOptions = await getFilterOptions();
     return { hotelsPromise, SidebarFilterOptions };
   },
-  errorComponent: ({ error, reset }) => (
-    <RouteError error={error} reset={reset} />
-  ),
 });
 
 function RouteComponent() {

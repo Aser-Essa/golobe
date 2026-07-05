@@ -1,4 +1,3 @@
-import RouteError from "#/components/common/RouteError";
 import FavouriteList from "#/components/favourites/FavouriteList";
 import FavouriteTypeFilter from "#/components/favourites/FavouriteTypeFilter";
 import Container from "#/components/layout/Container";
@@ -14,9 +13,6 @@ export const Route = createFileRoute("/_main/_protected/favourites/")({
   validateSearch: z.object({
     favType: z.enum(["hotel", "flight"]).default("hotel"),
   }),
-  errorComponent: ({ error, reset }) => (
-    <RouteError error={error} reset={reset} />
-  ),
 });
 
 function RouteComponent() {
