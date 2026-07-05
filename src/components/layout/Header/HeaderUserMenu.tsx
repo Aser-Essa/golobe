@@ -55,6 +55,7 @@ export default function HeaderUserMenu() {
             <ul className="space-y-2 text-sm font-medium">
               <li className="hover:bg-foreground/5 rounded-[4px] transition-all">
                 <Link
+                  viewTransition
                   to="/profile/account"
                   className="flex items-center justify-between gap-3 py-1"
                 >
@@ -67,6 +68,7 @@ export default function HeaderUserMenu() {
 
               <li className="hover:bg-foreground/5 rounded-[4px] transition-all">
                 <Link
+                  viewTransition
                   to="/profile/payment-methods"
                   className="flex items-center justify-between gap-3 py-1"
                 >
@@ -82,6 +84,7 @@ export default function HeaderUserMenu() {
             <ul className="space-y-2 text-sm font-medium">
               <li className="hover:bg-foreground/5 rounded-[4px] transition-all">
                 <Link
+                  viewTransition
                   to="/profile"
                   className="flex items-center justify-between gap-3 py-1"
                 >

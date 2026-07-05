@@ -6,6 +6,7 @@ export default function ViewPlaceButton({ hotelId }: { hotelId: string }) {
 
   function handleNavigate() {
     navigate({
+      viewTransition: true,
       to: `/hotels/${hotelId}`,
       search: (prev) => ({
         ...prev,

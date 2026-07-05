@@ -31,7 +31,7 @@ export default function SignUpVerifyForm({
           if (url.startsWith("http")) {
             window.location.href = url;
           } else {
-            router.navigate({ to: url });
+            router.navigate({ viewTransition: true, to: url });
           }
         },
       });
@@ -43,12 +43,10 @@ export default function SignUpVerifyForm({
   };
 
   return (
-     
-      <VerifyForm
-        handleVerify={handleVerify}
-        sendEmailCode={signUp.verifications.sendEmailCode}
-        fetchStatus={fetchStatus}
-      />
-     
+    <VerifyForm
+      handleVerify={handleVerify}
+      sendEmailCode={signUp.verifications.sendEmailCode}
+      fetchStatus={fetchStatus}
+    />
   );
 }

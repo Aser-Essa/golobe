@@ -19,7 +19,7 @@ export default function PasswordManagementDialog() {
 
   if (!isLoaded) return <Skeleton className="h-12 w-35 rounded-sm" />;
   if (!isSignedIn) {
-    navigate({ to: "/" });
+    navigate({ to: "/", viewTransition: true });
   }
 
   function handleOpenChange(open: boolean) {

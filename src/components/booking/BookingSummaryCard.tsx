@@ -21,17 +21,21 @@ export default function BookingSummaryCard({ booking }: { booking: Booking }) {
           <div className="border-primary hidden aspect-square size-20 min-w-20 overflow-hidden rounded-[8px] border lg:block">
             <img src={logoUrl} />
           </div>
-          <div className="flex w-full flex-col items-center justify-between gap-4 lg:gap-6 md:flex-row lg:w-auto lg:justify-normal">
+          <div className="flex w-full flex-col items-center justify-between gap-4 md:flex-row lg:w-auto lg:justify-normal lg:gap-6">
             <div className="flex items-center gap-4">
               <div className="space-y-2">
-                <p className="text-foreground/70 text-base text-nowrap">Check-In</p>
+                <p className="text-foreground/70 text-base text-nowrap">
+                  Check-In
+                </p>
                 <p className="text-xl font-semibold">
                   {formatDate(booking.check_in)}
                 </p>
               </div>
               <p>—</p>
               <div className="space-y-2">
-                <p className="text-foreground/70 text-base text-nowrap">Check-Out</p>
+                <p className="text-foreground/70 text-base text-nowrap">
+                  Check-Out
+                </p>
                 <p className="text-xl font-semibold">
                   {formatDate(booking.check_out)}
                 </p>
@@ -97,6 +101,7 @@ export default function BookingSummaryCard({ booking }: { booking: Booking }) {
             className="flex-1 lg:flex-none"
           />
           <Link
+            viewTransition
             to={`/bookings/$bookingId`}
             params={{ bookingId: booking.id }}
             className={cn(

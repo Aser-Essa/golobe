@@ -31,7 +31,7 @@ export default function RouteNotFound({ className }: { className?: string }) {
 
         <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
           <Button asChild size="lg">
-            <Link to="/">
+            <Link viewTransition to="/">
               <Home className="mr-2 h-4 w-4" />
               Back Home
             </Link>

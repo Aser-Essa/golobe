@@ -35,6 +35,7 @@ export default function AvailableRooms({ rooms }: AvailableRoomsProps) {
 
   const handleBookNow = (roomId: string) => {
     navigate({
+      viewTransition: true,
       to: `/hotels/$hotelId/checkout/${roomId}`,
       search: (prev) => ({
         ...prev,
@@ -46,7 +47,7 @@ export default function AvailableRooms({ rooms }: AvailableRoomsProps) {
 
   return (
     <div className="space-y-8">
-      <p className="text-xl font-bold font-trade-gothic">Available Rooms</p>
+      <p className="font-trade-gothic text-xl font-bold">Available Rooms</p>
       <div className="space-y-4">
         {avaliableRoomsCapacity.map(
           (

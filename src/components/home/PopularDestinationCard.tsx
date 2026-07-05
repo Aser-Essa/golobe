@@ -1,4 +1,3 @@
-import React from "react";
 import type { Tables } from "#/lib/types/supabase";
 import { Link } from "@tanstack/react-router";
 
@@ -11,9 +10,10 @@ export default function PopularDestinationCard({
 }: PopularDestinationCard) {
   return (
     <Link
+      viewTransition
       to="/hotels"
       search={{ destination: destination.country || destination.city || "" }}
-      className="relative h-80 overflow-hidden rounded-[16px] inline-block box-shadow-sm"
+      className="box-shadow-sm relative inline-block h-80 overflow-hidden rounded-[16px]"
     >
       <img
         src={destination.image || "/"}

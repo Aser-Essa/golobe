@@ -20,8 +20,6 @@ export default function HotelSearchBar({
   className?: string;
   submitButton?: React.ReactNode;
 }) {
-
-
   const defaultValues = {
     destination: searchParams.destination || "",
     checkIn: new Date(searchParams.checkIn),

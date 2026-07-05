@@ -84,6 +84,7 @@ export default function DestinationSearch<T extends FieldValues>({
                     onClick={() => setIsOpen(false)}
                   >
                     <Link
+                      viewTransition
                       to="/hotels"
                       reloadDocument
                       search={(prev) => ({

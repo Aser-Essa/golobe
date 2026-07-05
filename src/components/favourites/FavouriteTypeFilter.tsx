@@ -29,6 +29,7 @@ export default function FavouriteTypeFilter() {
             favType: value as FilterSearchParams["favType"],
           }),
           resetScroll: false,
+          viewTransition: true,
         })
       }
       options={[

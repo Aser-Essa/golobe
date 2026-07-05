@@ -63,6 +63,7 @@ export function HeaderMobileMenu() {
           <nav className="space-y-2">
             <DrawerClose asChild>
               <Link
+                viewTransition
                 to="/"
                 className="hover:bg-muted flex items-center gap-3 rounded-xl px-4 py-3 transition-colors"
               >
@@ -74,6 +75,7 @@ export function HeaderMobileMenu() {
             <Show when={"signed-in"}>
               <DrawerClose asChild>
                 <Link
+                  viewTransition
                   to="/favourites"
                   className="hover:bg-muted flex items-center gap-3 rounded-xl px-4 py-3 transition-colors"
                 >
@@ -84,6 +86,7 @@ export function HeaderMobileMenu() {
 
               <DrawerClose asChild>
                 <Link
+                  viewTransition
                   to="/profile"
                   className="hover:bg-muted flex items-center gap-3 rounded-xl px-4 py-3 transition-colors"
                 >

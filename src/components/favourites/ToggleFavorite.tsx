@@ -43,7 +43,7 @@ export default function ToggleFavorite({
 
   function handleClick() {
     if (!isSignedIn) {
-      navigate({ to: "/sign-in" });
+      navigate({ viewTransition: true, to: "/sign-in" });
       return;
     }
 

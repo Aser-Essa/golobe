@@ -9,7 +9,7 @@ export default function Logo({
   varient?: "green" | "white";
 }) {
   return (
-    <Link to="/"  className={cn(className)}>
+    <Link viewTransition to="/" className={cn(className)}>
       {varient === "white" ? (
         <img src="/logo-white-o.svg" alt="logo" />
       ) : (

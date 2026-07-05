@@ -135,6 +135,7 @@ export default function ViewRoomDetails({ room }: ViewRoomDetailsProps) {
             </DialogClose>
             {room.is_available && (
               <Link
+                viewTransition
                 to="/hotels/$hotelId/checkout/$roomId"
                 params={{ hotelId: room.hotel_id, roomId: room.id }}
                 className={cn(buttonVariants(), "min-h-10 flex-1 gap-2")}

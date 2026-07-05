@@ -43,6 +43,7 @@ function RouteComponent() {
           navigate({
             to: `/profile/tickets-bookings/?bookingType=${value}`,
             resetScroll: false,
+            viewTransition: true,
           })
         }
         options={[

@@ -18,6 +18,7 @@ export default function profileNavigation() {
           navigate({
             to: `/profile/${value}`,
             resetScroll: false,
+            viewTransition: true,
           })
         }
         options={[

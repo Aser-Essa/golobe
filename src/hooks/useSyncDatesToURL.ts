@@ -14,6 +14,7 @@ export function useSyncDatesToURL(checkInDate: Date, checkOutDate: Date) {
       }),
       resetScroll: false,
       replace: true,
+      viewTransition: true,
     });
   }, [checkInDate, checkOutDate]);
 }

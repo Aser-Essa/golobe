@@ -25,6 +25,7 @@ export default function RouteError({ error, reset }: RouteErrorProps) {
     setRetrying(true);
     setTimeout(() => {
       navigate({
+        viewTransition: true,
         to: ".",
         search: (prev) => prev,
         replace: true,
@@ -35,7 +36,7 @@ export default function RouteError({ error, reset }: RouteErrorProps) {
   }
 
   function handleBack() {
-    navigate({ to: "/" });
+    navigate({ viewTransition: true, to: "/" });
   }
 
   async function handleCopy() {

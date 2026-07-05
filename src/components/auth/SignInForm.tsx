@@ -42,13 +42,15 @@ export default function SignInForm({ signIn, fetchStatus }: UseSignInProps) {
     toast.success("You have successfully logged in");
     await new Promise((resolve) => setTimeout(resolve, 1000));
 
-    navigate({ to: "/", reloadDocument: true });
+    navigate({ viewTransition: true, to: "/", reloadDocument: true });
   }
 
   return (
     <div>
       <div className="mb-12 space-y-4">
-        <h3 className="text-[40px] leading-none font-bold font-trade-gothic">Login</h3>
+        <h3 className="font-trade-gothic text-[40px] leading-none font-bold">
+          Login
+        </h3>
         <span className="text-[#546869]">
           Login to access your Golobe account
         </span>
@@ -104,6 +106,7 @@ export default function SignInForm({ signIn, fetchStatus }: UseSignInProps) {
           />
 
           <Link
+            viewTransition
             to="/forgot-password"
             className={cn(
               buttonVariants({ variant: "link" }),
@@ -132,7 +135,11 @@ export default function SignInForm({ signIn, fetchStatus }: UseSignInProps) {
       <div className="space-y-10">
         <p className="mx-auto mt-4 text-center text-sm font-medium">
           Don't have an account?{" "}
-          <Link to="/sign-up" className="text-salmon font-semibold">
+          <Link
+            viewTransition
+            to="/sign-up"
+            className="text-salmon font-semibold"
+          >
             Sign up
           </Link>
         </p>

@@ -19,6 +19,7 @@ export default function SortBy() {
     navigate({
       search: (prev) => ({ ...prev, sortBy: value, page: 1 }),
       resetScroll: false,
+      viewTransition: true,
     });
   }
 

@@ -247,3 +247,42 @@ header nav .active::before {
   width: 20px !important;
   height: 20px !important;
 }
+
+
+/* ################ Page Transition Animation ################## */
+
+@view-transition {
+  navigation: auto;
+}
+
+::view-transition-old(root) {
+  animation: fade-out 0.2s ease;
+}
+
+::view-transition-new(root) {
+  animation: fade-in 0.25s ease;
+}
+
+@keyframes fade-out {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  to {
+    opacity: 0;
+    transform: scale(0.99);
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: scale(1.01);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}

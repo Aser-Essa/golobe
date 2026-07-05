@@ -30,11 +30,13 @@ export default function VerifyForm({
   return (
     <div>
       <div className="mb-12 space-y-4">
-        <Link to="/sign-in" className="flex items-center gap-1">
+        <Link viewTransition to="/sign-in" className="flex items-center gap-1">
           <ChevronLeft />
           <p>Back to login</p>
         </Link>
-        <h3 className="text-[32px] leading-none font-bold font-trade-gothic">Verify code</h3>
+        <h3 className="font-trade-gothic text-[32px] leading-none font-bold">
+          Verify code
+        </h3>
         <p className="text-sm text-[#546869]">
           An authentication code has been sent to your email.
         </p>

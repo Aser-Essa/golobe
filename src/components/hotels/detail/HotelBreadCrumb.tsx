@@ -16,42 +16,42 @@ export default function HotelBreadCrumb({
   country,
 }: HotelBreadCrumbProps) {
   return (
-     
-      <Breadcrumb className="font-medium">
-        <BreadcrumbList>
-          <BreadcrumbItem>
-            <BreadcrumbLink asChild>
-              <Link
-                to="/hotels"
-                className="text-salmon"
-                search={{
-                  destination: country,
-                }}
-              >
-                {country}
-              </Link>
-            </BreadcrumbLink>
-          </BreadcrumbItem>
-          <BreadcrumbSeparator />
-          <BreadcrumbItem>
-            <BreadcrumbLink asChild>
-              <Link
-                to="/hotels"
-                className="text-salmon"
-                search={{
-                  destination: city,
-                }}
-              >
-                {city}
-              </Link>
-            </BreadcrumbLink>
-          </BreadcrumbItem>
-          <BreadcrumbSeparator />
-          <BreadcrumbItem>
-            <BreadcrumbPage className="font-medium">{name}</BreadcrumbPage>
-          </BreadcrumbItem>
-        </BreadcrumbList>
-      </Breadcrumb>
-     
+    <Breadcrumb className="font-medium">
+      <BreadcrumbList>
+        <BreadcrumbItem>
+          <BreadcrumbLink asChild>
+            <Link
+              viewTransition
+              to="/hotels"
+              className="text-salmon"
+              search={{
+                destination: country,
+              }}
+            >
+              {country}
+            </Link>
+          </BreadcrumbLink>
+        </BreadcrumbItem>
+        <BreadcrumbSeparator />
+        <BreadcrumbItem>
+          <BreadcrumbLink asChild>
+            <Link
+              viewTransition
+              to="/hotels"
+              className="text-salmon"
+              search={{
+                destination: city,
+              }}
+            >
+              {city}
+            </Link>
+          </BreadcrumbLink>
+        </BreadcrumbItem>
+        <BreadcrumbSeparator />
+        <BreadcrumbItem>
+          <BreadcrumbPage className="font-medium">{name}</BreadcrumbPage>
+        </BreadcrumbItem>
+      </BreadcrumbList>
+    </Breadcrumb>
   );
 }

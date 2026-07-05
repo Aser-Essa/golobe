@@ -35,17 +35,19 @@ export default function ResetPasswordForm() {
 
     toast.success("Password reset successfully");
     await new Promise((resolve) => setTimeout(resolve, 1000));
-    router.navigate({ to: "/", reloadDocument: true });
+    router.navigate({ viewTransition: true, to: "/", reloadDocument: true });
   }
 
   return (
     <div>
       <div className="mb-12 space-y-4">
-        <Link to="/sign-in" className="flex items-center gap-1">
+        <Link viewTransition to="/sign-in" className="flex items-center gap-1">
           <ChevronLeft />
           <p>Back to login</p>
         </Link>
-        <h3 className="text-[40px] leading-none font-bold font-trade-gothic">Set a password</h3>
+        <h3 className="font-trade-gothic text-[40px] leading-none font-bold">
+          Set a password
+        </h3>
         <span className="text-[#546869]">
           Your previous password has been reset. Please set a new password for
           your account.

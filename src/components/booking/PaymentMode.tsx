@@ -34,6 +34,7 @@ export default function PaymentMode({ bookingPrice }: paymentModeProps) {
 
   const handlepaymentModeChange = (value: string) => {
     navigate({
+      viewTransition: true,
       search: (prev) => ({ ...prev, paymentMode: value }),
       resetScroll: false,
     });
@@ -53,7 +54,7 @@ export default function PaymentMode({ bookingPrice }: paymentModeProps) {
           >
             <Field orientation="horizontal">
               <FieldContent className="space-y-2">
-                <FieldTitle className="text-base font-bold font-trade-gothic">
+                <FieldTitle className="font-trade-gothic text-base font-bold">
                   Pay in full
                 </FieldTitle>
                 <FieldDescription className="text-sm">
@@ -69,7 +70,7 @@ export default function PaymentMode({ bookingPrice }: paymentModeProps) {
           >
             <Field orientation="horizontal">
               <FieldContent className="space-y-2">
-                <FieldTitle className="text-base font-bold font-trade-gothic">
+                <FieldTitle className="font-trade-gothic text-base font-bold">
                   Pay part now, part later
                 </FieldTitle>
                 <FieldDescription className="text-sm">

@@ -38,6 +38,7 @@ function RouteComponent() {
           "Your booking is not confirmed yet. Please try again later or contact support.",
         );
         navigate({
+          viewTransition: true,
           to: "/",
           replace: true,
         });
@@ -52,6 +53,7 @@ function RouteComponent() {
           to: "/bookings/$bookingId",
           params: { bookingId: bookingId },
           replace: true,
+          viewTransition: true,
         });
         clearInterval(intervalId);
       }

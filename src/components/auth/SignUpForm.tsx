@@ -54,7 +54,9 @@ export default function SignUpForm({ signUp, fetchStatus }: UseSignUpProps) {
   return (
     <div>
       <div className="mb-12 space-y-4">
-        <h3 className="text-[40px] leading-none font-bold font-trade-gothic">Sign up</h3>
+        <h3 className="font-trade-gothic text-[40px] leading-none font-bold">
+          Sign up
+        </h3>
         <span className="text-[#546869]">
           Let’s get you all set up so you can access your personal account.
         </span>
@@ -132,11 +134,19 @@ export default function SignUpForm({ signUp, fetchStatus }: UseSignUpProps) {
                   className="text-xs text-black sm:text-sm"
                 >
                   I agree to all the{" "}
-                  <Link to="/" className="text-salmon font-semibold">
+                  <Link
+                    viewTransition
+                    to="/"
+                    className="text-salmon font-semibold"
+                  >
                     Terms
                   </Link>
                   and
-                  <Link to="/" className="text-salmon font-semibold">
+                  <Link
+                    viewTransition
+                    to="/"
+                    className="text-salmon font-semibold"
+                  >
                     Privacy Policies
                   </Link>
                 </FieldLabel>
@@ -165,7 +175,11 @@ export default function SignUpForm({ signUp, fetchStatus }: UseSignUpProps) {
       <div className="space-y-10">
         <p className="mx-auto mt-4 text-center text-sm font-medium">
           Already have an account?{" "}
-          <Link to="/sign-in" className="text-salmon font-semibold">
+          <Link
+            viewTransition
+            to="/sign-in"
+            className="text-salmon font-semibold"
+          >
             Login
           </Link>
         </p>

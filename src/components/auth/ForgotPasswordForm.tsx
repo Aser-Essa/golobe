@@ -39,11 +39,11 @@ export default function ForgotPasswordForm({
   return (
     <div>
       <div className="mb-12 space-y-4">
-        <Link to="/sign-in" className="flex items-center gap-1">
+        <Link viewTransition to="/sign-in" className="flex items-center gap-1">
           <ChevronLeft />
           <p>Back to login</p>
         </Link>
-        <h3 className="font-trade-gothic text-[40px] leading-none font-bold ">
+        <h3 className="font-trade-gothic text-[40px] leading-none font-bold">
           Forgot your password?
         </h3>
         <span className="text-[#546869]">

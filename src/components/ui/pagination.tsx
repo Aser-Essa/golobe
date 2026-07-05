@@ -57,6 +57,7 @@ function PaginationLink({
       className={cn(className, isActive && "bg-primary/20 hover:bg-primary/30")}
     >
       <Link
+        viewTransition
         aria-current={isActive ? "page" : undefined}
         data-slot="pagination-link"
         data-active={isActive}

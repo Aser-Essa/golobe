@@ -17,7 +17,11 @@ export default function Header() {
       </Show>
       <Show when={"signed-in"}>
         <div className="flex items-center gap-4">
-          <Link to="/favourites" className="relative flex items-center gap-1">
+          <Link
+            to="/favourites"
+            className="relative flex items-center gap-1"
+            viewTransition
+          >
             <Heart fill="#000" />
             <p className="hidden text-sm font-semibold sm:block">Favorites</p>
           </Link>

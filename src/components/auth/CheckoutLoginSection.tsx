@@ -7,13 +7,15 @@ export default function CheckoutLoginSection() {
   const navigate = useNavigate();
 
   function handleClick() {
-    navigate({ to: "/sign-in" });
+    navigate({ viewTransition: true, to: "/sign-in" });
   }
 
   return (
     <div className="box-shadow-sm space-y-6 rounded-[12px] bg-white p-4 sm:p-6">
       <div className="space-y-4">
-        <p className="text-xl font-bold font-trade-gothic">Login or Sign up to book</p>
+        <p className="font-trade-gothic text-xl font-bold">
+          Login or Sign up to book
+        </p>
         <Button
           variant={"outline"}
           className="flex h-12 w-full items-center gap-4 bg-white"
