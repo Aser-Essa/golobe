@@ -24,9 +24,11 @@ function RouteComponent() {
 
       <div className="hidden w-full overflow-hidden rounded-[30px] min-[850px]:block">
         <img
-          src="/auth-slider-1.png"
+          src="/auth-slider-1.webp"
           alt="Auth Slider"
-          className="h-full w-full object-cover lg:max-h-204"
+          className="h-full w-full object-cover"
+          loading="eager"
+          decoding="async"
         />
       </div>
     </div>
