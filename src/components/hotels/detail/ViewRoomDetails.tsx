@@ -1,5 +1,5 @@
 import { Badge } from "#/components/ui/badge";
-import { Button } from "#/components/ui/button";
+import { Button, buttonVariants } from "#/components/ui/button";
 import {
   Dialog,
   DialogClose,
@@ -11,6 +11,8 @@ import {
   DialogTrigger,
 } from "#/components/ui/dialog";
 import type { HotelType } from "#/lib/types";
+import { cn } from "#/lib/utils";
+import { Link } from "@tanstack/react-router";
 import { formatDate } from "date-fns";
 import {
   Bed,
@@ -132,10 +134,14 @@ export default function ViewRoomDetails({ room }: ViewRoomDetailsProps) {
               </Button>
             </DialogClose>
             {room.is_available && (
-              <Button className="min-h-10 flex-2 gap-2">
+              <Link
+                to="/hotels/$hotelId/checkout/$roomId"
+                params={{ hotelId: room.hotel_id, roomId: room.id }}
+                className={cn(buttonVariants(), "min-h-10 flex-1 gap-2")}
+              >
                 <CalendarPlus className="size-4" />
                 Book this room
-              </Button>
+              </Link>
             )}
           </DialogFooter>
         </DialogContent>

@@ -25,31 +25,14 @@ export const updateUserBanner = createServerFn({ method: "POST" })
   .middleware([authFnMiddleware])
   .inputValidator(
     z.object({
-      dataUrl: z.string(),
+      fileName: z.string(),
     }),
   )
-  .handler(async ({ data: { dataUrl }, context: { userId } }) => {
+  .handler(async ({ data: { fileName }, context: { userId } }) => {
     try {
-      const [, base64] = dataUrl.split(",");
-      const buffer = Buffer.from(base64, "base64");
-      const file = new File([buffer], `cropped-banner.png`, {
-        type: "image/png",
-      });
-
-      const { error } = await supabase.storage
-        .from("banners")
-        .upload(`${userId}/${file.name}`, file, {
-          upsert: true,
-          cacheControl: "3600",
-        });
-
-      if (error) {
-        throw new Error(error.message);
-      }
-
       await clerkClient().users.updateUserMetadata(userId, {
         publicMetadata: {
-          bannerUrl: `${SupabaseStorageBannerPath}/${userId}/${file.name}?t=${Date.now()}`,
+          bannerUrl: `${SupabaseStorageBannerPath}/${userId}/${fileName}?t=${Date.now()}`,
         },
       });
     } catch (error: any) {

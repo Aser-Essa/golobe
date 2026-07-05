@@ -5,6 +5,7 @@ import { MapPin, Star } from "lucide-react";
 import ShareButton from "../../common/ShareButton";
 import { buttonVariants } from "../../ui/button";
 import RatingSummary from "./RatingSummary";
+import { Link } from "@tanstack/react-router";
 
 type HotelHeaderProps = {
   hotel: HotelType;
@@ -14,10 +15,10 @@ export default function HotelHeader({ hotel }: HotelHeaderProps) {
   const minPrice = getMinRoomPrice(hotel.rooms);
 
   return (
-    <div className="md:my-8 my-6 flex flex-col items-start justify-between gap-4 sm:flex-row">
+    <div className="my-6 flex flex-col items-start justify-between gap-4 sm:flex-row md:my-8">
       <div className="w-full space-y-4">
         <div className="flex flex-wrap items-center gap-4">
-          <h3 className="text-2xl font-bold font-trade-gothic">{hotel.name}</h3>
+          <h3 className="font-trade-gothic text-2xl font-bold">{hotel.name}</h3>
           <div className="flex items-center gap-1">
             <div className="flex items-center">
               {Array.from({ length: hotel.star_rating || 0 }).map((_, key) => (
@@ -49,15 +50,17 @@ export default function HotelHeader({ hotel }: HotelHeaderProps) {
           <span className="text-sm">/night</span>
         </p>
         <div className="flex flex-row-reverse items-center gap-2 sm:gap-4">
-          <a
-            href="#rooms"
+          <Link
+            to="/hotels/$hotelId"
+            params={{ hotelId: hotel.id }}
+            hash="rooms"
             className={cn(
               buttonVariants(),
               "h-12 w-auto px-4 py-2 font-semibold sm:w-37.5",
             )}
           >
             Book now
-          </a>
+          </Link>
           <ShareButton />
           <ToggleFavorite hotelId={hotel.id} />
         </div>

@@ -13,6 +13,7 @@ import { toast } from "sonner";
 import BannerEditorSection from "./BannerEditorSection";
 import { Loader2 } from "lucide-react";
 import DeleteBanner from "./DeleteBanner";
+import { supabase } from "#/lib/supabase";
 
 type UpdateAvatarProps = {
   setIsChange: (value: boolean) => void;
@@ -39,9 +40,37 @@ export default function UpdateAvatar({
 
   async function handleSave() {
     if (!userId || !image) return;
+
     setIsLoading(true);
-    await updateUserBanner({ data: { dataUrl: image } });
+
+    const response = await fetch(image);
+    const blob = await response.blob();
+
+    const file = new File([blob], "cropped-banner.png", {
+      type: "image/png",
+    });
+
+    const { error } = await supabase.storage
+      .from("banners")
+      .upload(`${userId}/${file.name}`, file, {
+        upsert: true,
+        cacheControl: "3600",
+      });
+
+    if (error) {
+      setIsLoading(false);
+      toast.error(error.message);
+      return;
+    }
+
+    await updateUserBanner({
+      data: {
+        fileName: file.name,
+      },
+    });
+
     await user.reload();
+
     setIsLoading(false);
     toast.success("Banner updated successfully");
     setIsOpen(false);
