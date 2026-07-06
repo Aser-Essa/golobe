@@ -13,7 +13,7 @@ import { toast } from "sonner";
 import BannerEditorSection from "./BannerEditorSection";
 import { Loader2 } from "lucide-react";
 import DeleteBanner from "./DeleteBanner";
-import { supabase } from "#/lib/supabase";
+import { createServerSupabaseClient } from "#/lib/supabase";
 
 type UpdateAvatarProps = {
   setIsChange: (value: boolean) => void;
@@ -40,6 +40,8 @@ export default function UpdateAvatar({
 
   async function handleSave() {
     if (!userId || !image) return;
+
+    const supabase = createServerSupabaseClient();
 
     setIsLoading(true);
 

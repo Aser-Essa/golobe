@@ -1,5 +1,6 @@
 import { REVIEWS_PER_PAGE } from "#/lib/constants";
-import { supabase } from "#/lib/supabase";
+import { createServerSupabaseClient } from "#/lib/supabase";
+
 import { getPaginationRange } from "#/lib/utils";
 import { auth } from "@clerk/tanstack-react-start/server";
 import { createServerFn } from "@tanstack/react-start";
@@ -25,11 +26,14 @@ function resolveCount(
   return result.count;
 }
 
-const buildHotelReviewsCountQuery = (hotelId: string) =>
-  supabase
+const buildHotelReviewsCountQuery = (hotelId: string) => {
+  const supabase = createServerSupabaseClient();
+
+  return supabase
     .from("reviews")
     .select("*", { count: "exact", head: true })
     .eq("hotel_id", hotelId);
+};
 
 export const getReviewStats = async (hotelId: string) => {
   const countQueries = [
@@ -60,6 +64,7 @@ export const getMyAddedReviews = async (hotelId: string) => {
       myAddedReview: null,
     };
   }
+  const supabase = createServerSupabaseClient();
 
   const { data: myAddedReview, error } = await supabase
     .from("reviews")
@@ -108,6 +113,8 @@ export const getReviews = createServerFn({ method: "GET" })
       perPage: REVIEWS_PER_PAGE,
       totalItems: count,
     });
+
+    const supabase = createServerSupabaseClient();
 
     const { data: reviews, error: reviewsError } = await supabase
       .from("reviews")

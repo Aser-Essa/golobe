@@ -1,5 +1,5 @@
 import { SupabaseStorageBannerPath } from "#/lib/constants";
-import { supabase } from "#/lib/supabase";
+import { createServerSupabaseClient } from "#/lib/supabase";
 import { authFnMiddleware } from "#/middlewares/auth";
 import { clerkClient } from "@clerk/tanstack-react-start/server";
 import { createServerFn } from "@tanstack/react-start";
@@ -45,6 +45,8 @@ export const deleteUserBanner = createServerFn({ method: "POST" })
   .middleware([authFnMiddleware])
   .handler(async ({ context: { userId } }) => {
     try {
+      const supabase = createServerSupabaseClient();
+
       const imagePaths = [
         `${userId}/banner.png`,
         `${userId}/cropped-banner.png`,

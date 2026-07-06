@@ -1,5 +1,6 @@
 import { HOTELS_PER_PAGE } from "#/lib/constants";
-import { supabase } from "#/lib/supabase";
+import { createServerSupabaseClient } from "#/lib/supabase";
+
 import type { FilterSearchParams, HotelType } from "#/lib/types";
 import { getTypePlacesCount, sanitizeString } from "#/lib/utils";
 import {
@@ -25,6 +26,8 @@ export const buildHotelsQuery = ({
   maxPrice,
   sortBy,
 }: FilterSearchParams) => {
+  const supabase = createServerSupabaseClient();
+
   let query = supabase
     .from("hotels")
     .select(HOTEL_DETAILS_SELECT)

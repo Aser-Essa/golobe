@@ -1,5 +1,5 @@
 import { bookingToInsertSchema } from "#/lib/schemas";
-import { supabase } from "#/lib/supabase";
+import { createServerSupabaseClient } from "#/lib/supabase";
 import type { BookingToInsert } from "#/lib/types";
 import { authFnMiddleware } from "#/middlewares/auth";
 import { createServerFn } from "@tanstack/react-start";
@@ -16,7 +16,7 @@ export async function insertBookingIntoDB({
 }: {
   bookingData: BookingToInsert;
 }) {
-  console.log(bookingData);
+  const supabase = createServerSupabaseClient();
 
   const { data, error } = await supabase
     .from("bookings")
@@ -45,6 +45,8 @@ export const checkBookingExist = createServerFn({ method: "GET" })
     }),
   )
   .handler(async ({ data: { payment_intent_id } }) => {
+    const supabase = createServerSupabaseClient();
+
     const { data, error } = await supabase
       .from("bookings")
       .select("id")
@@ -59,6 +61,8 @@ export const checkBookingExist = createServerFn({ method: "GET" })
 export const getUserBookings = createServerFn({ method: "GET" })
   .middleware([authFnMiddleware])
   .handler(async ({ context: { userId } }) => {
+    const supabase = createServerSupabaseClient();
+
     const { data, error } = await supabase
       .from("bookings")
       .select(BOOKING_SELECT_WITH_ROOM)
@@ -77,6 +81,8 @@ export const getBooking = createServerFn({ method: "GET" })
     }),
   )
   .handler(async ({ data: { bookingId } }) => {
+    const supabase = createServerSupabaseClient();
+
     const { data, error } = await supabase
       .from("bookings")
       .select(BOOKING_SELECT_WITH_ROOM)

@@ -1,5 +1,4 @@
 import { filterSearchParamsSchema } from "#/lib/schemas/search";
-import { supabase } from "#/lib/supabase";
 import type { searchDestinationsType } from "#/lib/types";
 import { sanitizeString, sortByPrice } from "#/lib/utils";
 import { createServerFn } from "@tanstack/react-start";
@@ -11,6 +10,7 @@ import {
   HOTEL_DETAILS_SELECT,
   paginateHotels,
 } from "./hotels.helpers";
+import { createServerSupabaseClient } from "#/lib/supabase";
 
 export const getHotels = createServerFn({ method: "GET" })
   .inputValidator(filterSearchParamsSchema)
@@ -66,6 +66,8 @@ export const getHotels = createServerFn({ method: "GET" })
 export const getHotel = createServerFn({ method: "GET" })
   .inputValidator(z.object({ id: z.string() }))
   .handler(async ({ data }) => {
+    const supabase = createServerSupabaseClient();
+
     const { data: hotelData, error } = await supabase
       .from("hotels")
       .select(
@@ -92,6 +94,8 @@ export const getHotel = createServerFn({ method: "GET" })
 
 export const getFilterOptions = createServerFn({ method: "GET" }).handler(
   async () => {
+    const supabase = createServerSupabaseClient();
+
     const { data: optionsData, error } = await supabase
       .from("hotel_filter_options")
       .select(`*`)
@@ -114,6 +118,7 @@ export const getSearchDestinations = createServerFn({ method: "GET" })
       const sanitizedQuery = sanitizeString(searchQuery);
 
       if (!searchQuery.length) return [];
+      const supabase = createServerSupabaseClient();
 
       let query = supabase.from("hotels").select(`city,country,address,name`);
 
@@ -144,6 +149,8 @@ export const getPopularDestinations = createServerFn({
     }),
   )
   .handler(async ({ data }) => {
+    const supabase = createServerSupabaseClient();
+
     const { data: destinations, error } = await supabase
       .from("popular_destinations")
       .select("*")
@@ -163,6 +170,8 @@ export const getFeaturedHotels = createServerFn({ method: "GET" })
     }),
   )
   .handler(async ({ data: { limit } }) => {
+    const supabase = createServerSupabaseClient();
+
     const { data: hotels } = await supabase
       .from("hotels")
       .select(HOTEL_DETAILS_SELECT)

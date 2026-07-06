@@ -1,5 +1,6 @@
 import { favouriteSchema } from "#/lib/schemas/favourite";
-import { supabase } from "#/lib/supabase";
+import { createServerSupabaseClient } from "#/lib/supabase";
+
 import { authFnMiddleware } from "#/middlewares/auth";
 import { createServerFn } from "@tanstack/react-start";
 import z from "zod";
@@ -30,6 +31,8 @@ const HOTEL_FAVOURITES_SELECT = `
 ` as const;
 
 const getHotelFavourites = async (userId: string) => {
+  const supabase = createServerSupabaseClient();
+
   const { data: favourites, error } = await supabase
     .from("favourites")
     .select(HOTEL_FAVOURITES_SELECT)
@@ -42,6 +45,8 @@ const getHotelFavourites = async (userId: string) => {
 };
 
 const getFlightFavourites = async (userId: string) => {
+  const supabase = createServerSupabaseClient();
+
   const { data: favourites, error } = await supabase
     .from("favourites")
     .select("*")
@@ -79,6 +84,8 @@ async function addFavourite({
     throw new Error("Hotel ID or Flight ID is required");
   }
 
+  const supabase = createServerSupabaseClient();
+
   const { error } = await supabase.from("favourites").insert({
     user_id: userId,
     hotel_id: hotelId,
@@ -91,6 +98,8 @@ async function addFavourite({
 }
 
 async function deleteFavourite(id: string) {
+  const supabase = createServerSupabaseClient();
+
   const { error } = await supabase.from("favourites").delete().eq("id", id);
 
   if (error) throw new Error(error.message);
@@ -100,6 +109,8 @@ export const toggleUserFavourites = createServerFn({ method: "POST" })
   .middleware([authFnMiddleware])
   .inputValidator(favouriteSchema)
   .handler(async ({ data, context: { userId } }) => {
+    const supabase = createServerSupabaseClient();
+
     const column = data.hotelId ? "hotel_id" : "flight_id";
     const value = data.hotelId ?? data.flightId;
 

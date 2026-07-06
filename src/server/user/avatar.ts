@@ -1,5 +1,5 @@
 import { SupabaseStorageAvatarPath } from "#/lib/constants";
-import { supabase } from "#/lib/supabase";
+import { createServerSupabaseClient } from "#/lib/supabase";
 import { authFnMiddleware } from "#/middlewares/auth";
 import { clerkClient } from "@clerk/tanstack-react-start/server";
 import { createServerFn } from "@tanstack/react-start";
@@ -36,6 +36,8 @@ export const updateUserAvatar = createServerFn({ method: "POST" })
         type: "image/png",
       });
 
+      const supabase = createServerSupabaseClient();
+
       const { error } = await supabase.storage
         .from("avatars")
         .upload(`${userId}/${file.name}`, file, {
@@ -66,6 +68,8 @@ export const deleteUserAvatar = createServerFn({ method: "POST" })
         `${userId}/avatar.png`,
         `${userId}/cropped-avatar.png`,
       ];
+
+      const supabase = createServerSupabaseClient();
 
       const { error } = await supabase.storage
         .from("avatars")

@@ -1,4 +1,4 @@
-import { supabase } from "#/lib/supabase";
+import { createServerSupabaseClient } from "#/lib/supabase";
 import { formatFileName } from "#/lib/utils";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import type { FileError, FileRejection } from "react-dropzone";
@@ -140,6 +140,7 @@ const useSupabaseUpload = (options: UseSupabaseUploadOptions) => {
     const responses = await Promise.all(
       filesToUpload.map(async (file) => {
         const safeName = fixedFileName ? fixedFileName : formatFileName(file);
+        const supabase = createServerSupabaseClient();
 
         const { error } = await supabase.storage
           .from(bucketName)

@@ -19,3 +19,17 @@ export const requireAuth = createServerFn().handler(async () => {
 
   return { userId };
 });
+
+export const getTokenServer = createServerFn().handler(async () => {
+  const { isAuthenticated, getToken } = await auth();
+
+  if (!isAuthenticated) {
+    throw redirect({
+      to: "/sign-in",
+    });
+  }
+
+  const token = await getToken();
+
+  return { token };
+});

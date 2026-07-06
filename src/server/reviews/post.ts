@@ -1,5 +1,6 @@
 import { insertReviewDBSchema, updateReviewDBSchema } from "#/lib/schemas";
-import { supabase } from "#/lib/supabase";
+import { createServerSupabaseClient } from "#/lib/supabase";
+
 import { authFnMiddleware } from "#/middlewares/auth";
 import { createServerFn } from "@tanstack/react-start";
 
@@ -7,6 +8,8 @@ export const createReview = createServerFn({ method: "POST" })
   .middleware([authFnMiddleware])
   .inputValidator(insertReviewDBSchema)
   .handler(async ({ data, context: { userId } }) => {
+    const supabase = createServerSupabaseClient();
+
     const { data: review, error } = await supabase
       .from("reviews")
       .insert([{ ...data, user_id: userId }])
@@ -23,6 +26,8 @@ export const updateReview = createServerFn({ method: "POST" })
   .middleware([authFnMiddleware])
   .inputValidator(updateReviewDBSchema)
   .handler(async ({ data, context: { userId } }) => {
+    const supabase = createServerSupabaseClient();
+
     const { data: review, error } = await supabase
       .from("reviews")
       .update({ ...data, user_id: userId })

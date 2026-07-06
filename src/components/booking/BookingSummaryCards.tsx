@@ -10,8 +10,8 @@ export default function BookingSummaryCards({
 }: BookingSummaryCardsProps) {
   return (
     <ul>
-      {bookings.map((booking) => (
-        <BookingSummaryCard booking={booking} />
+      {bookings.map((booking, idx) => (
+        <BookingSummaryCard key={idx} booking={booking} />
       ))}
     </ul>
   );
