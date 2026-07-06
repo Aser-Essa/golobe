@@ -1,8 +1,8 @@
-import { createServerSupabaseClient } from "#/lib/supabase";
+import { createServiceSupabaseClient } from "#/lib/supabase";
 import type { CreateUserType } from "#/lib/types";
 
 export const createUserDB = async ({ user }: { user: CreateUserType }) => {
-  const supabase = createServerSupabaseClient();
+  const supabase = createServiceSupabaseClient();
 
   const { data: existingUser, error: selectError } = await supabase
     .from("users")
@@ -59,7 +59,7 @@ export const updateUserDB = async ({
   if (!user.id) {
     throw new Error("User ID is required");
   }
-  const supabase = createServerSupabaseClient();
+  const supabase = createServiceSupabaseClient();
 
   const { error } = await supabase.from("users").update(user).eq("id", userId);
 
@@ -72,7 +72,7 @@ export const updateUserDB = async ({
 };
 
 export const deleteUserDB = async (id: string) => {
-  const supabase = createServerSupabaseClient();
+  const supabase = createServiceSupabaseClient();
 
   const { error } = await supabase
     .from("users")

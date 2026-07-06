@@ -1,5 +1,8 @@
 import { bookingToInsertSchema } from "#/lib/schemas";
-import { createServerSupabaseClient } from "#/lib/supabase";
+import {
+  createServerSupabaseClient,
+  createServiceSupabaseClient,
+} from "#/lib/supabase";
 import type { BookingToInsert } from "#/lib/types";
 import { authFnMiddleware } from "#/middlewares/auth";
 import { createServerFn } from "@tanstack/react-start";
@@ -16,7 +19,7 @@ export async function insertBookingIntoDB({
 }: {
   bookingData: BookingToInsert;
 }) {
-  const supabase = createServerSupabaseClient();
+  const supabase = createServiceSupabaseClient();
 
   const { data, error } = await supabase
     .from("bookings")

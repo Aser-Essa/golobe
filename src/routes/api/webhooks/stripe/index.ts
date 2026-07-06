@@ -30,27 +30,16 @@ export const Route = createFileRoute("/api/webhooks/stripe/")({
         }
 
         if (event.type === "payment_intent.succeeded") {
-          try {
-            console.log("Webhook received");
+          const formattedBookingData = formatBookingData(
+            event.data.object.metadata as unknown as stripeBookingMetadata,
+          );
 
-            const formattedBookingData = formatBookingData(
-              event.data.object.metadata as unknown as stripeBookingMetadata,
-            );
-
-            console.log("Formatted booking:", formattedBookingData);
-
-            const result = await insertBookingIntoDB({
-              bookingData: {
-                ...formattedBookingData,
-                payment_intent_id: event.data.object.id,
-              },
-            });
-
-            console.log("Insert result:", result);
-          } catch (err) {
-            console.error("WEBHOOK ERROR:", err);
-            throw err;
-          }
+          await insertBookingIntoDB({
+            bookingData: {
+              ...formattedBookingData,
+              payment_intent_id: event.data.object.id,
+            },
+          });
         }
 
         return Response.json({ received: true }, { status: 200 });

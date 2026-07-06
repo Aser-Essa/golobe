@@ -7,3 +7,7 @@ export function createServerSupabaseClient() {
     accessToken: async () => (await getTokenServer()).token,
   });
 }
+
+export function createServiceSupabaseClient() {
+  return createClient(env.SUPABASE_URL, process.env.SUPABASE_SERVICE_ROLE_KEY!);
+}
