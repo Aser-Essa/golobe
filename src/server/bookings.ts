@@ -51,11 +51,11 @@ export const checkBookingExist = createServerFn({ method: "GET" })
       .from("bookings")
       .select("id")
       .eq("payment_intent_id", payment_intent_id)
-      .single();
+      .maybeSingle();
 
     if (error) throw new Error(error.message);
 
-    return { exist: !!data.id, bookingId: data.id };
+    return { exist: !!data?.id, bookingId: data?.id };
   });
 
 export const getUserBookings = createServerFn({ method: "GET" })
@@ -87,7 +87,7 @@ export const getBooking = createServerFn({ method: "GET" })
       .from("bookings")
       .select(BOOKING_SELECT_WITH_ROOM)
       .eq("id", bookingId)
-      .single();
+      .maybeSingle();
 
     if (error) throw new Error(error.message);
 
