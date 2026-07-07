@@ -26,7 +26,7 @@ export default function AddCardForm() {
     });
 
     if (error.message) {
-      console.log(error.message);
+      console.error(error.message);
     }
 
     setLoading(false);

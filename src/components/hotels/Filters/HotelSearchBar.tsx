@@ -42,6 +42,7 @@ export default function HotelSearchBar({
 
   function onSubmit(data: HotelSearchWidgetType) {
     const mappedSearchParams = mapHotelWidgetToSearchParams(data);
+
     navigate({
       to: "/hotels",
       search: (prev) => ({ ...prev, ...mappedSearchParams }),

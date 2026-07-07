@@ -52,7 +52,7 @@ export default function NewPasswordStep({
       );
       onSuccess();
     } catch (error) {
-      console.log("SFsgsgf", error);
+      console.error(error);
       if (error instanceof Error) {
         toast.error(error.message);
         return;

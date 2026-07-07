@@ -1,4 +1,4 @@
-import { addDays } from "date-fns";
+import { addDays, format } from "date-fns";
 import type { FilterSearchParams, HotelSearchWidgetType } from "../types";
 import { parseDate } from "./date";
 
@@ -26,8 +26,8 @@ export function mapHotelWidgetToSearchParams(data: HotelSearchWidgetType) {
   const sanitizedDestination = sanitizeString(data.destination);
   return {
     destination: sanitizedDestination,
-    checkIn: data.checkIn.toISOString(),
-    checkOut: data.checkOut.toISOString(),
+    checkIn: format(data.checkIn, "yyyy-MM-dd"),
+    checkOut: format(data.checkOut, "yyyy-MM-dd"),
     rooms: data.rooms,
     guests: data.guests,
   };

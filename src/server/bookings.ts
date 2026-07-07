@@ -26,7 +26,7 @@ export async function insertBookingIntoDB({
     .insert([bookingData])
     .select();
 
-  console.log(error);
+  console.error(error);
 
   if (error) throw new Error(error.message);
 

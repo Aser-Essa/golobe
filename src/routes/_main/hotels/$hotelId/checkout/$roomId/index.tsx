@@ -47,7 +47,6 @@ function RouteComponent() {
     paymentMode: paymentModeValue,
   });
 
-  console.log(bookingPrice);
 
   return (
     <CheckoutConfirmProvider>
