@@ -40,7 +40,7 @@ export default function RateFilter() {
 
       <CollapsibleContent className="flex flex-col gap-2">
         <Tabs defaultValue={(rating || 0).toString()}>
-          <TabsList variant="default" className="flex items-center gap-4">
+          <TabsList variant="default" className="flex items-center gap-2 md:gap-4">
             {TabsArray.map((tab) => (
               <TabsTrigger
                 key={tab}

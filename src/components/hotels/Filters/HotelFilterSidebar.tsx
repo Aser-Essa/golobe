@@ -11,7 +11,7 @@ export default function HotelFilterSidebar({
   SidebarFilterOptions: SidebarFilterOptions;
 }) {
   return (
-    <div className="max-w-86 space-y-8">
+    <div className="space-y-8">
       <p className="text-xl font-semibold">Filters</p>
       <PriceFilter max_price={SidebarFilterOptions.max_price} />
       <Separator />

@@ -33,7 +33,7 @@ export function FilterSidebarSheet({
           </Button>
         </SheetTrigger>
         <SheetContent>
-          <div className="overflow-y-scroll p-4">
+          <div className="overflow-y-scroll overflow-x-hidden p-4">
             <HotelFilterSidebar SidebarFilterOptions={SidebarFilterOptions} />
           </div>
         </SheetContent>
