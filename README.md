@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="/public/Logo.svg" alt="Golobe Logo" width="160" />
+  <img src="/public/logo-green-o.svg" alt="Golobe Logo" width="160" />
 </p>
 
 <h1 align="center">Golobe — Hotel Booking Platform</h1>
@@ -16,40 +16,26 @@
 
 ---
 
-## Screenshots
-
-<!-- Add screenshots of the application here -->
-
-| Home Page | Hotel Search | Hotel Detail |
-|:---------:|:------------:|:------------:|
-| _screenshot_ | _screenshot_ | _screenshot_ |
-
-| Checkout | Booking Ticket | Profile |
-|:--------:|:--------------:|:-------:|
-| _screenshot_ | _screenshot_ | _screenshot_ |
-
----
-
 ## Features
 
-| Feature | Description |
-|---|---|
-| **Hotel Search & Filtering** | Search hotels by destination, check-in/check-out dates, rooms, and guests. Filter by price, rating, amenities, freebies, and hotel type (Hotel/Motel/Resort). |
-| **Hotel Detail Pages** | View hotel images, overview, description, tags, amenities, interactive map (Leaflet), available rooms with booking-aware availability, and reviews. |
-| **Room Availability Engine** | Rooms are filtered by existing bookings to show only available rooms for selected dates. Booked days are blocked in date pickers. |
-| **Stripe Payment Integration** | Full/split payment modes, Stripe Elements for card payment, saved payment methods, SetupIntents for adding cards, PaymentIntents for bookings. |
-| **Booking System** | Complete booking lifecycle — create bookings via Stripe webhook, view booking tickets with barcode, download booking as PDF. |
-| **User Reviews** | Authenticated users who have booked a hotel can add/edit reviews with a 5-star rating system. Reviews are paginated and display verified badges. |
-| **Favourites** | Toggle-to-favourite hotels (and prepared for flights). View all favourites from the profile, filtered by type. |
-| **User Profile Management** | Edit name, email, phone, address, date of birth. Upload/crop avatar and banner images via Supabase Storage. Manage passwords and payment methods. |
-| **Authentication** | Full auth flow via Clerk — email/password sign-up with OTP verification, sign-in, forgot/reset password, Google & Apple social OAuth, SSO callback. |
-| **Responsive Design** | Mobile-first responsive UI with Tailwind CSS v4, custom fonts (Montserrat, Trade Gothic), and shadcn/ui (Radix) components. |
-| **Pagination** | Server-side pagination for hotels and reviews with page button generation and windowed navigation. |
-| **Sorting** | Sort hotels by rating or price (ascending/descending). |
-| **PDF Booking Ticket** | Generate downloadable PDF booking tickets using `html2canvas-pro` and `jspdf` with barcode support via `next-barcode`. |
-| **Webhooks** | Clerk webhook syncs user data to Supabase and creates Stripe customers. Stripe webhook auto-creates bookings on successful payment. |
-| **Error Boundaries** | Custom `RouteError` and `RouteNotFound` components at every layout level for graceful error handling. |
-| **Toast Notifications** | Sonner-powered toast notifications across all user-facing actions. |
+| Feature                        | Description                                                                                                                                                   |
+| ------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Hotel Search & Filtering**   | Search hotels by destination, check-in/check-out dates, rooms, and guests. Filter by price, rating, amenities, freebies, and hotel type (Hotel/Motel/Resort). |
+| **Hotel Detail Pages**         | View hotel images, overview, description, tags, amenities, interactive map (Leaflet), available rooms with booking-aware availability, and reviews.           |
+| **Room Availability Engine**   | Rooms are filtered by existing bookings to show only available rooms for selected dates. Booked days are blocked in date pickers.                             |
+| **Stripe Payment Integration** | Full/split payment modes, Stripe Elements for card payment, saved payment methods, SetupIntents for adding cards, PaymentIntents for bookings.                |
+| **Booking System**             | Complete booking lifecycle — create bookings via Stripe webhook, view booking tickets with barcode, download booking as PDF.                                  |
+| **User Reviews**               | Authenticated users who have booked a hotel can add/edit reviews with a 5-star rating system. Reviews are paginated and display verified badges.              |
+| **Favourites**                 | Toggle-to-favourite hotels (and prepared for flights). View all favourites from the profile, filtered by type.                                                |
+| **User Profile Management**    | Edit name, email, phone, address, date of birth. Upload/crop avatar and banner images via Supabase Storage. Manage passwords and payment methods.             |
+| **Authentication**             | Full auth flow via Clerk — email/password sign-up with OTP verification, sign-in, forgot/reset password, Google & Apple social OAuth, SSO callback.           |
+| **Responsive Design**          | Mobile-first responsive UI with Tailwind CSS v4, custom fonts (Montserrat, Trade Gothic), and shadcn/ui (Radix) components.                                   |
+| **Pagination**                 | Server-side pagination for hotels and reviews with page button generation and windowed navigation.                                                            |
+| **Sorting**                    | Sort hotels by rating or price (ascending/descending).                                                                                                        |
+| **PDF Booking Ticket**         | Generate downloadable PDF booking tickets using `html2canvas-pro` and `jspdf` with barcode support via `next-barcode`.                                        |
+| **Webhooks**                   | Clerk webhook syncs user data to Supabase and creates Stripe customers. Stripe webhook auto-creates bookings on successful payment.                           |
+| **Error Boundaries**           | Custom `RouteError` and `RouteNotFound` components at every layout level for graceful error handling.                                                         |
+| **Toast Notifications**        | Sonner-powered toast notifications across all user-facing actions.                                                                                            |
 
 ---
 
@@ -57,73 +43,73 @@
 
 ### Core Framework
 
-| Technology | Purpose |
-|---|---|
-| [React 19](https://react.dev/) | UI library |
-| [TanStack Start](https://tanstack.com/start) | Full-stack React framework (SSR, server functions, routing) |
-| [TanStack Router](https://tanstack.com/router) | File-based, type-safe routing with search param validation |
-| [TypeScript 6](https://www.typescriptlang.org/) | Static type checking |
-| [Vite 8](https://vitejs.dev/) | Build tooling and dev server |
-| [Nitro](https://nitro.build/) | Server engine (Vercel deployment target) |
+| Technology                                      | Purpose                                                     |
+| ----------------------------------------------- | ----------------------------------------------------------- |
+| [React 19](https://react.dev/)                  | UI library                                                  |
+| [TanStack Start](https://tanstack.com/start)    | Full-stack React framework (SSR, server functions, routing) |
+| [TanStack Router](https://tanstack.com/router)  | File-based, type-safe routing with search param validation  |
+| [TypeScript 6](https://www.typescriptlang.org/) | Static type checking                                        |
+| [Vite 8](https://vitejs.dev/)                   | Build tooling and dev server                                |
+| [Nitro](https://nitro.build/)                   | Server engine (Vercel deployment target)                    |
 
 ### Backend & Data
 
-| Technology | Purpose |
-|---|---|
-| [Supabase](https://supabase.com/) | PostgreSQL database, Row-Level Security, Storage (avatars/banners) |
-| [Clerk](https://clerk.com/) | Authentication, user management, SSO, webhooks |
-| [Stripe](https://stripe.com/) | Payments — PaymentIntents, SetupIntents, customer management, webhooks |
+| Technology                        | Purpose                                                                |
+| --------------------------------- | ---------------------------------------------------------------------- |
+| [Supabase](https://supabase.com/) | PostgreSQL database, Row-Level Security, Storage (avatars/banners)     |
+| [Clerk](https://clerk.com/)       | Authentication, user management, SSO, webhooks                         |
+| [Stripe](https://stripe.com/)     | Payments — PaymentIntents, SetupIntents, customer management, webhooks |
 
 ### UI & Styling
 
-| Technology | Purpose |
-|---|---|
-| [Tailwind CSS v4](https://tailwindcss.com/) | Utility-first CSS framework |
-| [shadcn/ui (Radix)](https://ui.shadcn.com/) | Accessible, composable UI components |
-| [Lucide React](https://lucide.dev/) | Icon library |
-| [Sonner](https://sonner.emilkowal.dev/) | Toast notifications |
-| [Embla Carousel](https://www.embla-carousel.com/) | Carousel/slider component |
-| [Vaul](https://vaul.emilkowal.dev/) | Drawer component |
-| [Montserrat](https://fontsource.org/fonts/montserrat) | Primary font |
-| Trade Gothic LT Std Extended | Heading font (custom loaded) |
+| Technology                                            | Purpose                              |
+| ----------------------------------------------------- | ------------------------------------ |
+| [Tailwind CSS v4](https://tailwindcss.com/)           | Utility-first CSS framework          |
+| [shadcn/ui (Radix)](https://ui.shadcn.com/)           | Accessible, composable UI components |
+| [Lucide React](https://lucide.dev/)                   | Icon library                         |
+| [Sonner](https://sonner.emilkowal.dev/)               | Toast notifications                  |
+| [Embla Carousel](https://www.embla-carousel.com/)     | Carousel/slider component            |
+| [Vaul](https://vaul.emilkowal.dev/)                   | Drawer component                     |
+| [Montserrat](https://fontsource.org/fonts/montserrat) | Primary font                         |
+| Trade Gothic LT Std Extended                          | Heading font (custom loaded)         |
 
 ### Forms & Validation
 
-| Technology | Purpose |
-|---|---|
-| [React Hook Form](https://react-hook-form.com/) | Performant form management |
-| [Zod 4](https://zod.dev/) | Schema validation for forms, search params, server function inputs |
-| [@hookform/resolvers](https://github.com/react-hook-form/resolvers) | Zod integration with React Hook Form |
+| Technology                                                          | Purpose                                                            |
+| ------------------------------------------------------------------- | ------------------------------------------------------------------ |
+| [React Hook Form](https://react-hook-form.com/)                     | Performant form management                                         |
+| [Zod 4](https://zod.dev/)                                           | Schema validation for forms, search params, server function inputs |
+| [@hookform/resolvers](https://github.com/react-hook-form/resolvers) | Zod integration with React Hook Form                               |
 
 ### Utilities
 
-| Technology | Purpose |
-|---|---|
-| [date-fns](https://date-fns.org/) | Date manipulation and formatting |
-| [React Day Picker](https://react-day-picker.js.org/) | Date picker calendar component |
-| [React Leaflet](https://react-leaflet.js.org/) + [Leaflet](https://leafletjs.com/) | Interactive maps for hotel locations |
-| [React Dropzone](https://react-dropzone.js.org/) | Drag-and-drop file uploads |
-| [React Avatar Editor](https://github.com/mosch/react-avatar-editor) | Avatar image cropping |
-| [html2canvas-pro](https://html2canvas.hertzen.com/) + [jsPDF](https://github.com/parallax/jsPDF) | PDF ticket generation |
-| [next-barcode](https://github.com/nickcoutsos/react-barcode) | Barcode rendering on booking tickets |
-| [React Responsive](https://github.com/yocontra/react-responsive) | Responsive media queries in JS |
-| [React Scroll](https://github.com/fisshy/react-scroll) | Smooth scrolling to sections |
-| [react-svg-credit-card-payment-icons](https://www.npmjs.com/package/react-svg-credit-card-payment-icons) | Payment card brand icons |
-| [clsx](https://github.com/lukeed/clsx) + [tailwind-merge](https://github.com/dcastil/tailwind-merge) | Conditional class merging |
-| [class-variance-authority](https://cva.style/) | Component variant management |
-| [TanStack React Query](https://tanstack.com/query) | Server-state management and caching |
-| [Zustand](https://zustand-demo.pmnd.rs/) | Client-state management (available, not heavily used) |
-| [input-otp](https://input-otp.rodz.dev/) | OTP input for email verification |
+| Technology                                                                                               | Purpose                                               |
+| -------------------------------------------------------------------------------------------------------- | ----------------------------------------------------- |
+| [date-fns](https://date-fns.org/)                                                                        | Date manipulation and formatting                      |
+| [React Day Picker](https://react-day-picker.js.org/)                                                     | Date picker calendar component                        |
+| [React Leaflet](https://react-leaflet.js.org/) + [Leaflet](https://leafletjs.com/)                       | Interactive maps for hotel locations                  |
+| [React Dropzone](https://react-dropzone.js.org/)                                                         | Drag-and-drop file uploads                            |
+| [React Avatar Editor](https://github.com/mosch/react-avatar-editor)                                      | Avatar image cropping                                 |
+| [html2canvas-pro](https://html2canvas.hertzen.com/) + [jsPDF](https://github.com/parallax/jsPDF)         | PDF ticket generation                                 |
+| [next-barcode](https://github.com/nickcoutsos/react-barcode)                                             | Barcode rendering on booking tickets                  |
+| [React Responsive](https://github.com/yocontra/react-responsive)                                         | Responsive media queries in JS                        |
+| [React Scroll](https://github.com/fisshy/react-scroll)                                                   | Smooth scrolling to sections                          |
+| [react-svg-credit-card-payment-icons](https://www.npmjs.com/package/react-svg-credit-card-payment-icons) | Payment card brand icons                              |
+| [clsx](https://github.com/lukeed/clsx) + [tailwind-merge](https://github.com/dcastil/tailwind-merge)     | Conditional class merging                             |
+| [class-variance-authority](https://cva.style/)                                                           | Component variant management                          |
+| [TanStack React Query](https://tanstack.com/query)                                                       | Server-state management and caching                   |
+| [Zustand](https://zustand-demo.pmnd.rs/)                                                                 | Client-state management (available, not heavily used) |
+| [input-otp](https://input-otp.rodz.dev/)                                                                 | OTP input for email verification                      |
 
 ### Dev Tools
 
-| Technology | Purpose |
-|---|---|
-| [TanStack Devtools](https://tanstack.com/) | Router & Query devtools |
-| [Vitest](https://vitest.dev/) | Unit testing framework |
-| [Testing Library](https://testing-library.com/) | DOM testing utilities |
-| [Prettier](https://prettier.io/) | Code formatting (with Tailwind plugin) |
-| [ESLint](https://eslint.org/) | Linting |
+| Technology                                      | Purpose                                |
+| ----------------------------------------------- | -------------------------------------- |
+| [TanStack Devtools](https://tanstack.com/)      | Router & Query devtools                |
+| [Vitest](https://vitest.dev/)                   | Unit testing framework                 |
+| [Testing Library](https://testing-library.com/) | DOM testing utilities                  |
+| [Prettier](https://prettier.io/)                | Code formatting (with Tailwind plugin) |
+| [ESLint](https://eslint.org/)                   | Linting                                |
 
 ---
 
@@ -289,37 +275,37 @@ src/
 
 ### Tables
 
-| Table | Purpose |
-|---|---|
-| `users` | Core user records synced from Clerk via webhook. Fields: `id`, `full_name`, `email`, `phone`, `avatar_url`, `is_active`. Soft-delete via `is_active` flag. |
-| `hotels` | Hotel listings with `name`, `city`, `country`, `address`, `description`, `hotel_type` (hotel/motel/resort), `star_rating`, `avg_rating`, `review_count`, `tax_rate`, `latitude/longitude`, `logo_url`, `slug`, `is_active`. |
-| `rooms` | Hotel rooms with `name`, `price_per_night`, `max_guests`, `bed_type`, `view_type`, `description`, `image_url`, `is_available`. FK → `hotels`. |
-| `bookings` | Completed bookings with `user_id`, `hotel_id`, `room_id`, check-in/out dates, `guests`, pricing fields (`base_fare`, `discount`, `taxes`, `service_fee`, `paid_amount`, `remaining_amount`, `total`), `payment_intent_id`, `payment_mode`, `payment_status`, `status`, `booking_ref`, `promo_code`. FK → `hotels`, `rooms`, `users`. |
-| `reviews` | User reviews with `rating`, `body`, `hotel_id`, `user_id`, `booking_id`, `is_verified`. FK → `hotels`, `bookings`, `users`. |
-| `favourites` | Saved items with `user_id`, `hotel_id` (nullable), `flight_id` (nullable), `item_type` (hotel/flight). FK → `hotels`, `flights`, `users`. |
-| `amenities` | Lookup table for amenities with `name`, `category`, `icon_key`. |
-| `hotel_amenity_map` | Many-to-many join table between `hotels` and `amenities`. |
-| `hotel_images` | Hotel photos with `url`, `alt_text`, `is_cover`, `display_order`. FK → `hotels`. |
-| `hotel_tags` | Hotel tags (features/highlights) with `tag`, `icon_key`. FK → `hotels`. |
-| `destinations` | Destination metadata with `city`, `country`, `image_url`, `starting_price`, `tagline`, `category`. |
-| `flights` | Flight listings (schema exists, not fully implemented in UI). |
-| `recent_searches` | User search history with `destination`, `city`, `country`, `image_url`, `place_count`. FK → `users`. |
+| Table               | Purpose                                                                                                                                                                                                                                                                                                                              |
+| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `users`             | Core user records synced from Clerk via webhook. Fields: `id`, `full_name`, `email`, `phone`, `avatar_url`, `is_active`. Soft-delete via `is_active` flag.                                                                                                                                                                           |
+| `hotels`            | Hotel listings with `name`, `city`, `country`, `address`, `description`, `hotel_type` (hotel/motel/resort), `star_rating`, `avg_rating`, `review_count`, `tax_rate`, `latitude/longitude`, `logo_url`, `slug`, `is_active`.                                                                                                          |
+| `rooms`             | Hotel rooms with `name`, `price_per_night`, `max_guests`, `bed_type`, `view_type`, `description`, `image_url`, `is_available`. FK → `hotels`.                                                                                                                                                                                        |
+| `bookings`          | Completed bookings with `user_id`, `hotel_id`, `room_id`, check-in/out dates, `guests`, pricing fields (`base_fare`, `discount`, `taxes`, `service_fee`, `paid_amount`, `remaining_amount`, `total`), `payment_intent_id`, `payment_mode`, `payment_status`, `status`, `booking_ref`, `promo_code`. FK → `hotels`, `rooms`, `users`. |
+| `reviews`           | User reviews with `rating`, `body`, `hotel_id`, `user_id`, `booking_id`, `is_verified`. FK → `hotels`, `bookings`, `users`.                                                                                                                                                                                                          |
+| `favourites`        | Saved items with `user_id`, `hotel_id` (nullable), `flight_id` (nullable), `item_type` (hotel/flight). FK → `hotels`, `flights`, `users`.                                                                                                                                                                                            |
+| `amenities`         | Lookup table for amenities with `name`, `category`, `icon_key`.                                                                                                                                                                                                                                                                      |
+| `hotel_amenity_map` | Many-to-many join table between `hotels` and `amenities`.                                                                                                                                                                                                                                                                            |
+| `hotel_images`      | Hotel photos with `url`, `alt_text`, `is_cover`, `display_order`. FK → `hotels`.                                                                                                                                                                                                                                                     |
+| `hotel_tags`        | Hotel tags (features/highlights) with `tag`, `icon_key`. FK → `hotels`.                                                                                                                                                                                                                                                              |
+| `destinations`      | Destination metadata with `city`, `country`, `image_url`, `starting_price`, `tagline`, `category`.                                                                                                                                                                                                                                   |
+| `flights`           | Flight listings (schema exists, not fully implemented in UI).                                                                                                                                                                                                                                                                        |
+| `recent_searches`   | User search history with `destination`, `city`, `country`, `image_url`, `place_count`. FK → `users`.                                                                                                                                                                                                                                 |
 
 ### Views
 
-| View | Purpose |
-|---|---|
+| View                   | Purpose                                                                                                |
+| ---------------------- | ------------------------------------------------------------------------------------------------------ |
 | `hotel_filter_options` | Aggregated filter options: max price, amenities list, freebies list. Used to populate sidebar filters. |
-| `popular_destinations` | Aggregated view with `city`, `country`, `avg_rating`, `image`, `stays` count. Used on the home page. |
-| `user_profiles` | Public-safe view exposing only `id`, `full_name`, `avatar_url`. Used for review author display. |
+| `popular_destinations` | Aggregated view with `city`, `country`, `avg_rating`, `image`, `stays` count. Used on the home page.   |
+| `user_profiles`        | Public-safe view exposing only `id`, `full_name`, `avatar_url`. Used for review author display.        |
 
 ### Database Functions
 
-| Function | Purpose |
-|---|---|
-| `generate_booking_ref` | Auto-generates unique booking reference codes. |
-| `search_hotels` | Server-side hotel search with parameters (destination, dates, guests, price range, rating). |
-| `toggle_favourite` | Atomic toggle for favourite items. |
+| Function               | Purpose                                                                                     |
+| ---------------------- | ------------------------------------------------------------------------------------------- |
+| `generate_booking_ref` | Auto-generates unique booking reference codes.                                              |
+| `search_hotels`        | Server-side hotel search with parameters (destination, dates, guests, price range, rating). |
+| `toggle_favourite`     | Atomic toggle for favourite items.                                                          |
 
 ### Key Relationships
 
@@ -340,51 +326,51 @@ reviews >── bookings
 
 ### Layout Routes (Pathless)
 
-| Route | Purpose |
-|---|---|
-| `__root` | Root shell — HTML document, `ClerkProvider`, `QueryClientProvider`, `Toaster`, devtools. |
-| `_auth` | Auth layout (logo + image sidebar). Guards: redirects to `/` if already authenticated. |
-| `_main` | Main app layout with `Header` and `Footer`. |
-| `_main/_protected` | Protected wrapper. Guards: calls `requireAuth()`, redirects to `/sign-in` if not authenticated. |
-| `_main/_protected/profile` | Profile layout with banner, header, and tab navigation. |
+| Route                      | Purpose                                                                                         |
+| -------------------------- | ----------------------------------------------------------------------------------------------- |
+| `__root`                   | Root shell — HTML document, `ClerkProvider`, `QueryClientProvider`, `Toaster`, devtools.        |
+| `_auth`                    | Auth layout (logo + image sidebar). Guards: redirects to `/` if already authenticated.          |
+| `_main`                    | Main app layout with `Header` and `Footer`.                                                     |
+| `_main/_protected`         | Protected wrapper. Guards: calls `requireAuth()`, redirects to `/sign-in` if not authenticated. |
+| `_main/_protected/profile` | Profile layout with banner, header, and tab navigation.                                         |
 
 ### Public Routes
 
-| Path | Component | Description |
-|---|---|---|
-| `/` | Home | Landing page with search widget, popular destinations, featured hotels, why-us section. |
-| `/hotels` | Hotels Listing | Search results with filters, pagination, sorting. Requires `destination` param. |
-| `/hotels/$hotelId` | Hotel Detail | Full hotel page with rooms, reviews, map, amenities. |
-| `/hotels/$hotelId/checkout/$roomId` | Checkout | Room checkout with payment. Shows login prompt if unauthenticated. |
-| `/sign-in` | Sign In | Email/password + social auth login. |
-| `/sign-up` | Sign Up | Registration with OTP verification. |
-| `/forgot-password` | Forgot Password | Email-based password reset flow. |
-| `/sso-callback` | SSO Callback | OAuth redirect handler with loading animation. |
+| Path                                | Component       | Description                                                                             |
+| ----------------------------------- | --------------- | --------------------------------------------------------------------------------------- |
+| `/`                                 | Home            | Landing page with search widget, popular destinations, featured hotels, why-us section. |
+| `/hotels`                           | Hotels Listing  | Search results with filters, pagination, sorting. Requires `destination` param.         |
+| `/hotels/$hotelId`                  | Hotel Detail    | Full hotel page with rooms, reviews, map, amenities.                                    |
+| `/hotels/$hotelId/checkout/$roomId` | Checkout        | Room checkout with payment. Shows login prompt if unauthenticated.                      |
+| `/sign-in`                          | Sign In         | Email/password + social auth login.                                                     |
+| `/sign-up`                          | Sign Up         | Registration with OTP verification.                                                     |
+| `/forgot-password`                  | Forgot Password | Email-based password reset flow.                                                        |
+| `/sso-callback`                     | SSO Callback    | OAuth redirect handler with loading animation.                                          |
 
 ### Protected Routes (Require Authentication)
 
-| Path | Component | Description |
-|---|---|---|
-| `/bookings/$bookingId` | Booking Detail | Booking ticket view with barcode and PDF download. |
-| `/favourites` | Favourites | User's saved hotels/flights list with type filter tabs. |
-| `/profile/account` | Account Settings | Edit name, email, phone, address, DOB, password. |
-| `/profile/payment-methods` | Payment Methods | View/add/delete saved Stripe cards. |
-| `/profile/tickets-bookings` | Tickets & Bookings | All user bookings with summary cards. |
-| `/payment/pending` | Payment Pending | Post-payment polling page that waits for webhook confirmation. |
+| Path                        | Component          | Description                                                    |
+| --------------------------- | ------------------ | -------------------------------------------------------------- |
+| `/bookings/$bookingId`      | Booking Detail     | Booking ticket view with barcode and PDF download.             |
+| `/favourites`               | Favourites         | User's saved hotels/flights list with type filter tabs.        |
+| `/profile/account`          | Account Settings   | Edit name, email, phone, address, DOB, password.               |
+| `/profile/payment-methods`  | Payment Methods    | View/add/delete saved Stripe cards.                            |
+| `/profile/tickets-bookings` | Tickets & Bookings | All user bookings with summary cards.                          |
+| `/payment/pending`          | Payment Pending    | Post-payment polling page that waits for webhook confirmation. |
 
 ### API Routes
 
-| Path | Method | Description |
-|---|---|---|
-| `/api/webhooks/clerk` | POST | Clerk webhook — handles `user.created`, `user.updated`, `user.deleted` events. |
-| `/api/webhooks/stripe` | POST | Stripe webhook — handles `payment_intent.succeeded` event to create bookings. |
+| Path                   | Method | Description                                                                    |
+| ---------------------- | ------ | ------------------------------------------------------------------------------ |
+| `/api/webhooks/clerk`  | POST   | Clerk webhook — handles `user.created`, `user.updated`, `user.deleted` events. |
+| `/api/webhooks/stripe` | POST   | Stripe webhook — handles `payment_intent.succeeded` event to create bookings.  |
 
 ### Redirect Routes
 
-| Path | Redirects To |
-|---|---|
-| `/profile` | `/profile/account` |
-| `/payment` | `/` |
+| Path                        | Redirects To       |
+| --------------------------- | ------------------ |
+| `/profile`                  | `/profile/account` |
+| `/payment`                  | `/`                |
 | `/hotels/$hotelId/checkout` | `/hotels/$hotelId` |
 
 ---
@@ -396,6 +382,7 @@ reviews >── bookings
 Most data is fetched via TanStack Router `loader` functions that call server functions. Data is available synchronously in components via `Route.useLoaderData()`. Deferred data uses `Await` with `Promise` for streaming.
 
 **Examples**:
+
 - Home page: `getPopularDestinations` and `getFeaturedHotels` are fired as promises, rendered with `Await`.
 - Hotels listing: `getHotels` is deferred, sidebar filter options are awaited immediately.
 - Hotel detail: `getHotel`, `getReviewStats`, `getMyAddedReviewsServer` are awaited; `getReviews` is deferred.
@@ -414,6 +401,7 @@ Most data is fetched via TanStack Router `loader` functions that call server fun
 ### URL State
 
 Search parameters serve as the primary state for filtering and pagination:
+
 - Hotel filters: `destination`, `checkIn`, `checkOut`, `rooms`, `guests`, `minPrice`, `maxPrice`, `rating`, `freebies[]`, `amenities[]`, `hotelType`, `sortBy`, `hotel_page`
 - Review pagination: `reviews_page`
 - Favourite type: `favType`
@@ -474,22 +462,22 @@ Search parameters serve as the primary state for filtering and pagination:
 
 ## Reusable Components
 
-| Component | Purpose |
-|---|---|
-| `Container` | Consistent page padding/max-width wrapper. |
-| `TabFilter` | Generic tab navigation that maps values to labels and reports selection changes. |
-| `SortBy` | Reusable sort dropdown using `Select` primitive. |
-| `InputField` | Form-connected text input with label, error display, and `react-hook-form` integration. |
-| `DateField` | Calendar-based date picker with popover, booked-day disabling, and form integration. |
-| `StarsRating` | Interactive star rating component (click to rate or display-only). |
-| `ShareButton` | Web Share API integration with clipboard fallback. |
-| `DashedBorder` | SVG-based dashed border for decorative separators (booking ticket). |
-| `DropZone` | File upload dropzone with preview, validation errors, and upload button. |
-| `RouteError` | Error boundary component with retry capability and friendly error display. |
-| `RouteNotFound` | 404 page with navigation back to home. |
-| `HotelCard` | Hotel listing card with cover image, details, pricing, and favourite toggle. |
-| `BookingSummaryCard` | Compact booking card with hotel info, dates, and status. |
-| `ToggleFavorite` | Heart icon button that toggles favourites via server function. |
+| Component            | Purpose                                                                                 |
+| -------------------- | --------------------------------------------------------------------------------------- |
+| `Container`          | Consistent page padding/max-width wrapper.                                              |
+| `TabFilter`          | Generic tab navigation that maps values to labels and reports selection changes.        |
+| `SortBy`             | Reusable sort dropdown using `Select` primitive.                                        |
+| `InputField`         | Form-connected text input with label, error display, and `react-hook-form` integration. |
+| `DateField`          | Calendar-based date picker with popover, booked-day disabling, and form integration.    |
+| `StarsRating`        | Interactive star rating component (click to rate or display-only).                      |
+| `ShareButton`        | Web Share API integration with clipboard fallback.                                      |
+| `DashedBorder`       | SVG-based dashed border for decorative separators (booking ticket).                     |
+| `DropZone`           | File upload dropzone with preview, validation errors, and upload button.                |
+| `RouteError`         | Error boundary component with retry capability and friendly error display.              |
+| `RouteNotFound`      | 404 page with navigation back to home.                                                  |
+| `HotelCard`          | Hotel listing card with cover image, details, pricing, and favourite toggle.            |
+| `BookingSummaryCard` | Compact booking card with hotel info, dates, and status.                                |
+| `ToggleFavorite`     | Heart icon button that toggles favourites via server function.                          |
 
 ---
 
@@ -533,73 +521,73 @@ Search parameters serve as the primary state for filtering and pagination:
 
 ### Booking Utilities (`lib/utils/booking.ts`)
 
-| Function | Purpose |
-|---|---|
-| `isBookedDay` | Checks if a specific day falls within any existing booking's date range. Used to disable booked dates in the calendar. |
-| `calculateBookingPrice` | Computes pricing breakdown: base fare, taxes, service fee ($10), total, split amount, and amount to pay. |
-| `formatBookingData` | Converts Stripe PaymentIntent metadata into a `BookingToInsert` object for database insertion. |
-| `hasBookedDayInRange` | Checks if any day within a date range has existing bookings. |
+| Function                | Purpose                                                                                                                |
+| ----------------------- | ---------------------------------------------------------------------------------------------------------------------- |
+| `isBookedDay`           | Checks if a specific day falls within any existing booking's date range. Used to disable booked dates in the calendar. |
+| `calculateBookingPrice` | Computes pricing breakdown: base fare, taxes, service fee ($10), total, split amount, and amount to pay.               |
+| `formatBookingData`     | Converts Stripe PaymentIntent metadata into a `BookingToInsert` object for database insertion.                         |
+| `hasBookedDayInRange`   | Checks if any day within a date range has existing bookings.                                                           |
 
 ### Hotel Utilities (`lib/utils/hotel.ts`)
 
-| Function | Purpose |
-|---|---|
-| `getCoverImageUrl` | Extracts the cover image URL from a hotel's images array, with fallback. |
-| `getMinRoomPrice` | Finds the cheapest room price for display on listing cards. |
-| `getTypePlacesCount` | Counts hotels by type (hotel/motel/resort) for tab filter badges. |
-| `getRatingLabel` | Converts numeric rating to human-readable label (Exceptional, Excellent, etc.). |
+| Function             | Purpose                                                                         |
+| -------------------- | ------------------------------------------------------------------------------- |
+| `getCoverImageUrl`   | Extracts the cover image URL from a hotel's images array, with fallback.        |
+| `getMinRoomPrice`    | Finds the cheapest room price for display on listing cards.                     |
+| `getTypePlacesCount` | Counts hotels by type (hotel/motel/resort) for tab filter badges.               |
+| `getRatingLabel`     | Converts numeric rating to human-readable label (Exceptional, Excellent, etc.). |
 
 ### Search Utilities (`lib/utils/search.ts`)
 
-| Function | Purpose |
-|---|---|
-| `sanitizeString` | Removes special characters from search input for safe database queries. |
-| `mapSearchParamsToHotelWidget` | Converts URL search params to form-compatible data. |
-| `mapHotelWidgetToSearchParams` | Converts form data to URL search params. |
+| Function                       | Purpose                                                                 |
+| ------------------------------ | ----------------------------------------------------------------------- |
+| `sanitizeString`               | Removes special characters from search input for safe database queries. |
+| `mapSearchParamsToHotelWidget` | Converts URL search params to form-compatible data.                     |
+| `mapHotelWidgetToSearchParams` | Converts form data to URL search params.                                |
 
 ### Filter Utilities (`lib/utils/filters/`)
 
-| Function | Purpose |
-|---|---|
-| `filterByAmenities` | Filters hotels by selected amenity names (checks `hotel_amenity_map`). |
-| `filterByFreebies` | Filters hotels by freebie amenities (parking, breakfast, etc.). |
+| Function                 | Purpose                                                                           |
+| ------------------------ | --------------------------------------------------------------------------------- |
+| `filterByAmenities`      | Filters hotels by selected amenity names (checks `hotel_amenity_map`).            |
+| `filterByFreebies`       | Filters hotels by freebie amenities (parking, breakfast, etc.).                   |
 | `filterByAvailableRooms` | Filters hotels to only include those with rooms available for the selected dates. |
-| `filterByRoomsGuests` | Filters hotels by minimum room count and guest capacity. |
-| `filterByPrice` | Filters hotels by price range. |
+| `filterByRoomsGuests`    | Filters hotels by minimum room count and guest capacity.                          |
+| `filterByPrice`          | Filters hotels by price range.                                                    |
 
 ### Pagination Utilities (`lib/utils/pagination.ts`)
 
-| Function | Purpose |
-|---|---|
-| `getPaginationRange` | Calculates `from`, `to`, and `totalPages` for a given page/perPage/totalItems. |
+| Function              | Purpose                                                                            |
+| --------------------- | ---------------------------------------------------------------------------------- |
+| `getPaginationRange`  | Calculates `from`, `to`, and `totalPages` for a given page/perPage/totalItems.     |
 | `generatePageButtons` | Creates an array of page numbers with ellipsis ("...") for windowed pagination UI. |
 
 ### User Utilities (`lib/utils/user.ts`)
 
-| Function | Purpose |
-|---|---|
-| `getFullName` | Resolves user's display name from Clerk metadata, falling back to firstName/lastName. |
-| `formatUserName` | Formats "First L." style abbreviated name. |
-| `getFormattedUser` | Extracts and normalizes all user display fields (name, email, avatar, banner, phone, address, DOB) from Clerk user object. |
-| `getFormattedUserJson` | Same as above but for Clerk webhook JSON payload. |
+| Function               | Purpose                                                                                                                    |
+| ---------------------- | -------------------------------------------------------------------------------------------------------------------------- |
+| `getFullName`          | Resolves user's display name from Clerk metadata, falling back to firstName/lastName.                                      |
+| `formatUserName`       | Formats "First L." style abbreviated name.                                                                                 |
+| `getFormattedUser`     | Extracts and normalizes all user display fields (name, email, avatar, banner, phone, address, DOB) from Clerk user object. |
+| `getFormattedUserJson` | Same as above but for Clerk webhook JSON payload.                                                                          |
 
 ---
 
 ## Performance Optimizations
 
-| Optimization | Implementation |
-|---|---|
-| **Streaming with `Await`** | Hotel listings, reviews, bookings, and payment methods use deferred promises with `Await` for non-blocking SSR. The UI renders skeleton placeholders while data streams in. |
-| **Skeleton Loading States** | 11 dedicated skeleton components provide instant visual feedback during data loading. |
-| **Suspense Boundaries** | React Suspense wraps deferred data sections (favourites, bookings) for granular loading states. |
-| **Preloading** | `defaultPreload: "intent"` preloads route data when users hover over links. |
-| **Scroll Restoration** | `scrollRestoration: true` preserves scroll position across navigations. |
-| **Parallel Data Loading** | `Promise.all` is used to fetch independent data in parallel (e.g., hotel + reviews + user review on detail page). |
-| **Server-Side Pagination** | Hotels (4 per page) and reviews (10 per page) are paginated server-side to minimize data transfer. |
-| **URL-Based State** | Filter state is stored in URL search params, avoiding unnecessary client-side state management and enabling shareable filtered views. |
-| **Image Optimization** | WebP format for static images, `loading="eager"` for critical images, Supabase CDN with `cacheControl` for uploaded assets. |
-| **Font Optimization** | `font-display: swap` on custom fonts, variable Montserrat font for reduced file size. |
-| **Memoization** | `useCallback` and `useMemo` used in hooks (e.g., `useSupabaseUpload`) to prevent unnecessary re-renders. |
+| Optimization                | Implementation                                                                                                                                                              |
+| --------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Streaming with `Await`**  | Hotel listings, reviews, bookings, and payment methods use deferred promises with `Await` for non-blocking SSR. The UI renders skeleton placeholders while data streams in. |
+| **Skeleton Loading States** | 11 dedicated skeleton components provide instant visual feedback during data loading.                                                                                       |
+| **Suspense Boundaries**     | React Suspense wraps deferred data sections (favourites, bookings) for granular loading states.                                                                             |
+| **Preloading**              | `defaultPreload: "intent"` preloads route data when users hover over links.                                                                                                 |
+| **Scroll Restoration**      | `scrollRestoration: true` preserves scroll position across navigations.                                                                                                     |
+| **Parallel Data Loading**   | `Promise.all` is used to fetch independent data in parallel (e.g., hotel + reviews + user review on detail page).                                                           |
+| **Server-Side Pagination**  | Hotels (4 per page) and reviews (10 per page) are paginated server-side to minimize data transfer.                                                                          |
+| **URL-Based State**         | Filter state is stored in URL search params, avoiding unnecessary client-side state management and enabling shareable filtered views.                                       |
+| **Image Optimization**      | WebP format for static images, `loading="eager"` for critical images, Supabase CDN with `cacheControl` for uploaded assets.                                                 |
+| **Font Optimization**       | `font-display: swap` on custom fonts, variable Montserrat font for reduced file size.                                                                                       |
+| **Memoization**             | `useCallback` and `useMemo` used in hooks (e.g., `useSupabaseUpload`) to prevent unnecessary re-renders.                                                                    |
 
 ---
 
@@ -649,16 +637,16 @@ All sensitive keys are server-only (`process.env`). Only `VITE_` prefixed variab
 
 ## Error Handling
 
-| Layer | Strategy |
-|---|---|
-| **Route Error Boundaries** | Custom `RouteError` component at `__root`, `_main`, `_protected`, and `profile` layouts. Displays error message with a "Try Again" button that calls `reset()`. |
-| **Route Not Found** | Custom `RouteNotFound` component at every layout level with a "Back to Home" link. |
-| **Server Functions** | All database queries check for Supabase errors and throw `new Error(error.message)`. Stripe operations use try/catch blocks and return error objects. |
-| **Form Validation** | Zod schemas provide user-friendly error messages. React Hook Form displays errors inline below fields. |
-| **Toast Notifications** | `sonner` toasts display success/error messages for user actions (login, favourite toggle, review submission, payment errors). |
-| **Payment Pending Timeout** | The payment pending page times out after 15 polling attempts and displays an error toast, redirecting to home. |
-| **Webhook Errors** | Both webhooks catch and log errors, returning appropriate HTTP status codes (400 for verification failures, 200 for success). |
-| **Avatar/Banner Deletion** | Gracefully handles "Object not found" errors when deleting images that don't exist. |
+| Layer                       | Strategy                                                                                                                                                        |
+| --------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Route Error Boundaries**  | Custom `RouteError` component at `__root`, `_main`, `_protected`, and `profile` layouts. Displays error message with a "Try Again" button that calls `reset()`. |
+| **Route Not Found**         | Custom `RouteNotFound` component at every layout level with a "Back to Home" link.                                                                              |
+| **Server Functions**        | All database queries check for Supabase errors and throw `new Error(error.message)`. Stripe operations use try/catch blocks and return error objects.           |
+| **Form Validation**         | Zod schemas provide user-friendly error messages. React Hook Form displays errors inline below fields.                                                          |
+| **Toast Notifications**     | `sonner` toasts display success/error messages for user actions (login, favourite toggle, review submission, payment errors).                                   |
+| **Payment Pending Timeout** | The payment pending page times out after 15 polling attempts and displays an error toast, redirecting to home.                                                  |
+| **Webhook Errors**          | Both webhooks catch and log errors, returning appropriate HTTP status codes (400 for verification failures, 200 for success).                                   |
+| **Avatar/Banner Deletion**  | Gracefully handles "Object not found" errors when deleting images that don't exist.                                                                             |
 
 ---
 
@@ -956,75 +944,75 @@ golobe/
 
 ### Core Dependencies
 
-| Package | Purpose |
-|---|---|
-| `react`, `react-dom` | UI rendering (v19) |
-| `@tanstack/react-start` | Full-stack framework with server functions |
-| `@tanstack/react-router` | Type-safe file-based routing |
-| `@tanstack/react-query` | Async state management and caching |
-| `nitro` | Server engine for deployment |
-| `vite` | Build tool and dev server |
-| `typescript` | Type checking |
+| Package                  | Purpose                                    |
+| ------------------------ | ------------------------------------------ |
+| `react`, `react-dom`     | UI rendering (v19)                         |
+| `@tanstack/react-start`  | Full-stack framework with server functions |
+| `@tanstack/react-router` | Type-safe file-based routing               |
+| `@tanstack/react-query`  | Async state management and caching         |
+| `nitro`                  | Server engine for deployment               |
+| `vite`                   | Build tool and dev server                  |
+| `typescript`             | Type checking                              |
 
 ### Authentication & Backend
 
-| Package | Purpose |
-|---|---|
-| `@clerk/tanstack-react-start` | Clerk auth integration for TanStack Start |
-| `@supabase/supabase-js` | Supabase client for database and storage |
+| Package                                                  | Purpose                                     |
+| -------------------------------------------------------- | ------------------------------------------- |
+| `@clerk/tanstack-react-start`                            | Clerk auth integration for TanStack Start   |
+| `@supabase/supabase-js`                                  | Supabase client for database and storage    |
 | `stripe`, `@stripe/stripe-js`, `@stripe/react-stripe-js` | Stripe payment processing (server + client) |
 
 ### UI Components
 
-| Package | Purpose |
-|---|---|
-| `tailwindcss`, `@tailwindcss/vite` | CSS framework |
-| `radix-ui`, `shadcn` | Accessible UI primitives |
-| `lucide-react` | Icon set |
-| `sonner` | Toast notifications |
-| `embla-carousel-react` | Carousel component |
-| `vaul` | Drawer component |
-| `class-variance-authority` | Component variant system |
-| `clsx`, `tailwind-merge` | Class name utilities |
-| `tw-animate-css` | Animation utilities |
+| Package                            | Purpose                  |
+| ---------------------------------- | ------------------------ |
+| `tailwindcss`, `@tailwindcss/vite` | CSS framework            |
+| `radix-ui`, `shadcn`               | Accessible UI primitives |
+| `lucide-react`                     | Icon set                 |
+| `sonner`                           | Toast notifications      |
+| `embla-carousel-react`             | Carousel component       |
+| `vaul`                             | Drawer component         |
+| `class-variance-authority`         | Component variant system |
+| `clsx`, `tailwind-merge`           | Class name utilities     |
+| `tw-animate-css`                   | Animation utilities      |
 
 ### Form & Validation
 
-| Package | Purpose |
-|---|---|
-| `react-hook-form` | Form state management |
+| Package               | Purpose                   |
+| --------------------- | ------------------------- |
+| `react-hook-form`     | Form state management     |
 | `@hookform/resolvers` | Schema validation bridges |
-| `zod` | Runtime type validation |
-| `input-otp` | OTP input component |
+| `zod`                 | Runtime type validation   |
+| `input-otp`           | OTP input component       |
 
 ### Media & Files
 
-| Package | Purpose |
-|---|---|
-| `react-dropzone` | File upload drag-and-drop |
-| `react-avatar-editor` | Image cropping |
-| `html2canvas-pro` | HTML-to-canvas rendering for PDF |
-| `jspdf` | PDF generation |
-| `next-barcode` | Barcode rendering |
+| Package               | Purpose                          |
+| --------------------- | -------------------------------- |
+| `react-dropzone`      | File upload drag-and-drop        |
+| `react-avatar-editor` | Image cropping                   |
+| `html2canvas-pro`     | HTML-to-canvas rendering for PDF |
+| `jspdf`               | PDF generation                   |
+| `next-barcode`        | Barcode rendering                |
 
 ### Maps & Dates
 
-| Package | Purpose |
-|---|---|
-| `leaflet`, `react-leaflet` | Interactive maps |
-| `date-fns` | Date utilities |
-| `react-day-picker` | Calendar component |
+| Package                    | Purpose            |
+| -------------------------- | ------------------ |
+| `leaflet`, `react-leaflet` | Interactive maps   |
+| `date-fns`                 | Date utilities     |
+| `react-day-picker`         | Calendar component |
 
 ### Other
 
-| Package | Purpose |
-|---|---|
-| `react-responsive` | CSS media query hooks |
-| `react-scroll` | Smooth section scrolling |
-| `react-svg-credit-card-payment-icons` | Card brand SVG icons |
-| `@fontsource-variable/montserrat` | Self-hosted Montserrat font |
-| `next-themes` | Theme management (available for dark mode) |
-| `zustand` | Lightweight client state management |
+| Package                               | Purpose                                    |
+| ------------------------------------- | ------------------------------------------ |
+| `react-responsive`                    | CSS media query hooks                      |
+| `react-scroll`                        | Smooth section scrolling                   |
+| `react-svg-credit-card-payment-icons` | Card brand SVG icons                       |
+| `@fontsource-variable/montserrat`     | Self-hosted Montserrat font                |
+| `next-themes`                         | Theme management (available for dark mode) |
+| `zustand`                             | Lightweight client state management        |
 
 ---
 
