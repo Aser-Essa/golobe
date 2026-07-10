@@ -24,12 +24,10 @@ export const getTokenServer = createServerFn().handler(async () => {
   const { isAuthenticated, getToken } = await auth();
 
   if (!isAuthenticated) {
-    throw redirect({
-      to: "/sign-in",
-    });
+    return { token: null };
   }
 
-  const token = await getToken();
-
-  return { token };
+  return {
+    token: await getToken(),
+  };
 });

@@ -1,4 +1,5 @@
 import { filterSearchParamsSchema } from "#/lib/schemas/search";
+import { createServerSupabaseClient } from "#/lib/supabase";
 import type { searchDestinationsType } from "#/lib/types";
 import { sanitizeString, sortByPrice } from "#/lib/utils";
 import { createServerFn } from "@tanstack/react-start";
@@ -10,7 +11,6 @@ import {
   HOTEL_DETAILS_SELECT,
   paginateHotels,
 } from "./hotels.helpers";
-import { createServerSupabaseClient } from "#/lib/supabase";
 
 export const getHotels = createServerFn({ method: "GET" })
   .inputValidator(filterSearchParamsSchema)
