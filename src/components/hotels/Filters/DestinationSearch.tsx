@@ -70,6 +70,7 @@ export default function DestinationSearch<T extends FieldValues>({
           }
           label="Enter Destination"
           name={name}
+          autoComplete="off"
           placeholder="Enter Destination"
           onFocus={() => setIsOpen(true)}
         />
