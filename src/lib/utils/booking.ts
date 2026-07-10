@@ -1,19 +1,18 @@
 import {
-    differenceInCalendarDays,
-    isWithinInterval,
-    parseISO,
-    startOfDay,
-    subDays
+  differenceInCalendarDays,
+  isWithinInterval,
+  parseISO,
+  startOfDay,
+  subDays,
 } from "date-fns";
 import { SERVICE_FEE } from "../constants";
 import type {
-    BookingToInsert,
-    HotelType,
-    PricingParams,
-    stripeBookingMetadata
+  BookingToInsert,
+  HotelType,
+  PricingParams,
+  stripeBookingMetadata,
 } from "../types";
 import type { Tables } from "../types/supabase";
-
 
 export function isBookedDay({
   day,
@@ -47,7 +46,7 @@ export function calculateBookingPrice({
 
   const baseFare = pricePerNight * totalNights;
 
-  const taxes = baseFare * (taxRate / 100);
+  const taxes = Number((baseFare * (taxRate / 100)).toFixed(2));
   const total = baseFare + taxes + SERVICE_FEE;
 
   const splitedAmount = total / 2;

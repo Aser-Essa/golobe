@@ -33,6 +33,7 @@ export default function RoomSummaryCard({ room, hotel }: RoomSummaryCardProps) {
   });
 
   const { checkInDate, checkOutDate } = useBookingDates({ watch, setValue });
+  
   useSyncDatesToURL(checkInDate, checkOutDate);
 
   const today = startOfToday();
