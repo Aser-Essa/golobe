@@ -11,7 +11,7 @@ export default function Header() {
   return (
     <header className="box-shadow-sm fixed top-0 left-0 z-2000 flex h-20 w-full items-center justify-between bg-white/50 px-4 py-5 backdrop-blur-md sm:h-22 sm:px-8 md:px-16 xl:px-26">
       <HeaderNav />
-      <Logo className="mx-auto w-20 sm:w-auto" />
+      <Logo className="md:mx-auto w-20 sm:w-auto" />
       <Show when={"signed-out"}>
         <HeaderAuth />
       </Show>
